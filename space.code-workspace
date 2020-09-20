@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../Shop_8.09.2020"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "Shop_15.09.2020"
+  }
+}

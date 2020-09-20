@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shop</title>
+        <link rel="icon" type="image/png" href="./favicon/favicon.png" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.8.0/css/all.css"
+            integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="./style/style.css" />
+    </head>
+    <body>
+        <div class="app">
+            <div class="header"></div>
+            <div class="content">
+                <div class="left-side">
+                    <div class="product-types"></div>
+                    <div class="basket"></div>
+                </div>
+                <div class="right-side"></div>
+            </div>
+            <div class="footer"></div>
+        </div>
+        <!-- <div id="root"></div> -->
+
+        <!-- CONSTANTS AND UTILS-->
+        <script src="./constants/root.js"></script>
+        <script src="./api/api.js"></script>
+        <script src="./utils/localStorageUtil.js"></script>
+
+        <!-- HEADER -->
+        <script src="./components/Header/Header.js"></script>
+        <link rel="stylesheet" href="./components/Header/Header.css" />
+
+        <!-- APP -->
+        <script src="./components/App/App.js"></script>
+        <link rel="stylesheet" href="./components/App/App.css" />
+
+        <!-- PRODUCT-TYPES -->
+        <script src="./components/ProductTypes/ProductTypes.js"></script>
+        <link
+            rel="stylesheet"
+            href="./components/ProductTypes/ProductTypes.css"
+        />
+
+        <!-- BASKET -->
+        <script src="./components/Basket/Basket.js"></script>
+        <link rel="stylesheet" href="./components/Basket/Basket.css" />
+
+        <!-- PRODUCT-ITEM -->
+        <script src="./components/ProductItem/ProductItem.js"></script>
+        <link
+            rel="stylesheet"
+            href="./components/ProductItem/ProductItem.css"
+        />
+
+        <!-- FOOTER -->
+        <script src="./components/Footer/Footer.js"></script>
+        <link rel="stylesheet" href="./components/Footer/Footer.css" />
+
+        <!-- <script src="./componentsv2/ProductTypesList/ProductTypesList.js"></script> -->
+
+        <script src="./index.js"></script>
+    </body>
+</html>

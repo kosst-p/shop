@@ -1,0 +1,21 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    // Перед запускам прописать в консоле firefox -start-debugger-server
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach",
+            "type": "firefox",
+            "request": "attach",
+            "url": "http://127.0.0.1:5500",
+            "pathMappings": [
+                {
+                    "url": "http://127.0.0.1:5500",
+                    "path": "${workspaceFolder}components/ProductTypes/ProductTypes.js"
+                }
+            ]
+        }
+    ]
+}

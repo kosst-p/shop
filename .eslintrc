@@ -1,0 +1,36 @@
+{
+    //"extends": "airbnb-base",
+    //"parser": "babel-eslint", // This line is required to fix "unexpected token" errors
+    "env": {
+        "browser": true,
+        "es6": true
+        /*"node": true,
+        "jasmine": true */
+    },
+    "rules": {
+        /*             "indent": [
+                2,
+                4
+            ], */
+        "no-plusplus": [
+            2,
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ], //i++ разрешен только для циклов
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "quotes": ["error", "double"]
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        },
+        "ecmaVersion": 2018
+    }
+}
