@@ -38,7 +38,8 @@ class ProductTypes {
         let parent = document.querySelector("." + this.ulClassName);
         parent.addEventListener("click", event => {
             if (event.target.tagName === "LI") {
-                const type = event.target.getAttribute("data-name");
+                let typeChanged = new Event("typeChanged", { bubbles: true });
+                event.target.dispatchEvent(typeChanged);
                 this.switchActiveClass(event.target, "active-product", parent);
             }
         });

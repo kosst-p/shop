@@ -1,0 +1,36 @@
+class App {
+    constructor(props) {
+        this.ROOT_RIGHT_SIDE = props.ROOT_RIGHT_SIDE;
+        this.fetchData = props.fetchDataCallback;
+        this.getProductsItem = this.getProductsItem.bind(this);
+    }
+
+    async getProductsItem(productType) {
+        this.ROOT_RIGHT_SIDE.innerHTML = "";
+
+        const products = await this.fetchData(productType); // массив с продуктами из api
+
+        const productsItem = products.map((product, index) => {
+            const { name, description, category, image, price, type } = product;
+            return new ProductItem({
+                index,
+                name,
+                description,
+                category,
+                image,
+                price,
+                type,
+                quant: this.quant
+            });
+        });
+        console.log(productsItem);
+
+        productsItem.forEach(element => {
+            element.render().events(); // рендерим, вешаем eventListener'ов
+        });
+    }
+}
+const app = new App({
+    ROOT_RIGHT_SIDE: ROOT_RIGHT_SIDE,
+    fetchDataCallback: request.fetchData
+});
