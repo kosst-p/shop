@@ -7,13 +7,13 @@ const BASKET = document.querySelector(".basket");
 
 // список типов продуктов
 const productsType = [
-    { attribute: "pizza", name: "Пицца" },
-    { attribute: "shaurma", name: "Шаурма" },
-    { attribute: "sandwiches", name: "Сэндвичи" },
-    { attribute: "burgers", name: "Бургеры" },
-    { attribute: "chicken", name: "Курица & Картофель" },
-    { attribute: "salads", name: "Тортилья & Салаты" },
-    { attribute: "drinks", name: "Напитки & Десерты" }
+    { id: 1, attribute: "pizza", name: "Пицца" },
+    { id: 2, attribute: "shaurma", name: "Шаурма" },
+    { id: 3, attribute: "sandwiches", name: "Сэндвичи" },
+    { id: 4, attribute: "burgers", name: "Бургеры" },
+    { id: 5, attribute: "chicken", name: "Курица & Картофель" },
+    { id: 6, attribute: "salads", name: "Тортилья & Салаты" },
+    { id: 7, attribute: "drinks", name: "Напитки & Десерты" }
 ];
 
 // класс Input, render возвращает input

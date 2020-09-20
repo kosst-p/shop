@@ -4,13 +4,13 @@ class FetchApi {
         this.fetchData = this.fetchData.bind(this);
     }
 
-    async fetchData() {
+    async fetchData(typeProduct) {
         try {
             let response = await fetch(this.url);
             if (response.ok) {
                 let data = await response.json();
                 const products = data.menu.filter(product => {
-                    return product;
+                    if (typeProduct === product.category) return product;
                 });
                 return products;
             }
@@ -19,7 +19,4 @@ class FetchApi {
         }
     }
 }
-
 const request = new FetchApi({ URL });
-
-const dataApi = request.fetchData();

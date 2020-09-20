@@ -1,12 +1,15 @@
 class ProductItem {
     constructor(props) {
+        this.dataIndex = props.index;
         this.name = props.name;
         this.description = props.description;
         this.category = props.category;
         this.image = props.image;
         this.price = props.price;
         this.type = props.type;
+        // this.quant = props.quant;
         this.quantity = 1;
+        this.events = this.events.bind(this);
         this.render = this.render.bind(this);
         this.ROOT_RIGHT_SIDE = ROOT_RIGHT_SIDE;
     }
@@ -23,9 +26,61 @@ class ProductItem {
         console.log(this.quantity);
     }
 
+    events() {
+        this.ROOT_RIGHT_SIDE.addEventListener("click", e => {
+            if (
+                e.target.getAttribute("data-atr") === "inBasket" &&
+                e.target.getAttribute("data-index") === this.dataIndex
+            ) {
+                // вызвать ререндер корзины
+            }
+            if (
+                e.target.getAttribute("data-atr") === "increase" &&
+                e.target.getAttribute("data-index") === `data-${this.dataIndex}`
+            ) {
+                this.increaseQuantity();
+                // увеличение на 1
+            }
+            if (
+                e.target.getAttribute("data-atr") === "decrease" &&
+                e.target.getAttribute("data-index") === `data-${this.dataIndex}`
+            ) {
+                this.decreaseQuantity();
+                // уменьшение на 1
+            }
+        });
+    }
+
+    //   getTemplate() {
+    //       return `<div class="item-wrapper index-${this.dataIndex}" data-index=${this.dataIndex} data-name="${this.name}">
+    //     <div class="item-wrapper__img"><img src="data${this.image}" alt="${this.category}"></div>
+    //     <div class="item-wrapper__name">${this.name}</div>
+    //     <div class="item-wrapper__description" data-atr="${this.type}">${this.description}</div>
+    //     <div class="item-wrapper__price">Цена: ${this.price} руб.</div>
+    //     <div class="item-wrapper__count">
+    //         <span>Количество</span>
+    //       <div class="item-count__button">
+    //         <button class="btn-count" data-atr="decrease">
+    //           <i class='fas fa-minus' data-atr='decrease'></i>
+    //         </button>
+    //         <span class="item-count__field">${this.quantity}</span>
+    //         <button class="btn-count" data-atr="increase">
+    //           <i class='fas fa-plus' data-atr='increase'></i>
+    //         </button>
+    //       </div>
+    //       <div class="item-wrapper__inbasket">
+    //         <button class="btn-style basket-btn-add" data-name="${this.name}" data-atr="inBasket">
+    //           В корзину
+    //         </button>
+    //       </div>
+    //     </div>
+    // </div>`;
+    //   }
+
     render() {
         const itemWrapper = document.createElement("div");
         itemWrapper.classList.add("item-wrapper");
+        itemWrapper.setAttribute("data-index", this.dataIndex);
         itemWrapper.setAttribute("data-name", this.name);
         ROOT_RIGHT_SIDE.append(itemWrapper);
 

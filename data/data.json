@@ -16,7 +16,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 1
         },
         {
             "name": "Индейка",
@@ -33,7 +34,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 2
         },
         {
             "name": "Ветчина",
@@ -50,7 +52,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 3
         },
         {
             "name": "Индейка и ветчина",
@@ -67,7 +70,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 4
         },
         {
             "name": "Морепродукты",
@@ -84,7 +88,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 5
         },
         {
             "name": "Тунец",
@@ -101,7 +106,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 6
         },
         {
             "name": "Острый итальянский",
@@ -118,7 +124,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 7
         },
         {
             "name": "Б.М.Т.",
@@ -135,7 +142,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 8
         },
         {
             "name": "Куриная грудка",
@@ -152,7 +160,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 9
         },
         {
             "name": "Ростбиф",
@@ -169,7 +178,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 10
         },
         {
             "name": "Мелт",
@@ -186,7 +196,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 11
         },
         {
             "name": "Курица бекон",
@@ -203,7 +214,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 12
         },
         {
             "name": "Террияки",
@@ -220,7 +232,8 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
-            }
+            },
+            "id": 13
         },
         {
             "name": "Биф Клаб",
@@ -231,7 +244,8 @@
             "market": "subway",
             "type": "multiple",
             "weight": 1,
-            "components": {}
+            "components": {},
+            "id": 14
         },
         {
             "name": "Доп сыр (в бургер)",
@@ -241,7 +255,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 15
         },
         {
             "name": "ФишБургер",
@@ -251,7 +266,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 16
         },
         {
             "name": "Королевский бургер",
@@ -261,7 +277,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 17
         },
         {
             "name": "Дарт Вейдер",
@@ -271,7 +288,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 18
         },
         {
             "name": "Деревенский",
@@ -281,7 +299,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 19
         },
         {
             "name": "Имперский",
@@ -291,7 +310,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 20
         },
         {
             "name": "Вестерн",
@@ -301,7 +321,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 21
         },
         {
             "name": "Премиум",
@@ -311,7 +332,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 22
         },
         {
             "name": "Двойной премиум",
@@ -321,7 +343,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 23
         },
         {
             "name": "Пикантный бургер",
@@ -331,7 +354,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 24
         },
         {
             "name": "Чизбургер с беконом",
@@ -341,7 +365,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 25
         },
         {
             "name": "С куриным филе",
@@ -351,7 +376,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 26
         },
         {
             "name": "Со жгучим куриным филе",
@@ -361,7 +387,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 27
         },
         {
             "name": "Сырный бургер с беконом",
@@ -371,7 +398,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 28
         },
         {
             "name": "Слоппи джо",
@@ -381,7 +409,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 29
         },
         {
             "name": "Пири-пири Бургер",
@@ -391,7 +420,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 30
         },
         {
             "name": "Чизбургер",
@@ -401,7 +431,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 31
         },
         {
             "name": "Гамбургер",
@@ -411,7 +442,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 32
         },
         {
             "name": "Чикенбург",
@@ -421,7 +453,8 @@
             "category": "burgers",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 33
         },
         {
             "name": "Кубит",
@@ -431,7 +464,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 34
         },
         {
             "name": "Ролл с креветкой (3шт)",
@@ -441,7 +475,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 35
         },
         {
             "name": "Овощной салат",
@@ -451,7 +486,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 36
         },
         {
             "name": "Кусок фирменной курицы",
@@ -461,7 +497,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 37
         },
         {
             "name": "Чикен барбекю",
@@ -471,7 +508,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 38
         },
         {
             "name": "Чикен стрипс",
@@ -481,7 +519,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 39
         },
         {
             "name": "Чикен террияки байтс",
@@ -491,7 +530,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 40
         },
         {
             "name": "Пири-пири вингс",
@@ -501,7 +541,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 41
         },
         {
             "name": "Куриная лапша",
@@ -511,7 +552,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 42
         },
         {
             "name": "  6 Острых   крылышек Hot'n'Flakey",
@@ -521,7 +563,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 43
         },
         {
             "name": "12 Острых крылышек Hot'n'Flakey",
@@ -531,7 +574,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 44
         },
         {
             "name": "24 Острых крылышек Hot'n'Flakey",
@@ -541,7 +585,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 45
         },
         {
             "name": "Маленькая картошка",
@@ -551,7 +596,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 46
         },
         {
             "name": "Большая картошка",
@@ -561,7 +607,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 47
         },
         {
             "name": "Картошка 'по-английски'",
@@ -571,7 +618,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 48
         },
         {
             "name": "Картофельные драники'",
@@ -581,7 +629,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 49
         },
         {
             "name": "Соус сырный (порц)",
@@ -591,7 +640,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 50
         },
         {
             "name": "Соус чесночный (порц)",
@@ -601,7 +651,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 51
         },
         {
             "name": "Соус карри (порц)",
@@ -611,7 +662,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 52
         },
         {
             "name": "Соус кисло-сладкий (порц)",
@@ -621,7 +673,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 53
         },
         {
             "name": "Соус горчичный (порц)",
@@ -631,7 +684,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 54
         },
         {
             "name": "Соус сальса (порц)",
@@ -641,7 +695,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 55
         },
         {
             "name": "Соус барбекью (порц)",
@@ -651,7 +706,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 56
         },
         {
             "name": "Соус томатный кетчуп (порц)",
@@ -661,7 +717,8 @@
             "category": "chicken",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 57
         },
         {
             "name": "Цезарь",
@@ -671,7 +728,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 58
         },
         {
             "name": "Лукошко",
@@ -681,7 +739,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 59
         },
         {
             "name": "Салат с тунцом",
@@ -691,7 +750,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 60
         },
         {
             "name": "Курица с яблоком и апельсином",
@@ -701,7 +761,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 61
         },
         {
             "name": "Курица с грецким орехом и черносливом",
@@ -711,7 +772,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 62
         },
         {
             "name": "Салат греческий",
@@ -721,7 +783,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 63
         },
         {
             "name": "Мини-тортилья",
@@ -731,7 +794,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 64
         },
         {
             "name": "Тортилья SFC",
@@ -741,7 +805,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 65
         },
         {
             "name": "Тортилья пири-пири",
@@ -751,7 +816,8 @@
             "category": "salads",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 66
         },
         {
             "name": "Pepsi 1,25",
@@ -761,7 +827,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 67
         },
         {
             "name": "Маффин",
@@ -771,7 +838,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 68
         },
         {
             "name": "Pepsi 0,6",
@@ -781,7 +849,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 69
         },
         {
             "name": "Mirinda 0,6",
@@ -791,7 +860,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 70
         },
         {
             "name": "7up 0,6",
@@ -801,7 +871,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 71
         },
         {
             "name": "Mountain dew 0,6",
@@ -811,7 +882,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 72
         },
         {
             "name": "Кленовый пекан",
@@ -821,7 +893,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 73
         },
         {
             "name": "Сок",
@@ -831,7 +904,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 74
         },
         {
             "name": "Чай Lipton",
@@ -841,7 +915,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 75
         },
         {
             "name": "Аква Минерале (без газа)",
@@ -851,7 +926,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 76
         },
         {
             "name": "Аква Минерале (Газ)",
@@ -861,7 +937,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 77
         },
         {
             "name": "Адреналин раш",
@@ -871,7 +948,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 78
         },
         {
             "name": "Кукис",
@@ -881,7 +959,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 79
         },
         {
             "name": "Брюссельская вафля",
@@ -891,7 +970,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 80
         },
         {
             "name": "Круассан",
@@ -901,7 +981,8 @@
             "category": "drinks",
             "market": "subway",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 81
         },
         {
             "name": "Pepsi",
@@ -912,11 +993,8 @@
             "market": "subway",
             "type": "options",
             "weight": 1,
-            "volumes": {
-                "S": 50,
-                "M": 58,
-                "L": 85
-            }
+            "volumes": { "S": 50, "M": 58, "L": 85 },
+            "id": 82
         },
         {
             "name": "Вегетарианская 35см",
@@ -926,7 +1004,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 83
         },
         {
             "name": "Pizza Spot (фирм) 35см",
@@ -936,7 +1015,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 84
         },
         {
             "name": "Маргарита 35см",
@@ -946,7 +1026,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 85
         },
         {
             "name": "Грибная 35см",
@@ -956,7 +1037,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 86
         },
         {
             "name": "Баварская 35см",
@@ -966,7 +1048,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 87
         },
         {
             "name": "Пепперони 35см",
@@ -976,7 +1059,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 88
         },
         {
             "name": "Четыре Сыра Кватро Формаджио 35см",
@@ -986,7 +1070,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 89
         },
         {
             "name": "Куриная 35см",
@@ -996,7 +1081,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 90
         },
         {
             "name": "Ветчина с грибами 35см",
@@ -1006,7 +1092,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 91
         },
         {
             "name": "Морская 35см",
@@ -1016,7 +1103,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 92
         },
         {
             "name": "Сицилийская (ОСТРАЯ) 35см",
@@ -1026,7 +1114,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 93
         },
         {
             "name": "Гавайская 35см",
@@ -1036,7 +1125,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 94
         },
         {
             "name": "Карбонара 35см",
@@ -1046,7 +1136,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 95
         },
         {
             "name": "Мясная 35см",
@@ -1056,7 +1147,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 96
         },
         {
             "name": "Четыре Сезона Кватро Стаджиони 35см",
@@ -1066,7 +1158,8 @@
             "category": "pizza",
             "market": "",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 97
         },
         {
             "name": "Доп сыр (в шаурму)",
@@ -1076,7 +1169,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 98
         },
         {
             "name": "Буррито с говядиной (ОСТР)",
@@ -1086,7 +1180,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 99
         },
         {
             "name": "Буррито с курицей (остр)",
@@ -1096,7 +1191,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 100
         },
         {
             "name": "Фахитос с курицей",
@@ -1106,7 +1202,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 101
         },
         {
             "name": "Фахитос с говядиной",
@@ -1116,7 +1213,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 102
         },
         {
             "name": "Шаурма c курицей",
@@ -1126,7 +1224,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 103
         },
         {
             "name": "Шаурма c говядиной",
@@ -1136,7 +1235,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 104
         },
         {
             "name": "Мини-шаурма c курицей",
@@ -1146,7 +1246,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 105
         },
         {
             "name": "Мини-шаурма c говядиной",
@@ -1156,7 +1257,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 106
         },
         {
             "name": "Свинина с овощами в соусе тайчили",
@@ -1166,7 +1268,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 107
         },
         {
             "name": "Курица с овощами в соусе терияки",
@@ -1176,7 +1279,8 @@
             "category": "shaurma",
             "market": "doner",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 108
         }
     ],
     "fillings": {
@@ -1184,167 +1288,169 @@
             "name": "Бекон",
             "description": "(3-4 кусочка)",
             "price": 35,
-            "image": "/i/ingredients/products/bacon.png"
+            "image": "/i/ingredients/products/bacon.png",
+            "id": 1
         },
         "bmt": {
             "name": "БМТ",
             "description": "",
             "price": 60,
-            "image": "/i/ingredients/products/bmt.png"
+            "image": "/i/ingredients/products/bmt.png",
+            "id": 2
         },
         "cheese": {
             "name": "Сыр",
             "description": "(2 треугольника)",
             "price": 20,
-            "image": "/i/ingredients/products/cheese.png"
+            "image": "/i/ingredients/products/cheese.png",
+            "id": 3
         },
         "moc": {
             "name": "Моцарелла",
             "description": "(1 скуп)",
             "price": 20,
-            "image": "/i/ingredients/products/moc.png"
+            "image": "/i/ingredients/products/moc.png",
+            "id": 4
         },
         "chicken-breast": {
             "name": "Куриная грудка",
             "description": "",
             "price": 60,
-            "image": "/i/ingredients/products/chicken-breast.png"
+            "image": "/i/ingredients/products/chicken-breast.png",
+            "id": 5
         },
         "chicken-teriyaki": {
             "name": "Курица Терияки",
             "description": "",
             "price": 65,
-            "image": "/i/ingredients/products/chicken-teriyaki.png"
+            "image": "/i/ingredients/products/chicken-teriyaki.png",
+            "id": 6
         },
         "ham": {
             "name": "Ветчина",
             "description": "(4 кусочка)",
             "price": 45,
-            "image": "/i/ingredients/products/ham.png"
+            "image": "/i/ingredients/products/ham.png",
+            "id": 7
         },
         "melt": {
             "name": "Мелт",
             "description": "",
             "price": 70,
-            "image": "/i/ingredients/products/melt.png"
+            "image": "/i/ingredients/products/melt.png",
+            "id": 8
         },
         "mushrooms": {
             "name": "Грибы",
             "description": "(2 скупа)",
             "price": 50,
-            "image": "/i/ingredients/products/mushrooms.png"
+            "image": "/i/ingredients/products/mushrooms.png",
+            "id": 9
         },
         "omelet": {
             "name": "Омлет",
             "description": "",
             "price": 50,
-            "image": "/i/ingredients/products/omelet.png"
+            "image": "/i/ingredients/products/omelet.png",
+            "id": 10
         },
         "pepperoni": {
             "name": "Пепперони",
             "description": "(3 кусочка)",
             "price": 40,
-            "image": "/i/ingredients/products/pepperoni.png"
+            "image": "/i/ingredients/products/pepperoni.png",
+            "id": 11
         },
         "pork-bbq": {
             "name": "Свинина Барбекю",
             "description": "",
             "price": 65,
-            "image": "/i/ingredients/products/pork-bbq.png"
+            "image": "/i/ingredients/products/pork-bbq.png",
+            "id": 12
         },
         "roast": {
             "name": "Ростбиф",
             "description": "(2-3 кусочка)",
             "price": 55,
-            "image": "/i/ingredients/products/roast.png"
+            "image": "/i/ingredients/products/roast.png",
+            "id": 13
         },
         "salami": {
             "name": "Салями",
             "description": "(4 кусочка)",
             "price": 40,
-            "image": "/i/ingredients/products/salami.png"
+            "image": "/i/ingredients/products/salami.png",
+            "id": 14
         },
         "seafood": {
             "name": "Морепродукты",
             "description": "(2 скупа)",
             "price": 45,
-            "image": "/i/ingredients/products/seafood.png"
+            "image": "/i/ingredients/products/seafood.png",
+            "id": 15
         },
         "spicy-italian": {
             "name": "Острый итальянский",
             "description": "",
             "price": 60,
-            "image": "/i/ingredients/products/spicy-italian.png"
+            "image": "/i/ingredients/products/spicy-italian.png",
+            "id": 16
         },
         "subway-club": {
             "name": "Сабвэй Клаб",
             "description": "",
             "price": 70,
-            "image": "/i/ingredients/products/subway-club.png"
+            "image": "/i/ingredients/products/subway-club.png",
+            "id": 17
         },
         "tuna": {
             "name": "Тунец",
             "description": "(2 скупа)",
             "price": 55,
-            "image": "/i/ingredients/products/tuna.png"
+            "image": "/i/ingredients/products/tuna.png",
+            "id": 18
         },
         "turkey": {
             "name": "Индейка",
             "description": "(3 кусочка)",
             "price": 45,
-            "image": "/i/ingredients/products/turkey.png"
+            "image": "/i/ingredients/products/turkey.png",
+            "id": 19
         },
         "turkey-ham": {
             "name": "Индейка и ветчина",
             "description": "(2/2 кусочка)",
             "price": 45,
-            "image": "/i/ingredients/products/turkey-ham.png"
+            "image": "/i/ingredients/products/turkey-ham.png",
+            "id": 20
         }
     },
     "volumes": {
-        "S": {
-            "name": "0.4 Л",
-            "short_name": "0.4"
-        },
-        "M": {
-            "name": "0.5 Л",
-            "short_name": "0.5"
-        },
-        "L": {
-            "name": "0.8 Л",
-            "short_name": "0.8"
-        },
-        "cheese": {
-            "name": "сырный",
-            "short_name": "сырный"
-        },
-        "garlic": {
-            "name": "чесночный",
-            "short_name": "чесночный"
-        },
+        "S": { "name": "0.4 Л", "short_name": "0.4", "id": 1 },
+        "M": { "name": "0.5 Л", "short_name": "0.5", "id": 2 },
+        "L": { "name": "0.8 Л", "short_name": "0.8", "id": 3 },
+        "cheese": { "name": "сырный", "short_name": "сырный", "id": 4 },
+        "garlic": { "name": "чесночный", "short_name": "чесночный", "id": 5 },
         "sweet-and-sour": {
             "name": "кисло-сладкий",
-            "short_name": "кисло-сладкий"
+            "short_name": "кисло-сладкий",
+            "id": 6
         },
-        "curry": {
-            "name": "карри",
-            "short_name": "карри"
-        },
-        "bbq": {
-            "name": "барбекю",
-            "short_name": "барбекю"
-        }
+        "curry": { "name": "карри", "short_name": "карри", "id": 7 },
+        "bbq": { "name": "барбекю", "short_name": "барбекю", "id": 8 }
     },
     "sizes": {
         "1x": {
             "name": "15 См",
             "price": 60,
-            "image": "/i/sizes/1x.jpg"
+            "image": "/i/sizes/1x.jpg",
+            "id": 1
         },
         "2x": {
             "name": "30 См",
             "price": 110,
-            "image": "/i/sizes/2x.jpg"
+            "image": "/i/sizes/2x.jpg",
+            "id": 2
         }
     },
     "breads": {
@@ -1352,31 +1458,36 @@
             "name": "Белый итальянский",
             "description": "",
             "price": 0,
-            "image": "/i/bread/white-italian.png"
+            "image": "/i/bread/white-italian.png",
+            "id": 1
         },
         "white-sesame": {
             "name": "Белый с кунжутом",
             "description": "",
             "price": 0,
-            "image": "/i/bread/white-sesame.png"
+            "image": "/i/bread/white-sesame.png",
+            "id": 2
         },
         "oregano-parmesan": {
             "name": "Орегано-пармезан",
             "description": "",
             "price": 0,
-            "image": "/i/bread/oregano-parmesan.png"
+            "image": "/i/bread/oregano-parmesan.png",
+            "id": 3
         },
         "grey": {
             "name": "Серый",
             "description": "",
             "price": 0,
-            "image": "/i/bread/unknown_1.png"
+            "image": "/i/bread/unknown_1.png",
+            "id": 4
         },
         "grey-with-cereal": {
             "name": "Серый с овсяными хлопьями",
             "description": "",
             "price": 0,
-            "image": "/i/bread/grey-with-cereal.png"
+            "image": "/i/bread/grey-with-cereal.png",
+            "id": 5
         }
     },
     "vegetables": {
@@ -1384,43 +1495,50 @@
             "name": "Пекинская капуста",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/pekinka.png"
+            "image": "/i/ingredients/vegetables/pekinka.png",
+            "id": 1
         },
         "tomato": {
             "name": "Помидор",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/tomato.png"
+            "image": "/i/ingredients/vegetables/tomato.png",
+            "id": 2
         },
         "pickled-cucumber": {
             "name": "Соленый огурец",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/pickled-cucumber.png"
+            "image": "/i/ingredients/vegetables/pickled-cucumber.png",
+            "id": 3
         },
         "onion-purple": {
             "name": "Красный лук",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/onion-purple.png"
+            "image": "/i/ingredients/vegetables/onion-purple.png",
+            "id": 4
         },
         "green-peppers-bulgarian": {
             "name": "Болгарский перец",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/green-peppers-bulgarian.png"
+            "image": "/i/ingredients/vegetables/green-peppers-bulgarian.png",
+            "id": 5
         },
         "olives": {
             "name": "Маслины",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/olives.png"
+            "image": "/i/ingredients/vegetables/olives.png",
+            "id": 6
         },
         "pepper-hapapeno": {
             "name": "Острый перец Халапеньо",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/vegetables/pepper-hapapeno.png"
+            "image": "/i/ingredients/vegetables/pepper-hapapeno.png",
+            "id": 7
         }
     },
     "sauces": {
@@ -1428,93 +1546,109 @@
             "name": "1000 Островов",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/1000-islands.png"
+            "image": "/i/ingredients/sauces/1000-islands.png",
+            "id": 1
         },
         "bbq": {
             "name": "Барбекю",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/bbq.png"
+            "image": "/i/ingredients/sauces/bbq.png",
+            "id": 2
         },
         "cheese": {
             "name": "Сырный",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/cheese.png"
+            "image": "/i/ingredients/sauces/cheese.png",
+            "id": 3
         },
         "chipotle": {
             "name": "Чиппотл",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/chipotle.png"
+            "image": "/i/ingredients/sauces/chipotle.png",
+            "id": 4
         },
         "garlic": {
             "name": "Чесночный",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/garlic.png"
+            "image": "/i/ingredients/sauces/garlic.png",
+            "id": 5
         },
         "mayonnaise": {
             "name": "Майонез",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/mayonnaise.png"
+            "image": "/i/ingredients/sauces/mayonnaise.png",
+            "id": 6
         },
         "mustard": {
             "name": "Горчица",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/mustard.png"
+            "image": "/i/ingredients/sauces/mustard.png",
+            "id": 7
         },
         "mustard-and-honey": {
             "name": "Горчица медовая",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/mustard-and-honey.png"
+            "image": "/i/ingredients/sauces/mustard-and-honey.png",
+            "id": 8
         },
         "olive-oil": {
             "name": "Оливковое масло",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/olive-oil.png"
+            "image": "/i/ingredients/sauces/olive-oil.png",
+            "id": 9
         },
         "spicy-ketchup": {
             "name": "Острый кетчуп",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/spicy-ketchup.png"
+            "image": "/i/ingredients/sauces/spicy-ketchup.png",
+            "id": 10
         },
         "sweet-and-sour": {
             "name": "Кисло-сладкий",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/sweet-and-sour.png"
+            "image": "/i/ingredients/sauces/sweet-and-sour.png",
+            "id": 11
         },
         "sweet-onion": {
             "name": "Сладкий лук",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/sweet-onion.png"
+            "image": "/i/ingredients/sauces/sweet-onion.png",
+            "id": 12
         },
         "wine-vinegar": {
             "name": "Винный уксус",
             "description": "",
             "price": 0,
-            "image": "/i/ingredients/sauces/wine-vinegar.png"
+            "image": "/i/ingredients/sauces/wine-vinegar.png",
+            "id": 13
         }
     },
     "markets": {
         "subway": {
             "name": "Subway",
-            "image": "/i/markets/subway_logo.png"
+            "image": "/i/markets/subway_logo.png",
+            "id": 1
         },
         "sfc": {
             "name": "South Fried Chicke",
-            "image": "/i/markets/south_fried_chicken.png"
+            "image": "/i/markets/south_fried_chicken.png",
+            "id": 2
         },
         "doner": {
             "name": "Донер Кебаб",
-            "image": "/i/markets/doner.png"
+            "image": "/i/markets/doner.png",
+            "id": 3
         }
     }
 }

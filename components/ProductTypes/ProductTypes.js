@@ -38,8 +38,10 @@ class ProductTypes {
         let parent = document.querySelector("." + this.ulClassName);
         parent.addEventListener("click", event => {
             if (event.target.tagName === "LI") {
-                let typeChanged = new Event("typeChanged", { bubbles: true });
-                event.target.dispatchEvent(typeChanged);
+                let typeChanged = new CustomEvent("typeChanged", {
+                    bubbles: true
+                });
+                event.target.dispatchEvent(typeChanged); // запускаем созданное событие на элементе на элементе
                 this.switchActiveClass(event.target, "active-product", parent);
             }
         });
