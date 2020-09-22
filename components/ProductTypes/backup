@@ -2,58 +2,43 @@ class ProductTypes {
     constructor(props) {
         this.parentDOM = props.parentDOM;
         this.productsArray = props.productsArray;
-        this.activeType = props.activeType;
         this.ulClassName = props.ulClassName;
-        this.getProductsItem = props.getProductsItemCallback; // функция из App
     }
 
     // создание ul
     createList() {
-        let ul = document.createElement("ul");
+        const ul = document.createElement("ul");
         ul.classList.add(this.ulClassName);
         this.parentDOM.appendChild(ul); // добавил в DOM
     }
 
     // создание li и добавление в ul
     createListItems() {
-        let parent = document.querySelector("." + this.ulClassName);
+        const parent = document.querySelector("." + this.ulClassName);
         this.productsArray.map(item => {
-            const { attribute, name } = item;
+            const { id, type, name } = item;
             let li = document.createElement("li");
-            if (attribute === this.activeType) {
-                li.setAttribute("data-name", attribute);
-                li.setAttribute("data-default", this.activeType);
-                li.textContent = name;
-                li.classList.add("active-product");
-                parent.appendChild(li); // добавил в ul
-            } else {
-                li.textContent = name;
-                li.setAttribute("data-name", attribute);
-                parent.appendChild(li); // добавил в ul
-            }
+            li.setAttribute("data-id", id);
+            parent.appendChild(li); // добавил в ul
+            li.textContent = name;
+            li.addEventListener("click", e => {
+                this.changeProductTypeByClick(e);
+            });
         });
     }
 
-    userEvent() {
-        const myEvent = new CustomEvent("getProduct", { bubbles: true });
+    // // событие клика на li с сменой
+    changeProductTypeByClick(event) {
         let parent = document.querySelector("." + this.ulClassName);
-        parent.dispatchEvent(myEvent);
-    }
-
-    // событие клика на li с сменой
-    changeProductTypeByClick() {
-        let parent = document.querySelector("." + this.ulClassName);
-        parent.addEventListener("click", async event => {
-            if (event.target.tagName === "LI") {
-                const type = event.target.getAttribute("data-name");
-                this.switchActiveClass(event.target, "active-product", parent);
-            }
+        this.switchActiveClass(event.target, "active-product", parent);
+        // пользовательское событие
+        let typeChanged = new CustomEvent("typeChanged", {
+            bubbles: true,
+            detail: { id: event.target.getAttribute("data-id") }
         });
-    }
-
-    // при первой загрузке страницы вызовется функция
-    firstLoadProductType() {
-        this.getProductsItem(this.activeType);
+        // запускаем созданное событие на элементе
+        app.onTypeChanged(); // ? вызов из App
+        event.target.dispatchEvent(typeChanged);
     }
 
     // смена активного класса
@@ -69,17 +54,22 @@ class ProductTypes {
     }
 
     render() {
-        this.createList(); // ?
-        this.createListItems(); // ?
-        // this.firstLoadProductType(); // ?
-        this.changeProductTypeByClick(); // ?
+        this.addEventListeners("test1", "test1");
+        this.addEventListeners("test2", "test2");
+        this.addEventListeners("test3", "test3");
+        this.addEventListeners("test4", "test4");
+        this.addEventListeners("test4", "test6");
+        this.addEventListeners("test4", "test5");
+        this.fireEvent("test12");
+        // console.log(this.listeners);
+        this.createList();
+        this.createListItems();
     }
 }
 
 const productTypesList = new ProductTypes({
     parentDOM: ROOT_PRODUCT_TYPES,
     productsArray: productsType,
-    activeType: "sandwiches",
     ulClassName: "menu-list"
 });
 

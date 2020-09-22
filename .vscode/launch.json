@@ -13,7 +13,7 @@
             "pathMappings": [
                 {
                     "url": "http://127.0.0.1:5500",
-                    "path": "${workspaceFolder}components/ProductTypes/ProductTypes.js"
+                    "path": "${workspaceFolder}"
                 }
             ]
         }

@@ -1,17 +1,14 @@
 class FetchApi {
-    constructor(props) {
-        this.url = props.URL;
+    constructor() {
         this.fetchData = this.fetchData.bind(this);
     }
 
-    async fetchData() {
+    static async fetchDataProducts(url) {
         try {
-            let response = await fetch(this.url);
+            let response = await fetch(url);
             if (response.ok) {
                 let data = await response.json();
-                const products = data.menu.filter(product => {
-                    return product;
-                });
+                const products = data.menu;
                 return products;
             }
         } catch (error) {
@@ -19,7 +16,3 @@ class FetchApi {
         }
     }
 }
-
-const request = new FetchApi({ URL });
-
-const dataApi = request.fetchData();

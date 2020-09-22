@@ -2,54 +2,36 @@ class ProductTypes {
     constructor(props) {
         this.parentDOM = props.parentDOM;
         this.productsArray = props.productsArray;
-        this.activeType = props.activeType;
         this.ulClassName = props.ulClassName;
     }
 
     // создание ul
     createList() {
-        let ul = document.createElement("ul");
+        const ul = document.createElement("ul");
         ul.classList.add(this.ulClassName);
         this.parentDOM.appendChild(ul); // добавил в DOM
     }
 
     // создание li и добавление в ul
     createListItems() {
-        let parent = document.querySelector("." + this.ulClassName);
+        const parent = document.querySelector("." + this.ulClassName);
         this.productsArray.map(item => {
-            const { attribute, name } = item;
+            const { id, name } = item;
             let li = document.createElement("li");
-            if (attribute === this.activeType) {
-                li.setAttribute("data-name", attribute);
-                li.setAttribute("data-default", this.activeType);
-                li.textContent = name;
-                li.classList.add("active-product");
-                parent.appendChild(li); // добавил в ul
-            } else {
-                li.textContent = name;
-                li.setAttribute("data-name", attribute);
-                parent.appendChild(li); // добавил в ul
-            }
+            li.setAttribute("data-id", id);
+            parent.appendChild(li); // добавил в ul
+            li.textContent = name;
+            li.addEventListener("click", event => {
+                this.changeProductTypeByClick(event, id); // id t
+            });
         });
     }
 
-    // событие клика на li с сменой
-    changeProductTypeByClick() {
+    // событие клика на li с сменой активного класса
+    changeProductTypeByClick(event, id) {
         let parent = document.querySelector("." + this.ulClassName);
-        parent.addEventListener("click", event => {
-            if (event.target.tagName === "LI") {
-                let typeChanged = new CustomEvent("typeChanged", {
-                    bubbles: true
-                });
-                event.target.dispatchEvent(typeChanged); // запускаем созданное событие на элементе на элементе
-                this.switchActiveClass(event.target, "active-product", parent);
-            }
-        });
-    }
-
-    // при первой загрузке страницы вызовется функция
-    firstLoadProductType() {
-        this.getProductsItem(this.activeType);
+        this.switchActiveClass(event.target, "active-product", parent);
+        pubSub.fireEvent("typeChanged", { id: id });
     }
 
     // смена активного класса
@@ -65,17 +47,14 @@ class ProductTypes {
     }
 
     render() {
-        this.createList(); // ?
-        this.createListItems(); // ?
-        // this.firstLoadProductType(); // ?
-        this.changeProductTypeByClick(); // ?
+        this.createList();
+        this.createListItems();
     }
 }
 
 const productTypesList = new ProductTypes({
-    parentDOM: ROOT_PRODUCT_TYPES,
+    parentDOM: ROOT_PRODUCT_TYPES, // в какой родительский враппер вставляем контент
     productsArray: productsType,
-    activeType: "sandwiches",
     ulClassName: "menu-list"
 });
 
