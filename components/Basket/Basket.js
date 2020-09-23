@@ -2,31 +2,14 @@ class Basket {
     constructor(props) {
         this.parentDOM = props.parentDOM;
         this.basketFromLocalStorage = localStorageUtil.getDataFromLocalStorage(); // для начальной загрузки
-        pubSub.subscribeByEvent("inBasket", this.render.bind(this));
-    }
-
-    createContent() {
-        const basketFromLS = localStorageUtil.getDataFromLocalStorage();
-        const basketContent = document.querySelector(".basket-content");
-        basketFromLS.forEach(item => {
-            const basketContentItem = document.createElement("div");
-            basketContentItem.classList.add("basket-content__items");
-            const divName = document.createElement("div");
-            divName.textContent = item.name;
-            basketContentItem.prepend(divName);
-            const divCount = document.createElement("div");
-            divCount.textContent = item.quantity;
-            divName.after(divCount);
-
-            const divBtnDelete = document.createElement("div");
-            const btnDelete = document.createElement("button");
-            btnDelete.classList.add("btn-delete-goods");
-            btnDelete.textContent = "x";
-            divBtnDelete.prepend(btnDelete);
-            divCount.after(divBtnDelete);
-
-            basketContent.append(basketContentItem); // !
-        });
+        pubSub.subscribeByEvent(
+            "addProductInBasket",
+            this.renderBasketItems.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "deleteProductFromBasket",
+            this.renderBasketItems.bind(this)
+        );
     }
 
     createBasket() {
@@ -75,10 +58,24 @@ class Basket {
         return basket;
     }
 
-    render() {
+    renderBasketItems() {
+        const basketFromLS = localStorageUtil.getDataFromLocalStorage();
+        const basketContent = document.querySelector(".basket-content");
+        basketContent.innerHTML = "";
+        const basketContentItems = basketFromLS.map(element => {
+            const { id, name, quantity } = element;
+            return new BasketItem({ id, name, quantity });
+        });
+
+        basketContentItems.reduce((acc, child) => {
+            acc.append(child.render());
+            return acc;
+        }, basketContent); // рендер содержимого корзины
+    }
+
+    renderBasket() {
         this.parentDOM.innerHTML = "";
         this.parentDOM.appendChild(this.createBasket());
-        this.createContent();
     }
 }
 
@@ -86,4 +83,5 @@ const basket = new Basket({
     parentDOM: BASKET
 });
 
-basket.render();
+basket.renderBasket();
+basket.renderBasketItems();

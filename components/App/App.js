@@ -3,26 +3,43 @@ class App {
         this.ROOT_RIGHT_SIDE = props.ROOT_RIGHT_SIDE;
         this.productsArray = props.productsArray;
         pubSub.subscribeByEvent("typeChanged", this.onTypeChanged.bind(this));
-        pubSub.subscribeByEvent("inBasket", this.checkProdInLS.bind(this));
+        pubSub.subscribeByEvent(
+            "addProductInBasket",
+            this.addToBasket.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "deleteProductFromBasket",
+            this.deleteFromBasket.bind(this)
+        );
     }
 
-    checkProdInLS(data) {
-        const basketFromLS = localStorageUtil.getDataFromLocalStorage();
+    addToBasket(product) {
+        const basket = localStorageUtil.getDataFromLocalStorage();
 
         let found = false; // флаг проверки добавления
-        for (let i = 0; i < basketFromLS.length; i++) {
-            if (basketFromLS[i].id === data.id) {
-                basketFromLS[i].quantity += data.quantity;
-                basketFromLS[i].total += data.quantity * data.price;
+        for (let i = 0; i < basket.length; i++) {
+            if (basket[i].id === product.id) {
+                basket[i].quantity += product.quantity;
+                basket[i].total += product.quantity * product.price;
                 found = true; // нашли искомый элемент и обновили его, изменили флаг
                 break;
             }
         }
         // если не нашли, добавляем новый элемент
         if (!found) {
-            basketFromLS.push(data);
+            basket.push(product);
         }
-        localStorageUtil.putDataToLocalStorage(basketFromLS);
+        localStorageUtil.putDataToLocalStorage(basket);
+    }
+
+    deleteFromBasket(id) {
+        const basket = localStorageUtil.getDataFromLocalStorage();
+        const updBasket = basket.filter(item => {
+            if (item.id !== id) {
+                return item;
+            }
+        });
+        localStorageUtil.putDataToLocalStorage(updBasket);
     }
 
     async onTypeChanged(params) {
@@ -69,12 +86,12 @@ class App {
             });
 
         filteredProducts.reduce((acc, child) => {
-            acc.appendChild(child.render());
+            acc.append(child.render());
             return acc;
         }, this.ROOT_RIGHT_SIDE); // рендер карточек
     }
 
-    async firstPageLoading() {
+    async startLoadingProducts() {
         const products = await FetchApi.fetchDataProducts(URL);
         const markets = await FetchApi.fetchDataMarkets(URL);
 
@@ -103,7 +120,7 @@ class App {
         });
 
         allProducts.reduce((acc, child) => {
-            acc.appendChild(child.render());
+            acc.append(child.render());
             return acc;
         }, this.ROOT_RIGHT_SIDE); // рендер карточек
     }
@@ -114,4 +131,4 @@ const app = new App({
     productsArray: productsType
 });
 
-app.firstPageLoading();
+app.startLoadingProducts();

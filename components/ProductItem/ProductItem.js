@@ -23,7 +23,7 @@ class ProductItem {
             total: this.quantity * this.price
         };
         // localStorageUtil.putDataToLocalStorage(product);
-        pubSub.fireEvent("inBasket", product); // пользовательское событие
+        pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
     }
 
     increaseQuantity() {

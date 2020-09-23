@@ -101,6 +101,12 @@ body {
     justify-content: space-between;
     border-bottom: 2px solid #eead17;
     padding: 10px;
+    align-content: center;
+    text-align: center;
+}
+
+.basket-content__items > div {
+    width: 150px;
 }
 .basket-btn-wrapper {
     text-align: center;
