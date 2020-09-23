@@ -1,10 +1,10 @@
 class LocalStorageUtil {
-    constructor(keyName) {
-        this.keyName = keyName;
+    constructor() {
+        this.keyName = "basket";
     }
 
-    putDataToLocalStorage() {
-        localStorage.setItem(this.keyName, JSON.stringify(id));
+    putDataToLocalStorage(data) {
+        localStorage.setItem(this.keyName, JSON.stringify(data));
     }
 
     getDataFromLocalStorage() {
@@ -15,3 +15,4 @@ class LocalStorageUtil {
         return [];
     }
 }
+const localStorageUtil = new LocalStorageUtil();

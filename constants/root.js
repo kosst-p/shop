@@ -3,7 +3,7 @@ const URL = "../data/data.json";
 const APP = document.querySelector(".app");
 const ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
 const ROOT_RIGHT_SIDE = document.querySelector(".right-side");
-const BASKET = document.querySelector(".basket");
+const BASKET = document.querySelector(".basket-wrapper");
 
 // список типов продуктов
 const productsType = [

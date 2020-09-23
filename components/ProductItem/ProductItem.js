@@ -1,6 +1,7 @@
 class ProductItem {
     constructor(props) {
         this.id = props.id;
+        this.marketImg = props.marketImg;
         this.name = props.name;
         this.description = props.description;
         this.category = props.category;
@@ -14,8 +15,15 @@ class ProductItem {
     }
 
     addInBasket() {
-        console.log(`товар с id=${this.id} добавлен в корзину`);
-        // свое событие, ловить потом в app и добавлять в корзину
+        const product = {
+            id: this.id,
+            name: this.name,
+            price: this.price,
+            quantity: this.quantity,
+            total: this.quantity * this.price
+        };
+        // localStorageUtil.putDataToLocalStorage(product);
+        pubSub.fireEvent("inBasket", product); // пользовательское событие
     }
 
     increaseQuantity() {
@@ -36,15 +44,23 @@ class ProductItem {
 
     render() {
         /* Create item */
+
         const itemWrapper = document.createElement("div");
         itemWrapper.classList.add("item-wrapper");
         itemWrapper.setAttribute("id", this.id);
+        const marketImgWrapper = document.createElement("div");
+        marketImgWrapper.classList.add("item-wrapper__img-market");
+        const imgMarket = document.createElement("img");
+        imgMarket.setAttribute("src", `data${this.marketImg}`);
+        marketImgWrapper.prepend(imgMarket);
+        itemWrapper.prepend(marketImgWrapper);
         const itemImgWrapper = document.createElement("div");
         itemImgWrapper.classList.add("item-wrapper__img");
         const img = document.createElement("img");
         img.setAttribute("src", `data${this.image}`);
         itemImgWrapper.prepend(img);
         itemWrapper.prepend(itemImgWrapper);
+        marketImgWrapper.after(itemImgWrapper);
         const nameWrapper = document.createElement("div");
         nameWrapper.classList.add("item-wrapper__name");
         nameWrapper.textContent = this.name;

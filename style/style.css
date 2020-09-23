@@ -63,7 +63,7 @@ body {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
-.basket {
+.basket-wrapper {
     border-radius: 15px;
     background-color: #f8df3e;
     -webkit-box-shadow: 0px 0px 47px -18px rgba(0, 0, 0, 0.75);
