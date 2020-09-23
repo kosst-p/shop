@@ -22,13 +22,12 @@ class ProductItem {
             quantity: this.quantity,
             total: this.quantity * this.price
         };
-        // localStorageUtil.putDataToLocalStorage(product);
+
         pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
     }
 
     increaseQuantity() {
         this.quantity = this.quantity + 1;
-        console.log(this.quantity);
         const parent = document.getElementById(this.id);
         parent.replaceWith(this.render());
     }
@@ -39,12 +38,14 @@ class ProductItem {
             const parent = document.getElementById(this.id);
             parent.replaceWith(this.render());
         }
-        console.log(this.quantity);
+    }
+
+    openModal() {
+        MODAL_WINDOW.classList.add("open");
     }
 
     render() {
         /* Create item */
-
         const itemWrapper = document.createElement("div");
         itemWrapper.classList.add("item-wrapper");
         itemWrapper.setAttribute("id", this.id);
@@ -66,6 +67,17 @@ class ProductItem {
         nameWrapper.textContent = this.name;
         itemImgWrapper.after(nameWrapper);
         const descrWrapper = document.createElement("div");
+
+        if (this.type === "single") {
+            descrWrapper.classList.add("single");
+        }
+        if (this.type === "multiple") {
+            descrWrapper.classList.add("multiple");
+            descrWrapper.addEventListener("click", e => {
+                console.log("modal open");
+                this.openModal();
+            });
+        }
         descrWrapper.classList.add("item-wrapper__description");
         descrWrapper.setAttribute("data-atr", this.type);
         descrWrapper.textContent = this.description;

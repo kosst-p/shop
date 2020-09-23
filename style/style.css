@@ -382,12 +382,12 @@ body {
     min-width: 800px;
 }
 
-.components-wrapper {
+.ingredients-wrapper {
     display: flex;
     flex-wrap: wrap;
 }
 
-.components-list {
+.ingredients-list {
     border-radius: 6px;
     background-color: #ffffff;
     margin-top: 20px;
@@ -399,22 +399,22 @@ body {
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
-.components-list li {
+.ingredients-list li {
     cursor: pointer;
     padding: 15px;
     list-style-type: none;
 }
-.components-list li:hover,
-.components-list li.active-component {
+.ingredients-list li:hover,
+.ingredients-list li.active-component {
     background-color: #ec5645;
     color: #ffffff;
 }
-.components-list li:first-child:hover {
+.ingredients-list li:first-child:hover {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
 }
 
-.components-list li:last-child:hover {
+.ingredients-list li:last-child:hover {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -446,10 +446,10 @@ body {
     display: none;
 }
 
-.component-count__button {
+.ingredients-count__button {
     margin-bottom: 10px;
 }
-.component-count__field {
+.ingredients-count__field {
     padding: 2px 10px;
     border: 1px solid #cfcfcffa;
     border-radius: 3px;

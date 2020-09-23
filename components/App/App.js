@@ -15,31 +15,46 @@ class App {
 
     addToBasket(product) {
         const basket = localStorageUtil.getDataFromLocalStorage();
-
+        let updBasket = [];
+        let updTotalPrice = 0;
         let found = false; // флаг проверки добавления
-        for (let i = 0; i < basket.length; i++) {
-            if (basket[i].id === product.id) {
-                basket[i].quantity += product.quantity;
-                basket[i].total += product.quantity * product.price;
+        for (let i = 0; i < basket.products.length; i++) {
+            if (basket.products[i].id === product.id) {
+                basket.products[i].quantity += product.quantity;
+                basket.products[i].total += product.quantity * product.price;
                 found = true; // нашли искомый элемент и обновили его, изменили флаг
                 break;
             }
         }
         // если не нашли, добавляем новый элемент
         if (!found) {
-            basket.push(product);
+            basket.products.push(product);
         }
-        localStorageUtil.putDataToLocalStorage(basket);
+        updBasket = basket.products;
+        updTotalPrice += product.quantity * product.price + basket.totalPrice;
+        updBasket = localStorageUtil.putDataToLocalStorage({
+            products: updBasket,
+            totalPrice: updTotalPrice
+        });
     }
 
     deleteFromBasket(id) {
         const basket = localStorageUtil.getDataFromLocalStorage();
-        const updBasket = basket.filter(item => {
+        const updBasket = basket.products.filter(item => {
             if (item.id !== id) {
                 return item;
             }
         });
-        localStorageUtil.putDataToLocalStorage(updBasket);
+
+        let updTotalPrice = 0;
+        updBasket.forEach(element => {
+            updTotalPrice += element.total;
+        });
+
+        localStorageUtil.putDataToLocalStorage({
+            products: updBasket,
+            totalPrice: updTotalPrice
+        });
     }
 
     async onTypeChanged(params) {

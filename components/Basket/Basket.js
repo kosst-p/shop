@@ -10,6 +10,22 @@ class Basket {
             "deleteProductFromBasket",
             this.renderBasketItems.bind(this)
         );
+        pubSub.subscribeByEvent(
+            "addProductInBasket",
+            this.renderTotalPrice.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "deleteProductFromBasket",
+            this.renderTotalPrice.bind(this)
+        );
+    }
+
+    completePurchase() {
+        if (localStorageUtil.checkDataFromLocalStorage()) {
+            localStorageUtil.removeDataFromLocalStorage();
+            this.renderBasketItems();
+            this.renderTotalPrice();
+        }
     }
 
     createBasket() {
@@ -36,12 +52,10 @@ class Basket {
         basketTitle.after(basketHeader);
         const basketContent = document.createElement("div");
         basketContent.classList.add("basket-content");
-
-        basketHeader.after(basketContent); //TODO
+        basketHeader.after(basketContent); // <- контент тут
         const basketTotalPrice = document.createElement("div");
         basketTotalPrice.classList.add("basket-total-price");
-        basketTotalPrice.textContent = "Итого: 111 руб.";
-        basketContent.after(basketTotalPrice);
+        basketContent.after(basketTotalPrice); // <- общая цена
         const basketBtnWrapper = document.createElement("div");
         basketBtnWrapper.classList.add("basket-btn-wrapper");
         const completeOrder = document.createElement("button");
@@ -52,6 +66,7 @@ class Basket {
 
         basketBtnWrapper.addEventListener("click", event => {
             console.log("Ваш заказ оформлен");
+            this.completePurchase();
         });
         basketTotalPrice.after(basketBtnWrapper);
 
@@ -59,10 +74,11 @@ class Basket {
     }
 
     renderBasketItems() {
-        const basketFromLS = localStorageUtil.getDataFromLocalStorage();
+        const basket = localStorageUtil.getDataFromLocalStorage();
         const basketContent = document.querySelector(".basket-content");
         basketContent.innerHTML = "";
-        const basketContentItems = basketFromLS.map(element => {
+
+        const basketContentItems = basket.products.map(element => {
             const { id, name, quantity } = element;
             return new BasketItem({ id, name, quantity });
         });
@@ -73,9 +89,17 @@ class Basket {
         }, basketContent); // рендер содержимого корзины
     }
 
+    renderTotalPrice() {
+        const basketContent = document.querySelector(".basket-total-price");
+        const basket = localStorageUtil.getDataFromLocalStorage();
+        basketContent.innerHTML = "";
+        const totalPrice = basket.totalPrice;
+        basketContent.append(new BasketTotalPrice({ totalPrice }).render()); // рендер общей цены
+    }
+
     renderBasket() {
         this.parentDOM.innerHTML = "";
-        this.parentDOM.appendChild(this.createBasket());
+        this.parentDOM.append(this.createBasket());
     }
 }
 
@@ -85,3 +109,4 @@ const basket = new Basket({
 
 basket.renderBasket();
 basket.renderBasketItems();
+basket.renderTotalPrice();

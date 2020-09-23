@@ -6,14 +6,11 @@ class BasketItem {
     }
 
     deleteFromBasket() {
-        console.log("продукт удален", this.id);
-
         pubSub.fireEvent("deleteProductFromBasket", this.id); // пользовательское событие
     }
 
     render() {
         const basketContentItem = document.createElement("div");
-        // basketContentItem.setAttribute("id", this.id);
         basketContentItem.classList.add("basket-content__items");
         const divName = document.createElement("div");
 
@@ -35,5 +32,3 @@ class BasketItem {
         return basketContentItem;
     }
 }
-
-//  куда будем рендерить const basketContent = document.querySelector(".basket-content");
