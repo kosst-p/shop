@@ -8,6 +8,7 @@ class ModalTitle {
             this.changeTitle.bind(this)
         );
         pubSub.subscribeByEvent("ingredientChanged", this.render.bind(this));
+
         pubSub.subscribeByEvent(
             "loadPreOrderLayout",
             this.changeTitle.bind(this)
@@ -15,7 +16,7 @@ class ModalTitle {
         pubSub.subscribeByEvent("loadPreOrderLayout", this.render.bind(this));
     }
 
-    changeTitle(title) {
+    changeTitle({ title }) {
         this.titleContent = title;
     }
     createContent() {

@@ -12,6 +12,7 @@ const ROOT_MODAL_BUTTONS_WRAPPER = document.querySelector(
     ".modal-buttons-wrapper"
 );
 const ROOT_INGREDIENTS_WRAPPER = document.querySelector(".ingredients-wrapper");
+const ROOT_MODAL_COUNT = document.querySelector(".modal-count");
 
 // список типов продуктов
 const productsType = [

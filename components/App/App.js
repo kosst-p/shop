@@ -4,6 +4,10 @@ class App {
         this.productsArray = props.productsArray;
         pubSub.subscribeByEvent("typeChanged", this.onTypeChanged.bind(this));
         pubSub.subscribeByEvent(
+            "ingredientChanged",
+            this.onIgredientChanged.bind(this)
+        );
+        pubSub.subscribeByEvent(
             "addProductInBasket",
             this.addToBasket.bind(this)
         );
@@ -105,6 +109,8 @@ class App {
             return acc;
         }, this.ROOT_RIGHT_SIDE); // рендер карточек
     }
+
+    async onIngredientChanged(params) {}
 
     async startLoadingProducts() {
         const products = await FetchApi.fetchDataProducts(URL);

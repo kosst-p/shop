@@ -9,6 +9,7 @@ class IngredientTypes {
             this.renderIngredientTypes.bind(this)
         );
         this.ROOT_INGREDIENTS_WRAPPER = ROOT_INGREDIENTS_WRAPPER;
+        this.ROOT_MODAL_COUNT = ROOT_MODAL_COUNT;
     }
     // создание ul
     createList() {
@@ -30,13 +31,14 @@ class IngredientTypes {
             parent.appendChild(li); // добавил в ul
             li.textContent = name;
             li.addEventListener("click", event => {
-                this.changeIngredientTypesByClick(event, title, type, index);
+                this.changeIngredientTypesByClick(event, title, index, id);
             });
         });
     }
 
-    changeIngredientTypesByClick(event, title, type, index) {
+    changeIngredientTypesByClick(event, title, index, id) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
+        this.ROOT_MODAL_COUNT.innerHTML = "";
         const buttonNext = document.querySelector(".next");
         const buttonPrev = document.querySelector(".prev");
         let parent = document.querySelector("." + this.ulClassName);
@@ -45,7 +47,7 @@ class IngredientTypes {
             pubSub.fireEvent("loadPreOrderLayout", title);
             buttonNext.classList.add("disabled");
         } else {
-            pubSub.fireEvent("ingredientChanged", title); // пользовательское событие
+            pubSub.fireEvent("ingredientChanged", { id, title }); // пользовательское событие
             buttonNext.classList.remove("disabled");
         }
         // условие для первого элемента списка
@@ -87,6 +89,7 @@ class IngredientTypes {
     }
     prevIngredientType(e) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
+        this.ROOT_MODAL_COUNT.innerHTML = "";
         const list = document.querySelector(".ingredients-list").childNodes;
         const buttonNext = document.querySelector(".next");
         for (let i = 0; i < list.length; i++) {
@@ -104,7 +107,10 @@ class IngredientTypes {
                 // условие для последнего элемента списка
                 if (index !== list.length - 1) {
                     buttonNext.classList.remove("disabled");
-                    pubSub.fireEvent("ingredientChanged", title);
+                    pubSub.fireEvent("ingredientChanged", {
+                        id: prevId,
+                        title
+                    });
                 }
 
                 // условие для первого элемента списка
@@ -148,11 +154,14 @@ class IngredientTypes {
                 list[i].removeAttribute("class");
                 if (index === list.length - 1) {
                     // условие для последнего элемента списка
-                    pubSub.fireEvent("loadPreOrderLayout", title);
+                    pubSub.fireEvent("loadPreOrderLayout", { title });
                     e.target.classList.add("disabled");
                 } else {
                     buttonPrev.classList.remove("disabled");
-                    pubSub.fireEvent("ingredientChanged", title);
+                    pubSub.fireEvent("ingredientChanged", {
+                        id: nextId,
+                        title
+                    });
                 }
 
                 break;

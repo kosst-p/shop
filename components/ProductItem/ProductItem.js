@@ -94,6 +94,7 @@ class ProductItem {
         const countButtonWrapper = document.createElement("div");
         countButtonWrapper.classList.add("item-count__button");
         countTitle.after(countButtonWrapper);
+
         const buttonDecrease = document.createElement("button");
         buttonDecrease.classList.add("btn-count");
         countButtonWrapper.prepend(buttonDecrease);

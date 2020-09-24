@@ -10,6 +10,7 @@ class Modal {
         this.ROOT_MODAL_PRICE = ROOT_MODAL_PRICE;
         this.ROOT_MODAL_BUTTONS_WRAPPER = ROOT_MODAL_BUTTONS_WRAPPER;
         this.ROOT_INGREDIENTS_WRAPPER = ROOT_INGREDIENTS_WRAPPER;
+        this.ROOT_MODAL_COUNT = ROOT_MODAL_COUNT;
     }
 
     closeModal() {
@@ -23,6 +24,7 @@ class Modal {
                 this.ROOT_MODAL_PRICE.innerHTML = "";
                 this.ROOT_MODAL_BUTTONS_WRAPPER.innerHTML = "";
                 this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
+                this.ROOT_MODAL_COUNT.innerHTML = "";
                 this.ROOT_MODAL_WINDOW.classList.remove("open");
             }
         });

@@ -29,9 +29,14 @@ class FetchApi {
         }
     }
 
-    static async fetchDataComponents(url) {
+    static async fetchDataIngredients(url) {
         try {
             let response = await fetch(url);
+            if (response.ok) {
+                let data = await response.json();
+                const ingredients = data;
+                return ingredients;
+            }
         } catch (error) {
             console.log(error);
         }
