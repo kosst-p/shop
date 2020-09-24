@@ -22,13 +22,13 @@ class ProductTypes {
             parent.appendChild(li); // добавил в ul
             li.textContent = name;
             li.addEventListener("click", event => {
-                this.changeProductTypeByClick(event, id); // id типа продукта
+                this.changeProductTypesByClick(event, id); // id типа продукта
             });
         });
     }
 
     // событие клика на li с сменой активного класса
-    changeProductTypeByClick(event, id) {
+    changeProductTypesByClick(event, id) {
         let parent = document.querySelector("." + this.ulClassName);
         this.switchActiveClass(event.target, "active-product", parent);
         pubSub.fireEvent("typeChanged", { id: id }); // пользовательское событие

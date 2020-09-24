@@ -405,7 +405,7 @@ body {
     list-style-type: none;
 }
 .ingredients-list li:hover,
-.ingredients-list li.active-component {
+.ingredients-list li.active-ingredient {
     background-color: #ec5645;
     color: #ffffff;
 }

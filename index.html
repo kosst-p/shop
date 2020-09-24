@@ -29,12 +29,15 @@
                             <i class="modal-close-btn fas fa-times"></i>
                             <div class="modal-title"></div>
                             <div class="modal-main">
-                                <div class="ingredients-list-wrapper"></div>
-                                <div class="modal-buttons-wrapper"></div>
+                                <div class="ingredient-nav-bar">
+                                    <div class="ingredient-types"></div>
+                                    <div class="modal-buttons-wrapper"></div>
+                                </div>
+
                                 <div class="ingredients-wrapper"></div>
                             </div>
                             <div class="modal-count"></div>
-                            <div class="modal-price">Итого: 0 руб.</div>
+                            <div class="modal-price"></div>
                         </div>
                     </div>
                 </div>
@@ -61,6 +64,12 @@
         <!-- BASKET-TOTAL-PRICE -->
         <script src="./components/BasketTotalPrice/BasketTotalPrice.js"></script>
 
+        <!-- MODAL TITLE-->
+        <script src="./components/ModalTitle/ModalTitle.js"></script>
+
+        <!-- INGREDIENT MODAL PRICE-->
+        <script src="./components/IngredientsTotalPrice/IngredientsTotalPrice.js"></script>
+
         <!-- MODAL -->
         <script src="./components/Modal/Modal.js"></script>
 
@@ -73,6 +82,13 @@
         <link
             rel="stylesheet"
             href="./components/ProductTypes/ProductTypes.css"
+        />
+
+        <!-- INGREDIENT-TYPES -->
+        <script src="./components/IngredientTypes/IngredientTypes.js"></script>
+        <link
+            rel="stylesheet"
+            href="./components/IngredientTypes/IngredientTypes.css"
         />
 
         <!-- BASKET -->
@@ -89,8 +105,6 @@
         <!-- FOOTER -->
         <script src="./components/Footer/Footer.js"></script>
         <link rel="stylesheet" href="./components/Footer/Footer.css" />
-
-        <!-- <script src="./componentsv2/ProductTypesList/ProductTypesList.js"></script> -->
 
         <script src="./index.js"></script>
     </body>

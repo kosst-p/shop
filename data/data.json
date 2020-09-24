@@ -1004,7 +1004,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 83
         },
         {
             "name": "Pizza Spot (фирм) 35см",
@@ -1014,7 +1015,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 84
         },
         {
             "name": "Маргарита 35см",
@@ -1024,7 +1026,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 85
         },
         {
             "name": "Грибная 35см",
@@ -1034,7 +1037,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 86
         },
         {
             "name": "Баварская 35см",
@@ -1044,7 +1048,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 87
         },
         {
             "name": "Пепперони 35см",
@@ -1054,7 +1059,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 88
         },
         {
             "name": "Четыре Сыра Кватро Формаджио 35см",
@@ -1064,7 +1070,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 89
         },
         {
             "name": "Куриная 35см",
@@ -1074,7 +1081,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 90
         },
         {
             "name": "Ветчина с грибами 35см",
@@ -1084,7 +1092,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 91
         },
         {
             "name": "Морская 35см",
@@ -1094,7 +1103,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 92
         },
         {
             "name": "Сицилийская (ОСТРАЯ) 35см",
@@ -1104,7 +1114,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 93
         },
         {
             "name": "Гавайская 35см",
@@ -1114,7 +1125,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 94
         },
         {
             "name": "Карбонара 35см",
@@ -1124,7 +1136,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 95
         },
         {
             "name": "Мясная 35см",
@@ -1134,7 +1147,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 96
         },
         {
             "name": "Четыре Сезона Кватро Стаджиони 35см",
@@ -1144,7 +1158,8 @@
             "category": "pizza",
             "market": "sfc",
             "type": "single",
-            "weight": 1
+            "weight": 1,
+            "id": 97
         },
         {
             "name": "Доп сыр (в шаурму)",

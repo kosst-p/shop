@@ -104,7 +104,7 @@ class Basket {
 }
 
 const basket = new Basket({
-    parentDOM: BASKET
+    parentDOM: ROOT_BASKET
 });
 
 basket.renderBasket();

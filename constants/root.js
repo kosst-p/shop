@@ -3,8 +3,14 @@ const URL = "../data/data.json";
 const APP = document.querySelector(".app");
 const ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
 const ROOT_RIGHT_SIDE = document.querySelector(".right-side");
-const BASKET = document.querySelector(".basket-wrapper");
-const MODAL_WINDOW = document.querySelector(".modal");
+const ROOT_BASKET = document.querySelector(".basket-wrapper");
+const ROOT_MODAL_WINDOW = document.querySelector(".modal");
+const ROOT_INGREDIENT_TYPES = document.querySelector(".ingredient-types");
+const ROOT_MODAL_TITLE = document.querySelector(".modal-title");
+const ROOT_MODAL_PRICE = document.querySelector(".modal-price");
+const ROOT_MODAL_BUTTONS_WRAPPER = document.querySelector(
+    ".modal-buttons-wrapper"
+);
 
 // список типов продуктов
 const productsType = [
@@ -19,24 +25,33 @@ const productsType = [
 
 // список типов ингредиентов
 const ingredientsType = [
-    { type: "sizes", name: "Размер", title: "Выберите размер сэндвича" },
-    { type: "breads", name: "Хлеб", title: "Хлеб для сэндвича на выбор" },
+    { id: 1, type: "sizes", name: "Размер", title: "Выберите размер сэндвича" },
     {
+        id: 2,
+        type: "breads",
+        name: "Хлеб",
+        title: "Хлеб для сэндвича на выбор"
+    },
+    {
+        id: 3,
         type: "vegetables",
         name: "Овощи",
         title: "Дополнительные овощи бесплатно"
     },
     {
+        id: 4,
         type: "sauces",
         name: "Соусы",
         title: "Выберите 3 бесплатных соуса по вкусу"
     },
     {
+        id: 5,
         type: "fillings",
         name: "Начинка",
         title: "Добавьте начинку по вкусу"
     },
     {
+        id: 6,
         type: "ready",
         name: "Готово",
         title: "Проверьте и добавьте в корзину"

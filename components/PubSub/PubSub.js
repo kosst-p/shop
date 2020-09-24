@@ -5,6 +5,7 @@ class PubSub {
 
     subscribeByEvent(type, callback) {
         //subscribe
+        // console.log(this.listeners);
         if (!this.listeners[type]) {
             this.listeners[type] = [];
         }

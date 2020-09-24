@@ -10,8 +10,7 @@ class ProductItem {
         this.type = props.type;
         this.quantity = 1;
         this.render = this.render.bind(this);
-        this.increaseQuantity = this.increaseQuantity.bind(this);
-        this.decreaseQuantity = this.decreaseQuantity.bind(this);
+        this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
     }
 
     addInBasket() {
@@ -41,7 +40,8 @@ class ProductItem {
     }
 
     openModal() {
-        MODAL_WINDOW.classList.add("open");
+        this.ROOT_MODAL_WINDOW.classList.add("open");
+        pubSub.fireEvent("openModal"); // пользовательское событие
     }
 
     render() {
@@ -74,7 +74,6 @@ class ProductItem {
         if (this.type === "multiple") {
             descrWrapper.classList.add("multiple");
             descrWrapper.addEventListener("click", e => {
-                console.log("modal open");
                 this.openModal();
             });
         }
