@@ -9,6 +9,7 @@ class Modal {
         this.ROOT_MODAL_TITLE = ROOT_MODAL_TITLE;
         this.ROOT_MODAL_PRICE = ROOT_MODAL_PRICE;
         this.ROOT_MODAL_BUTTONS_WRAPPER = ROOT_MODAL_BUTTONS_WRAPPER;
+        this.ROOT_INGREDIENTS_WRAPPER = ROOT_INGREDIENTS_WRAPPER;
     }
 
     closeModal() {
@@ -21,18 +22,9 @@ class Modal {
                 this.ROOT_MODAL_TITLE.innerHTML = "";
                 this.ROOT_MODAL_PRICE.innerHTML = "";
                 this.ROOT_MODAL_BUTTONS_WRAPPER.innerHTML = "";
+                this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
                 this.ROOT_MODAL_WINDOW.classList.remove("open");
             }
-        });
-    }
-    prevIngredients() {
-        this.prevButton.addEventListener("click", e => {
-            pubSub.fireEvent("prevIngredients"); // пользовательское событие
-        });
-    }
-    nextIngredients() {
-        this.nextButton.addEventListener("click", e => {
-            pubSub.fireEvent("nextIngredients"); // пользовательское событие
         });
     }
 }

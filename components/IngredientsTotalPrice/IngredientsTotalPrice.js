@@ -1,6 +1,6 @@
 class IngredientsTotalPrice {
     constructor() {
-        this.price = "Цена: 0руб.";
+        this.price = "Цена: 0 руб.";
         this.ROOT_MODAL_PRICE = ROOT_MODAL_PRICE;
         pubSub.subscribeByEvent("openModal", this.render.bind(this));
     }

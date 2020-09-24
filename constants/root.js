@@ -11,6 +11,7 @@ const ROOT_MODAL_PRICE = document.querySelector(".modal-price");
 const ROOT_MODAL_BUTTONS_WRAPPER = document.querySelector(
     ".modal-buttons-wrapper"
 );
+const ROOT_INGREDIENTS_WRAPPER = document.querySelector(".ingredients-wrapper");
 
 // список типов продуктов
 const productsType = [
