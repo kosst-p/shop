@@ -46,7 +46,7 @@ class App {
         updBasket = basket.products;
         updTotalPrice += product.quantity * product.price + basket.totalPrice;
 
-        updBasket = localStorageUtil.putBasketToLocalStorage({
+        localStorageUtil.putBasketToLocalStorage({
             products: updBasket,
             totalPrice: updTotalPrice
         });

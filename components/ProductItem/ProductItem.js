@@ -25,19 +25,62 @@ class ProductItem {
     }
 
     increaseQuantity(field) {
-        const basket = localStorageUtil.getBasketFromLocalStorage();
-        console.log(basket);
-
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
+
+        if (localStorageUtil.checkBasketFromLocalStorage()) {
+            const basket = localStorageUtil.getBasketFromLocalStorage();
+            let updProducts = [];
+            for (let i = 0; i < basket.products.length; i++) {
+                if (basket.products[i].id === this.id) {
+                    console.log(basket.products[i]);
+                    basket.products[i].quantity += 1;
+                    basket.products[i].total =
+                        basket.products[i].quantity * basket.products[i].price;
+                    break;
+                }
+            }
+            updProducts = basket.products;
+            let updTotalPrice = 0;
+            updTotalPrice += this.price + basket.totalPrice;
+            basket.totalPrice = updTotalPrice;
+            localStorageUtil.putBasketToLocalStorage({
+                products: updProducts,
+                totalPrice: updTotalPrice
+            });
+            pubSub.fireEvent("updateBasket"); // пользовательское событие
+            console.log(basket);
+        }
     }
 
     decreaseQuantity(field) {
         if (this.quantity > 1) {
             this.quantity -= 1;
-            // const parent = document.getElementById(this.id);
-            // parent.replaceWith(this.render());
             field.textContent = this.quantity;
+            if (localStorageUtil.checkBasketFromLocalStorage()) {
+                const basket = localStorageUtil.getBasketFromLocalStorage();
+                let updProducts = [];
+                for (let i = 0; i < basket.products.length; i++) {
+                    if (basket.products[i].id === this.id) {
+                        console.log(basket.products[i]);
+                        basket.products[i].quantity -= 1;
+                        basket.products[i].total =
+                            basket.products[i].quantity *
+                            basket.products[i].price;
+                        break;
+                    }
+                }
+                updProducts = basket.products;
+                let updTotalPrice = 0;
+                updTotalPrice += basket.totalPrice - this.price;
+                basket.totalPrice = updTotalPrice;
+                localStorageUtil.putBasketToLocalStorage({
+                    products: updProducts,
+                    totalPrice: updTotalPrice
+                });
+                pubSub.fireEvent("updateBasket"); // пользовательское событие
+                console.log(basket);
+            }
         }
     }
 

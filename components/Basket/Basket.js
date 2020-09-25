@@ -18,6 +18,15 @@ class Basket {
             "deleteProductFromBasket",
             this.renderTotalPrice.bind(this)
         );
+
+        pubSub.subscribeByEvent(
+            "updateBasket",
+            this.renderBasketItems.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "updateBasket",
+            this.renderTotalPrice.bind(this)
+        );
     }
 
     completePurchase() {
