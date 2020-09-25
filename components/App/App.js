@@ -16,59 +16,6 @@ class App {
             "openModal",
             this.onIngredientChanged.bind(this)
         );
-        pubSub.subscribeByEvent(
-            "addProductInBasket",
-            this.addToBasket.bind(this)
-        );
-        pubSub.subscribeByEvent(
-            "deleteProductFromBasket",
-            this.deleteFromBasket.bind(this)
-        );
-    }
-
-    addToBasket(product) {
-        const basket = localStorageUtil.getBasketFromLocalStorage();
-        let updBasket = [];
-        let updTotalPrice = 0;
-        let found = false; // флаг проверки добавления
-        for (let i = 0; i < basket.products.length; i++) {
-            if (basket.products[i].id === product.id) {
-                basket.products[i].quantity += product.quantity;
-                basket.products[i].total += product.quantity * product.price;
-                found = true; // нашли искомый элемент и обновили его, изменили флаг
-                break;
-            }
-        }
-        // если не нашли, добавляем новый элемент
-        if (!found) {
-            basket.products.push(product);
-        }
-        updBasket = basket.products;
-        updTotalPrice += product.quantity * product.price + basket.totalPrice;
-
-        localStorageUtil.putBasketToLocalStorage({
-            products: updBasket,
-            totalPrice: updTotalPrice
-        });
-    }
-
-    deleteFromBasket(id) {
-        const basket = localStorageUtil.getBasketFromLocalStorage();
-        const updBasket = basket.products.filter(item => {
-            if (item.id !== id) {
-                return item;
-            }
-        });
-
-        let updTotalPrice = 0;
-        updBasket.forEach(element => {
-            updTotalPrice += element.total;
-        });
-
-        localStorageUtil.putBasketToLocalStorage({
-            products: updBasket,
-            totalPrice: updTotalPrice
-        });
     }
 
     async onProductTypeChanged(params) {
@@ -113,7 +60,7 @@ class App {
                 });
                 return filteredProduct;
             });
-
+        console.log(filteredProducts);
         filteredProducts.reduce((acc, child) => {
             acc.append(child.render());
             return acc;

@@ -6,8 +6,13 @@ class BasketItem {
     }
 
     deleteFromBasket() {
-        pubSub.fireEvent("deleteProductFromBasket", this.id); // пользовательское событие
+        pubSub.fireEvent("onDeleteProductFromBasket", this.id); // пользовательское событие
     }
+
+    // changeQuantity(quantity) {
+    //     this.quantity += quantity;
+    //     return this;
+    // }
 
     render() {
         const basketContentItem = document.createElement("div");

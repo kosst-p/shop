@@ -2,40 +2,71 @@ class Basket {
     constructor(props) {
         this.parentDOM = props.parentDOM;
         this.basketFromLocalStorage = localStorageUtil.getBasketFromLocalStorage(); // для начальной загрузки
+        this.addedProducts = [];
+        this.totalPrice = 0;
+        /* добавление продукта */
         pubSub.subscribeByEvent(
-            "addProductInBasket",
-            this.renderBasketItems.bind(this)
+            "onAddProductInBasket",
+            this.addedProduct.bind(this)
         );
         pubSub.subscribeByEvent(
-            "deleteProductFromBasket",
-            this.renderBasketItems.bind(this)
+            "onAddProductInBasket",
+            this.renderProductsInBasket.bind(this)
         );
         pubSub.subscribeByEvent(
-            "addProductInBasket",
+            "onAddProductInBasket",
+            this.renderTotalPrice.bind(this)
+        );
+        /* *** */
+        /* удаление продукта */
+        pubSub.subscribeByEvent(
+            "onDeleteProductFromBasket",
+            this.deletedProduct.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onDeleteProductFromBasket",
+            this.renderProductsInBasket.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onDeleteProductFromBasket",
+            this.renderTotalPrice.bind(this)
+        );
+        /* *** */
+        /* Изменение количества */
+        pubSub.subscribeByEvent(
+            "onIncreaseQuantityInBasket",
+            this.updatedQuantity.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onDecreaseQuantityInBasket",
+            this.updatedQuantity.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onIncreaseQuantityInBasket",
+            this.renderProductsInBasket.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onDecreaseQuantityInBasket",
+            this.renderProductsInBasket.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "onIncreaseQuantityInBasket",
             this.renderTotalPrice.bind(this)
         );
         pubSub.subscribeByEvent(
-            "deleteProductFromBasket",
+            "onDecreaseQuantityInBasket",
             this.renderTotalPrice.bind(this)
         );
-
-        pubSub.subscribeByEvent(
-            "updateBasket",
-            this.renderBasketItems.bind(this)
-        );
-        pubSub.subscribeByEvent(
-            "updateBasket",
-            this.renderTotalPrice.bind(this)
-        );
+        /* *** */
     }
 
-    completePurchase() {
-        if (localStorageUtil.checkBasketFromLocalStorage()) {
-            localStorageUtil.removeBasketFromLocalStorage();
-            this.renderBasketItems();
-            this.renderTotalPrice();
-        }
-    }
+    // completePurchase() {
+    //     if (localStorageUtil.checkBasketFromLocalStorage()) {
+    //         localStorageUtil.removeBasketFromLocalStorage();
+    //         this.renderBasketItems();
+    //         this.renderTotalPrice();
+    //     }
+    // }
 
     createBasket() {
         const basket = document.createElement("div");
@@ -82,17 +113,50 @@ class Basket {
         return basket;
     }
 
-    renderBasketItems() {
-        const basket = localStorageUtil.getBasketFromLocalStorage();
+    updatedQuantity(product) {
+        this.addedProducts.forEach(item => {
+            if (item.id === product.id) {
+                item.quantity = product.quantity;
+                item.total = product.total;
+                if (product.type === "increase")
+                    this.totalPrice += product.price;
+                if (product.type === "decrease")
+                    this.totalPrice -= product.price;
+            }
+        });
+    }
+
+    addedProduct(currentProduct) {
+        const foundProduct = this.addedProducts.find(
+            item => item.id === currentProduct.id
+        );
+        if (!foundProduct) {
+            this.addedProducts.push(currentProduct);
+        } else {
+            // меняется по ссылке
+            console.log("найден");
+            foundProduct.quantity += currentProduct.quantity;
+            foundProduct.total +=
+                currentProduct.quantity * currentProduct.price;
+        }
+        this.totalPrice += currentProduct.total;
+    }
+
+    deletedProduct(id) {
+        const foundProduct = this.addedProducts.find(item => item.id === id);
+        const foundIndex = this.addedProducts.findIndex(item => item.id === id);
+        this.addedProducts.splice(foundIndex, 1);
+        this.totalPrice -= foundProduct.total;
+    }
+
+    renderProductsInBasket() {
         const basketContent = document.querySelector(".basket-content");
         basketContent.innerHTML = "";
-
-        const basketContentItems = basket.products.map(element => {
-            const { id, name, quantity } = element;
+        const preparedProducts = this.addedProducts.map(product => {
+            const { id, name, quantity } = product;
             return new BasketItem({ id, name, quantity });
         });
-
-        basketContentItems.reduce((acc, child) => {
+        preparedProducts.reduce((acc, child) => {
             acc.append(child.render());
             return acc;
         }, basketContent); // рендер содержимого корзины
@@ -100,10 +164,10 @@ class Basket {
 
     renderTotalPrice() {
         const basketContent = document.querySelector(".basket-total-price");
-        const basket = localStorageUtil.getBasketFromLocalStorage();
         basketContent.innerHTML = "";
-        const totalPrice = basket.totalPrice;
-        basketContent.append(new BasketTotalPrice({ totalPrice }).render()); // рендер общей цены
+        basketContent.append(
+            new BasketTotalPrice({ totalPrice: this.totalPrice }).render()
+        ); // рендер общей цены
     }
 
     renderBasket() {
@@ -117,5 +181,4 @@ const basket = new Basket({
 });
 
 basket.renderBasket();
-basket.renderBasketItems();
 basket.renderTotalPrice();

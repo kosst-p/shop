@@ -10,6 +10,7 @@ class ProductItem {
         this.type = props.type;
         this.quantity = 1;
         this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
+        this.increaseQuantity = this.increaseQuantity.bind(this);
     }
 
     addInBasket() {
@@ -20,67 +21,36 @@ class ProductItem {
             quantity: this.quantity,
             total: this.quantity * this.price
         };
-
-        pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
+        pubSub.fireEvent("onAddProductInBasket", product); // пользовательское событие
     }
 
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
 
-        if (localStorageUtil.checkBasketFromLocalStorage()) {
-            const basket = localStorageUtil.getBasketFromLocalStorage();
-            let updProducts = [];
-            for (let i = 0; i < basket.products.length; i++) {
-                if (basket.products[i].id === this.id) {
-                    console.log(basket.products[i]);
-                    basket.products[i].quantity += 1;
-                    basket.products[i].total =
-                        basket.products[i].quantity * basket.products[i].price;
-                    break;
-                }
-            }
-            updProducts = basket.products;
-            let updTotalPrice = 0;
-            updTotalPrice += this.price + basket.totalPrice;
-            basket.totalPrice = updTotalPrice;
-            localStorageUtil.putBasketToLocalStorage({
-                products: updProducts,
-                totalPrice: updTotalPrice
-            });
-            pubSub.fireEvent("updateBasket"); // пользовательское событие
-            console.log(basket);
-        }
+        const product = {
+            id: this.id,
+            price: this.price,
+            quantity: this.quantity,
+            total: this.quantity * this.price,
+            type: "increase"
+        };
+
+        pubSub.fireEvent("onIncreaseQuantityInBasket", product); // пользовательское событие
     }
 
     decreaseQuantity(field) {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
-            if (localStorageUtil.checkBasketFromLocalStorage()) {
-                const basket = localStorageUtil.getBasketFromLocalStorage();
-                let updProducts = [];
-                for (let i = 0; i < basket.products.length; i++) {
-                    if (basket.products[i].id === this.id) {
-                        console.log(basket.products[i]);
-                        basket.products[i].quantity -= 1;
-                        basket.products[i].total =
-                            basket.products[i].quantity *
-                            basket.products[i].price;
-                        break;
-                    }
-                }
-                updProducts = basket.products;
-                let updTotalPrice = 0;
-                updTotalPrice += basket.totalPrice - this.price;
-                basket.totalPrice = updTotalPrice;
-                localStorageUtil.putBasketToLocalStorage({
-                    products: updProducts,
-                    totalPrice: updTotalPrice
-                });
-                pubSub.fireEvent("updateBasket"); // пользовательское событие
-                console.log(basket);
-            }
+            const product = {
+                id: this.id,
+                price: this.price,
+                quantity: this.quantity,
+                total: this.quantity * this.price,
+                type: "decrease"
+            };
+            pubSub.fireEvent("onDecreaseQuantityInBasket", product); // пользовательское событие
         }
     }
 
