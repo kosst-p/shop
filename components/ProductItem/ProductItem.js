@@ -10,9 +10,10 @@ class ProductItem {
         this.type = props.type;
         this.quantity = 1;
         this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
-        this.increaseQuantity = this.increaseQuantity.bind(this);
+        this.collectionRule = props.collectionRule;
     }
 
+    // добавить в корзину
     addInBasket() {
         const product = {
             id: this.id,
@@ -24,6 +25,7 @@ class ProductItem {
         pubSub.fireEvent("onAddProductInBasket", product); // пользовательское событие
     }
 
+    // увеличить количество
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
@@ -39,6 +41,7 @@ class ProductItem {
         pubSub.fireEvent("onIncreaseQuantityInBasket", product); // пользовательское событие
     }
 
+    // уменьшить количество
     decreaseQuantity(field) {
         if (this.quantity > 1) {
             this.quantity -= 1;
@@ -54,17 +57,20 @@ class ProductItem {
         }
     }
 
+    // открыть ммодальное окно
     openModal() {
         this.ROOT_MODAL_WINDOW.classList.add("open");
         pubSub.fireEvent("openModal", {
             id: 1,
             nameProduct: this.name,
             image: this.image,
-            idProduct: this.id * 1000
+            idProduct: this.id * 1000,
+            collectionRule: this.collectionRule
         }); // пользовательское событие. передает id первого элемента из списка
         //TODO прокинуть имя и картинку и записать в преордер
     }
 
+    // рендер
     render() {
         /* Create item */
         const itemWrapper = document.createElement("div");

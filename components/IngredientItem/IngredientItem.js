@@ -5,6 +5,15 @@ class IngredientItem {
         this.price = props.price;
         this.description = props.description;
         this.id = props.id;
+        this.category = props.category;
+    }
+
+    addIngredientInPreOrder() {
+        pubSub.fireEvent("onAddInPreOrder", {
+            id: this.id,
+            name: this.name,
+            category: this.category
+        }); // пользовательское событие
     }
 
     render() {
@@ -34,7 +43,7 @@ class IngredientItem {
         ingredientWrapperDescr.after(ingredientWrapperPrice);
 
         ingredientWrapper.addEventListener("click", e => {
-            console.log("ingredient");
+            this.addIngredientInPreOrder();
         });
 
         return ingredientWrapper;

@@ -16,45 +16,50 @@ const ROOT_MODAL_COUNT = document.querySelector(".modal-count");
 
 // список типов продуктов
 const productsType = [
-    { id: 1, type: "pizza", name: "Пицца" },
-    { id: 2, type: "shaurma", name: "Шаурма" },
-    { id: 3, type: "sandwiches", name: "Сэндвичи" },
-    { id: 4, type: "burgers", name: "Бургеры" },
-    { id: 5, type: "chicken", name: "Курица & Картофель" },
-    { id: 6, type: "salads", name: "Тортилья & Салаты" },
-    { id: 7, type: "drinks", name: "Напитки & Десерты" }
+    { id: 1, category: "pizza", name: "Пицца" },
+    { id: 2, category: "shaurma", name: "Шаурма" },
+    { id: 3, category: "sandwiches", name: "Сэндвичи" },
+    { id: 4, category: "burgers", name: "Бургеры" },
+    { id: 5, category: "chicken", name: "Курица & Картофель" },
+    { id: 6, category: "salads", name: "Тортилья & Салаты" },
+    { id: 7, category: "drinks", name: "Напитки & Десерты" }
 ];
 
 // список типов ингредиентов
 const ingredientsType = [
-    { id: 1, type: "sizes", name: "Размер", title: "Выберите размер сэндвича" },
+    {
+        id: 1,
+        category: "sizes",
+        name: "Размер",
+        title: "Выберите размер сэндвича"
+    },
     {
         id: 2,
-        type: "breads",
+        category: "breads",
         name: "Хлеб",
         title: "Хлеб для сэндвича на выбор"
     },
     {
         id: 3,
-        type: "vegetables",
+        category: "vegetables",
         name: "Овощи",
         title: "Дополнительные овощи бесплатно"
     },
     {
         id: 4,
-        type: "sauces",
+        category: "sauces",
         name: "Соусы",
         title: "Выберите 3 бесплатных соуса по вкусу"
     },
     {
         id: 5,
-        type: "fillings",
+        category: "fillings",
         name: "Начинка",
         title: "Добавьте начинку по вкусу"
     },
     {
         id: 6,
-        type: "ready",
+        category: "ready",
         name: "Готово",
         title: "Проверьте и добавьте в корзину"
     }

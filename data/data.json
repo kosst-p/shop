@@ -17,7 +17,11 @@
                 "sauce": [],
                 "filling": []
             },
-
+            "collectionRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 1
         },
         {

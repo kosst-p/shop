@@ -12,28 +12,21 @@ class App {
             "ingredientTypeChanged",
             this.onIngredientChanged.bind(this)
         );
-        pubSub.subscribeByEvent(
-            "openModal",
-            this.onIngredientChanged.bind(this)
-        );
+        // pubSub.subscribeByEvent(
+        //     "openModal",
+        //     this.onIngredientChanged.bind(this)
+        // );
     }
 
-    async onProductTypeChanged(params) {
+    // загрузка продуктов на страницу относительно выбранного типа из списка
+    async onProductTypeChanged(currentType) {
         this.ROOT_RIGHT_SIDE.innerHTML = "";
 
         const products = await FetchApi.fetchDataProducts(URL);
         const markets = await FetchApi.fetchDataMarkets(URL);
 
-        let desiredType = ""; // искомый тип продукта
-
-        this.productsType.forEach(item => {
-            if (item.id === +params.id) {
-                desiredType = item.type;
-            }
-        });
-
         const filteredProducts = products
-            .filter(product => desiredType === product.category)
+            .filter(product => currentType.category === product.category)
             .map(product => {
                 const {
                     id,
@@ -43,12 +36,13 @@ class App {
                     category,
                     image,
                     price,
-                    type
+                    type,
+                    collectionRule
                 } = product;
 
                 const marketImg = markets[market].image;
 
-                const filteredProduct = new ProductItem({
+                const instanceProductItem = new ProductItem({
                     id,
                     marketImg,
                     name,
@@ -56,9 +50,11 @@ class App {
                     category,
                     image,
                     price,
-                    type
+                    type,
+                    collectionRule // ?
                 });
-                return filteredProduct;
+
+                return instanceProductItem;
             });
         console.log(filteredProducts);
         filteredProducts.reduce((acc, child) => {
@@ -67,32 +63,35 @@ class App {
         }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
     }
 
-    async onIngredientChanged(params) {
+    // загрузка ингредиентов в модальном окне относительно выбранного типа из списка
+    async onIngredientChanged(currentType) {
         const fetchData = await FetchApi.fetchDataIngredients(URL);
-        let desiredType = ""; // искомый тип ингредиента
-        this.ingredientsType.forEach(item => {
-            if (item.id === +params.id) {
-                desiredType = item.type;
-            }
-        });
-        console.log(desiredType);
         const filteredIngredients = [];
-        for (const key in fetchData[desiredType]) {
+        for (const key in fetchData[currentType.category]) {
             const { id, name, price, description, image } = fetchData[
-                desiredType
+                currentType.category
             ][key];
-            if (fetchData[desiredType].hasOwnProperty(key)) {
+            if (fetchData[currentType.category].hasOwnProperty(key)) {
                 filteredIngredients.push(
-                    new IngredientItem({ id, name, price, description, image })
+                    new IngredientItem({
+                        id,
+                        name,
+                        price,
+                        description,
+                        image,
+                        category: currentType.category
+                    })
                 );
             }
         }
+        console.log(filteredIngredients);
         filteredIngredients.reduce((acc, child) => {
             acc.append(child.render()); // ?
             return acc;
         }, this.ROOT_INGREDIENTS_WRAPPER); // рендер карточек ингредиент
     }
 
+    // начальная(первая) загрузка страницы. получение всего списка продуктов
     async startLoadingProducts() {
         const products = await FetchApi.fetchDataProducts(URL);
         const markets = await FetchApi.fetchDataMarkets(URL);
@@ -106,7 +105,8 @@ class App {
                 category,
                 image,
                 price,
-                type
+                type,
+                collectionRule // ?
             } = product;
             const marketImg = markets[market].image;
             return new ProductItem({
@@ -117,14 +117,14 @@ class App {
                 category,
                 image,
                 price,
-                type
+                type,
+                collectionRule
             });
         });
-
         allProducts.reduce((acc, child) => {
             acc.append(child.render());
             return acc;
-        }, this.ROOT_RIGHT_SIDE); // рендер карточек
+        }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
     }
 }
 

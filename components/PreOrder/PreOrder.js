@@ -9,12 +9,43 @@ class PreOrder {
             "openModal",
             this.getInfoAboutProduct.bind(this)
         );
+        this.preOrder = {
+            ingredients: {
+                sizes: [],
+                breads: [],
+                vegetables: [],
+                sauces: [],
+                fillings: []
+            }
+        };
+        this.collectionRule = "";
+        pubSub.subscribeByEvent(
+            "onAddInPreOrder",
+            this.addedInPreOrder.bind(this)
+        );
     }
 
     getInfoAboutProduct(params) {
         this.idProduct = params.idProduct;
         this.image = params.image;
         this.nameProduct = params.nameProduct;
+        this.collectionRule = params.collectionRule;
+    }
+
+    addedInPreOrder(params) {
+        // console.log(params);
+        // console.log(this.preOrder);
+        // console.log(this.collectionRule);
+        // console.log(params.typeOfIngredient);
+        if (
+            this.preOrder.ingredients[params.typeOfIngredient].length <
+            this.collectionRule[params.typeOfIngredient]
+        )
+            this.preOrder.ingredients[params.typeOfIngredient].push(
+                params.name
+            );
+        // this.preOrder.ingredients[params.typeOfIngredient].push(params.name);
+        console.log(this.preOrder);
     }
 
     createContent() {

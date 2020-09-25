@@ -1,7 +1,7 @@
 class IngredientTypes {
     constructor(props) {
-        this.ingredientsWrapper = props.ROOT_INGREDIENT_TYPES;
-        this.buttonsWrapper = props.ROOT_MODAL_BUTTONS_WRAPPER;
+        this.ROOT_INGREDIENT_TYPES = props.ROOT_INGREDIENT_TYPES;
+        this.ROOT_MODAL_BUTTONS_WRAPPER = props.ROOT_MODAL_BUTTONS_WRAPPER;
         this.ingredientsArray = props.ingredientsArray;
         this.ulClassName = props.ulClassName;
         pubSub.subscribeByEvent(
@@ -10,25 +10,28 @@ class IngredientTypes {
         );
         this.ROOT_INGREDIENTS_WRAPPER = ROOT_INGREDIENTS_WRAPPER;
         this.ROOT_MODAL_COUNT = ROOT_MODAL_COUNT;
+        this.ROOT_INGREDIENTS_LIST = null;
+        this.buttonNext = null;
+        this.buttonPrev = null;
     }
     // создание ul
     createList() {
         const ul = document.createElement("ul");
         ul.classList.add(this.ulClassName);
-        this.ingredientsWrapper.appendChild(ul); // добавил в DOM
+        this.ROOT_INGREDIENT_TYPES.appendChild(ul); // добавил в DOM
+        this.ROOT_INGREDIENTS_LIST = ul;
     }
 
     // создание li и добавление в ul
     createListItems() {
-        const parent = document.querySelector("." + this.ulClassName);
         this.ingredientsArray.map((item, index) => {
-            const { id, name, title, type } = item;
+            const { id, name, title, category } = item;
             let li = document.createElement("li");
             li.setAttribute("data-id", id);
             if (index === 0) {
                 li.classList.add("active-ingredient");
             }
-            parent.appendChild(li); // добавил в ul
+            this.ROOT_INGREDIENTS_LIST.appendChild(li); // добавил в ul
             li.textContent = name;
             li.addEventListener("click", event => {
                 this.changeIngredientTypesByClick(
@@ -36,46 +39,44 @@ class IngredientTypes {
                     title,
                     index,
                     id,
-                    parent
+                    this.ROOT_INGREDIENTS_LIST,
+                    category
                 );
             });
         });
     }
 
-    changeIngredientTypesByClick(event, title, index, id, parent) {
+    // событие клика на li с сменой активного класса
+    changeIngredientTypesByClick(event, title, index, id, domElem, category) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.ROOT_MODAL_COUNT.innerHTML = "";
-        const buttonNext = document.querySelector(".next");
-        const buttonPrev = document.querySelector(".prev");
         // условие для последнего элемента списка
         if (index === this.ingredientsArray.length - 1) {
             pubSub.fireEvent("loadPreOrderLayout", { title });
-            buttonNext.classList.add("disabled");
+            this.buttonNext.classList.add("disabled");
         } else {
-            pubSub.fireEvent("ingredientTypeChanged", { id, title }); // пользовательское событие
-            buttonNext.classList.remove("disabled");
+            pubSub.fireEvent("ingredientTypeChanged", { id, title, category }); // пользовательское событие
+            this.buttonNext.classList.remove("disabled");
         }
         // условие для первого элемента списка
         if (index === 0) {
-            buttonPrev.classList.add("disabled");
+            this.buttonPrev.classList.add("disabled");
         } else {
-            buttonPrev.classList.remove("disabled");
+            this.buttonPrev.classList.remove("disabled");
         }
-        this.switchActiveClass(event.target, "active-ingredient", parent);
+        this.switchActiveClass(event.target, "active-ingredient", domElem);
     }
 
     // смена активного класса
-    switchActiveClass(element, className, parent) {
-        parent.childNodes.forEach(el => {
+    switchActiveClass(element, className, domElem) {
+        domElem.childNodes.forEach(el => {
             el.classList.remove(className);
             el.removeAttribute("class");
-            if (el.getAttribute("data-default")) {
-                el.removeAttribute("data-default");
-            }
         });
         element.classList.add(className);
     }
 
+    // создание кнопки Назад
     createButtonPrev() {
         const prev = document.createElement("button");
         prev.classList.add("btn-style");
@@ -90,28 +91,29 @@ class IngredientTypes {
         arrow.classList.add("fa-chevron-left");
         prev.textContent = "Назад";
         prev.prepend(arrow);
+        this.buttonPrev = prev;
         return prev;
     }
+    // событие клика на кнопке Назад
     prevIngredientType(e) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.ROOT_MODAL_COUNT.innerHTML = "";
-        const list = document.querySelector(".ingredients-list").childNodes;
-        const buttonNext = document.querySelector(".next");
+        const list = this.ROOT_INGREDIENTS_LIST.childNodes;
         for (let i = 0; i < list.length; i++) {
             if (
                 list[i].classList.contains("active-ingredient") &&
                 list[i - 1]
             ) {
                 const prevId = list[i - 1].getAttribute("data-id");
-                const params = this.ingredientTypeParams(prevId);
-                const { title, type, index } = params;
+                const params = this.ingredientTypeParams(prevId); // узнать предыдущий index и title
+                const { title, index } = params;
                 list[i].classList.remove("active-ingredient");
                 list[i - 1].classList.add("active-ingredient");
                 list[i].removeAttribute("class");
 
                 // условие для последнего элемента списка
                 if (index !== list.length - 1) {
-                    buttonNext.classList.remove("disabled");
+                    this.buttonNext.classList.remove("disabled");
                     pubSub.fireEvent("ingredientTypeChanged", {
                         id: prevId,
                         title
@@ -126,6 +128,7 @@ class IngredientTypes {
             }
         }
     }
+    // создание кнопки Вперед
     createButtonNext() {
         const next = document.createElement("button");
         next.classList.add("btn-style");
@@ -139,21 +142,21 @@ class IngredientTypes {
         arrow.classList.add("fa-chevron-right");
         next.textContent = "Вперед";
         next.append(arrow);
-
+        this.buttonNext = next;
         return next;
     }
+    // событие клика на кнопке Вперед
     nextIngredientType(e) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
-        const list = document.querySelector(".ingredients-list").childNodes;
-        const buttonPrev = document.querySelector(".prev");
+        const list = this.ROOT_INGREDIENTS_LIST.childNodes;
         for (let i = 0; i < list.length; i++) {
             if (
                 list[i].classList.contains("active-ingredient") &&
                 list[i + 1]
             ) {
                 const nextId = list[i + 1].getAttribute("data-id");
-                const params = this.ingredientTypeParams(nextId);
-                const { title, type, index } = params;
+                const params = this.ingredientTypeParams(nextId); // узнать следующий index и title
+                const { title, index } = params;
                 list[i].classList.remove("active-ingredient");
                 list[i + 1].classList.add("active-ingredient");
                 list[i].removeAttribute("class");
@@ -162,7 +165,7 @@ class IngredientTypes {
                     pubSub.fireEvent("loadPreOrderLayout", { title });
                     e.target.classList.add("disabled");
                 } else {
-                    buttonPrev.classList.remove("disabled");
+                    this.buttonPrev.classList.remove("disabled");
                     pubSub.fireEvent("ingredientTypeChanged", {
                         id: nextId,
                         title
@@ -177,7 +180,6 @@ class IngredientTypes {
         const params = {};
         for (let i = 0; i < this.ingredientsArray.length; i++) {
             if (+id === this.ingredientsArray[i].id) {
-                params.type = this.ingredientsArray[i].type;
                 params.title = this.ingredientsArray[i].title;
                 params.index = i;
                 break;
@@ -188,8 +190,8 @@ class IngredientTypes {
     renderIngredientTypes() {
         this.createList();
         this.createListItems();
-        this.buttonsWrapper.append(this.createButtonPrev());
-        this.buttonsWrapper.append(this.createButtonNext());
+        this.ROOT_MODAL_BUTTONS_WRAPPER.append(this.createButtonPrev());
+        this.ROOT_MODAL_BUTTONS_WRAPPER.append(this.createButtonNext());
     }
 }
 

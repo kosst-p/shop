@@ -1,9 +1,11 @@
 class Basket {
     constructor(props) {
-        this.parentDOM = props.parentDOM;
+        this.ROOT_BASKET = props.ROOT_BASKET;
         this.basketFromLocalStorage = localStorageUtil.getBasketFromLocalStorage(); // для начальной загрузки
         this.addedProducts = [];
         this.totalPrice = 0;
+        this.ROOT_BASKET_CONTENT = null;
+        this.ROOT_BASKET_TOTAL_PRICE = null;
         /* добавление продукта */
         pubSub.subscribeByEvent(
             "onAddProductInBasket",
@@ -60,14 +62,18 @@ class Basket {
         /* *** */
     }
 
-    // completePurchase() {
-    //     if (localStorageUtil.checkBasketFromLocalStorage()) {
-    //         localStorageUtil.removeBasketFromLocalStorage();
-    //         this.renderBasketItems();
-    //         this.renderTotalPrice();
-    //     }
-    // }
+    // оформление заказа
+    completePurchase() {
+        if (this.addedProduct.length && this.totalPrice) {
+            console.log("Ваш заказ оформлен");
+            this.addedProducts = [];
+            this.totalPrice = 0;
+            this.renderProductsInBasket();
+            this.renderTotalPrice();
+        }
+    }
 
+    // создание корзины
     createBasket() {
         const basket = document.createElement("div");
         const basketTitle = document.createElement("div");
@@ -92,9 +98,11 @@ class Basket {
         basketTitle.after(basketHeader);
         const basketContent = document.createElement("div");
         basketContent.classList.add("basket-content");
+        this.ROOT_BASKET_CONTENT = basketContent;
         basketHeader.after(basketContent); // <- контент тут
         const basketTotalPrice = document.createElement("div");
         basketTotalPrice.classList.add("basket-total-price");
+        this.ROOT_BASKET_TOTAL_PRICE = basketTotalPrice;
         basketContent.after(basketTotalPrice); // <- общая цена
         const basketBtnWrapper = document.createElement("div");
         basketBtnWrapper.classList.add("basket-btn-wrapper");
@@ -105,7 +113,6 @@ class Basket {
         basketBtnWrapper.prepend(completeOrder);
 
         basketBtnWrapper.addEventListener("click", event => {
-            console.log("Ваш заказ оформлен");
             this.completePurchase();
         });
         basketTotalPrice.after(basketBtnWrapper);
@@ -113,6 +120,7 @@ class Basket {
         return basket;
     }
 
+    // обновление количества
     updatedQuantity(product) {
         this.addedProducts.forEach(item => {
             if (item.id === product.id) {
@@ -126,6 +134,7 @@ class Basket {
         });
     }
 
+    // добавление
     addedProduct(currentProduct) {
         const foundProduct = this.addedProducts.find(
             item => item.id === currentProduct.id
@@ -134,7 +143,6 @@ class Basket {
             this.addedProducts.push(currentProduct);
         } else {
             // меняется по ссылке
-            console.log("найден");
             foundProduct.quantity += currentProduct.quantity;
             foundProduct.total +=
                 currentProduct.quantity * currentProduct.price;
@@ -142,6 +150,7 @@ class Basket {
         this.totalPrice += currentProduct.total;
     }
 
+    // удаление
     deletedProduct(id) {
         const foundProduct = this.addedProducts.find(item => item.id === id);
         const foundIndex = this.addedProducts.findIndex(item => item.id === id);
@@ -149,9 +158,9 @@ class Basket {
         this.totalPrice -= foundProduct.total;
     }
 
+    // рендер продуктов внутри корзины
     renderProductsInBasket() {
-        const basketContent = document.querySelector(".basket-content");
-        basketContent.innerHTML = "";
+        this.ROOT_BASKET_CONTENT.innerHTML = "";
         const preparedProducts = this.addedProducts.map(product => {
             const { id, name, quantity } = product;
             return new BasketItem({ id, name, quantity });
@@ -159,25 +168,26 @@ class Basket {
         preparedProducts.reduce((acc, child) => {
             acc.append(child.render());
             return acc;
-        }, basketContent); // рендер содержимого корзины
+        }, this.ROOT_BASKET_CONTENT);
     }
 
+    // рендер общей цены внутри корзины
     renderTotalPrice() {
-        const basketContent = document.querySelector(".basket-total-price");
-        basketContent.innerHTML = "";
-        basketContent.append(
+        this.ROOT_BASKET_TOTAL_PRICE.innerHTML = "";
+        this.ROOT_BASKET_TOTAL_PRICE.append(
             new BasketTotalPrice({ totalPrice: this.totalPrice }).render()
         ); // рендер общей цены
     }
 
+    // рендер козины
     renderBasket() {
-        this.parentDOM.innerHTML = "";
-        this.parentDOM.append(this.createBasket());
+        this.ROOT_BASKET.innerHTML = "";
+        this.ROOT_BASKET.append(this.createBasket());
     }
 }
 
 const basket = new Basket({
-    parentDOM: ROOT_BASKET
+    ROOT_BASKET: ROOT_BASKET
 });
 
 basket.renderBasket();
