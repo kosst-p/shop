@@ -31,23 +31,28 @@ class IngredientTypes {
             parent.appendChild(li); // добавил в ul
             li.textContent = name;
             li.addEventListener("click", event => {
-                this.changeIngredientTypesByClick(event, title, index, id);
+                this.changeIngredientTypesByClick(
+                    event,
+                    title,
+                    index,
+                    id,
+                    parent
+                );
             });
         });
     }
 
-    changeIngredientTypesByClick(event, title, index, id) {
+    changeIngredientTypesByClick(event, title, index, id, parent) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.ROOT_MODAL_COUNT.innerHTML = "";
         const buttonNext = document.querySelector(".next");
         const buttonPrev = document.querySelector(".prev");
-        let parent = document.querySelector("." + this.ulClassName);
         // условие для последнего элемента списка
         if (index === this.ingredientsArray.length - 1) {
-            pubSub.fireEvent("loadPreOrderLayout", title);
+            pubSub.fireEvent("loadPreOrderLayout", { title });
             buttonNext.classList.add("disabled");
         } else {
-            pubSub.fireEvent("ingredientChanged", { id, title }); // пользовательское событие
+            pubSub.fireEvent("ingredientTypeChanged", { id, title }); // пользовательское событие
             buttonNext.classList.remove("disabled");
         }
         // условие для первого элемента списка
@@ -107,7 +112,7 @@ class IngredientTypes {
                 // условие для последнего элемента списка
                 if (index !== list.length - 1) {
                     buttonNext.classList.remove("disabled");
-                    pubSub.fireEvent("ingredientChanged", {
+                    pubSub.fireEvent("ingredientTypeChanged", {
                         id: prevId,
                         title
                     });
@@ -158,7 +163,7 @@ class IngredientTypes {
                     e.target.classList.add("disabled");
                 } else {
                     buttonPrev.classList.remove("disabled");
-                    pubSub.fireEvent("ingredientChanged", {
+                    pubSub.fireEvent("ingredientTypeChanged", {
                         id: nextId,
                         title
                     });

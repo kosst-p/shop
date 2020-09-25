@@ -34,8 +34,7 @@ class FetchApi {
             let response = await fetch(url);
             if (response.ok) {
                 let data = await response.json();
-                const ingredients = data;
-                return ingredients;
+                return data;
             }
         } catch (error) {
             console.log(error);

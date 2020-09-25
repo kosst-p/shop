@@ -4,10 +4,13 @@ class ModalTitle {
         this.ROOT_MODAL_TITLE = ROOT_MODAL_TITLE;
         pubSub.subscribeByEvent("openModal", this.render.bind(this));
         pubSub.subscribeByEvent(
-            "ingredientChanged",
+            "ingredientTypeChanged",
             this.changeTitle.bind(this)
         );
-        pubSub.subscribeByEvent("ingredientChanged", this.render.bind(this));
+        pubSub.subscribeByEvent(
+            "ingredientTypeChanged",
+            this.render.bind(this)
+        );
 
         pubSub.subscribeByEvent(
             "loadPreOrderLayout",

@@ -1,9 +1,7 @@
 class Modal {
     constructor() {
         this.closeBtn = document.querySelector(".modal-close-btn");
-        this.modalContent = document.querySelector(".modal-content");
-        this.prevButton = document.querySelector(".prev");
-        this.nextButton = document.querySelector(".next");
+
         this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
         this.ROOT_INGREDIENT_TYPES = ROOT_INGREDIENT_TYPES;
         this.ROOT_MODAL_TITLE = ROOT_MODAL_TITLE;

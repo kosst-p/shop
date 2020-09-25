@@ -1,7 +1,7 @@
 class Basket {
     constructor(props) {
         this.parentDOM = props.parentDOM;
-        this.basketFromLocalStorage = localStorageUtil.getDataFromLocalStorage(); // для начальной загрузки
+        this.basketFromLocalStorage = localStorageUtil.getBasketFromLocalStorage(); // для начальной загрузки
         pubSub.subscribeByEvent(
             "addProductInBasket",
             this.renderBasketItems.bind(this)
@@ -21,8 +21,8 @@ class Basket {
     }
 
     completePurchase() {
-        if (localStorageUtil.checkDataFromLocalStorage()) {
-            localStorageUtil.removeDataFromLocalStorage();
+        if (localStorageUtil.checkBasketFromLocalStorage()) {
+            localStorageUtil.removeBasketFromLocalStorage();
             this.renderBasketItems();
             this.renderTotalPrice();
         }
@@ -74,7 +74,7 @@ class Basket {
     }
 
     renderBasketItems() {
-        const basket = localStorageUtil.getDataFromLocalStorage();
+        const basket = localStorageUtil.getBasketFromLocalStorage();
         const basketContent = document.querySelector(".basket-content");
         basketContent.innerHTML = "";
 
@@ -91,7 +91,7 @@ class Basket {
 
     renderTotalPrice() {
         const basketContent = document.querySelector(".basket-total-price");
-        const basket = localStorageUtil.getDataFromLocalStorage();
+        const basket = localStorageUtil.getBasketFromLocalStorage();
         basketContent.innerHTML = "";
         const totalPrice = basket.totalPrice;
         basketContent.append(new BasketTotalPrice({ totalPrice }).render()); // рендер общей цены

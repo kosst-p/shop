@@ -9,7 +9,6 @@ class ProductItem {
         this.price = props.price;
         this.type = props.type;
         this.quantity = 1;
-        this.render = this.render.bind(this);
         this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
     }
 
@@ -25,23 +24,32 @@ class ProductItem {
         pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
     }
 
-    increaseQuantity() {
+    increaseQuantity(field) {
+        const basket = localStorageUtil.getBasketFromLocalStorage();
+        console.log(basket);
+
         this.quantity = this.quantity + 1;
-        const parent = document.getElementById(this.id);
-        parent.replaceWith(this.render());
+        field.textContent = this.quantity;
     }
 
-    decreaseQuantity() {
+    decreaseQuantity(field) {
         if (this.quantity > 1) {
             this.quantity -= 1;
-            const parent = document.getElementById(this.id);
-            parent.replaceWith(this.render());
+            // const parent = document.getElementById(this.id);
+            // parent.replaceWith(this.render());
+            field.textContent = this.quantity;
         }
     }
 
     openModal() {
         this.ROOT_MODAL_WINDOW.classList.add("open");
-        pubSub.fireEvent("openModal"); // пользовательское событие
+        pubSub.fireEvent("openModal", {
+            id: 1,
+            nameProduct: this.name,
+            image: this.image,
+            idProduct: this.id * 1000
+        }); // пользовательское событие. передает id первого элемента из списка
+        //TODO прокинуть имя и картинку и записать в преордер
     }
 
     render() {
@@ -125,14 +133,14 @@ class ProductItem {
 
         /* Events */
         buttonIncrease.addEventListener("click", e => {
-            this.increaseQuantity();
+            this.increaseQuantity(spanCount);
         });
 
         buttonDecrease.addEventListener("click", e => {
-            this.decreaseQuantity();
+            this.decreaseQuantity(spanCount);
         });
         buttonInBasket.addEventListener("click", e => {
-            this.addInBasket();
+            this.addInBasket(spanCount);
         });
         /* *** */
 
