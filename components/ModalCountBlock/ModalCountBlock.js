@@ -8,13 +8,24 @@ class ModalCountBlock {
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
+        pubSub.fireEvent("changeQuantity", {
+            quantity: this.quantity
+        });
     }
 
     decreaseQuantity(field) {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
+            pubSub.fireEvent("changeQuantity", {
+                quantity: this.quantity
+            });
         }
+    }
+
+    addInBasket(e) {
+        console.log(e);
+        pubSub.fireEvent("addPreOrderInBasket", { close: true });
     }
 
     createContent() {
@@ -68,7 +79,7 @@ class ModalCountBlock {
             this.decreaseQuantity(spanCount);
         });
         buttonInBasket.addEventListener("click", e => {
-            this.addInBasket();
+            this.addInBasket(e.target);
         });
         /* *** */
 

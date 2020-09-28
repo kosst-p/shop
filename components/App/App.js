@@ -12,10 +12,19 @@ class App {
             "ingredientTypeChanged",
             this.onIngredientChanged.bind(this)
         );
-        // pubSub.subscribeByEvent(
-        //     "openModal",
-        //     this.onIngredientChanged.bind(this)
-        // );
+        pubSub.subscribeByEvent(
+            "openModal",
+            this.onIngredientChanged.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "setChangedIngredients",
+            this.onSetChangedIngredients.bind(this)
+        );
+        this.changedIngredients = [];
+    }
+
+    onSetChangedIngredients(data) {
+        this.changedIngredients = data;
     }
 
     // загрузка продуктов на страницу относительно выбранного типа из списка
@@ -37,7 +46,7 @@ class App {
                     image,
                     price,
                     type,
-                    collectionRule
+                    ingredientsRule
                 } = product;
 
                 const marketImg = markets[market].image;
@@ -51,7 +60,8 @@ class App {
                     image,
                     price,
                     type,
-                    collectionRule // ?
+                    ingredientsRule, // ?
+                    ingredientsType: this.ingredientsType
                 });
 
                 return instanceProductItem;
@@ -79,12 +89,12 @@ class App {
                         price,
                         description,
                         image,
-                        category: currentType.category
+                        category: currentType.category,
+                        changedIngredients: this.changedIngredients
                     })
                 );
             }
         }
-        console.log(filteredIngredients);
         filteredIngredients.reduce((acc, child) => {
             acc.append(child.render()); // ?
             return acc;
@@ -106,7 +116,7 @@ class App {
                 image,
                 price,
                 type,
-                collectionRule // ?
+                ingredientsRule // ?
             } = product;
             const marketImg = markets[market].image;
             return new ProductItem({
@@ -118,7 +128,8 @@ class App {
                 image,
                 price,
                 type,
-                collectionRule
+                ingredientsRule,
+                ingredientsType: this.ingredientsType
             });
         });
         allProducts.reduce((acc, child) => {

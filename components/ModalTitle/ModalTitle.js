@@ -17,6 +17,8 @@ class ModalTitle {
             this.changeTitle.bind(this)
         );
         pubSub.subscribeByEvent("loadPreOrderLayout", this.render.bind(this));
+        pubSub.subscribeByEvent("onCloseModal", this.changeTitle.bind(this));
+        pubSub.subscribeByEvent("onCloseModal", this.render.bind(this));
     }
 
     changeTitle({ title }) {

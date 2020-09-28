@@ -28,7 +28,8 @@ const pubSub = new PubSub();
 productTypeChanged - смена продуктов на странице относительно выбранной позиции в списке
 ingredientTypeChanged - смена ингредиентов в модальном окне относительно выбранной позиции в списке
 onAddProductInBasket - добавление продукта в корзину
-deleteProductFromBasket - удаление продукта из корзины
+onIncreaseQuantityInBasket, onDecreaseQuantityInBasket - изменение количества в карточки товара и в корзине одновременно
+onDeleteProductFromBasket - удаление продукта из корзины
 openModal - открытие модального окна
 loadPreOrderLayout - загрузка шаблона с выбранными компонентами для продукта
 */

@@ -60,6 +60,20 @@ class Basket {
             this.renderTotalPrice.bind(this)
         );
         /* *** */
+        /* Добавление предзаказа */
+        pubSub.subscribeByEvent(
+            "setPreOrderInBasket",
+            this.addedProduct.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "setPreOrderInBasket",
+            this.renderProductsInBasket.bind(this)
+        );
+        pubSub.subscribeByEvent(
+            "setPreOrderInBasket",
+            this.renderTotalPrice.bind(this)
+        );
+        /* *** */
     }
 
     // оформление заказа
@@ -134,6 +148,8 @@ class Basket {
         });
     }
 
+    addedPreOrderProduct() {}
+
     // добавление
     addedProduct(currentProduct) {
         const foundProduct = this.addedProducts.find(
@@ -147,6 +163,7 @@ class Basket {
             foundProduct.total +=
                 currentProduct.quantity * currentProduct.price;
         }
+        console.log(currentProduct.total);
         this.totalPrice += currentProduct.total;
     }
 
@@ -162,8 +179,9 @@ class Basket {
     renderProductsInBasket() {
         this.ROOT_BASKET_CONTENT.innerHTML = "";
         const preparedProducts = this.addedProducts.map(product => {
-            const { id, name, quantity } = product;
-            return new BasketItem({ id, name, quantity });
+            const { id, name, quantity, ingredients } = product;
+
+            return new BasketItem({ id, name, quantity, ingredients });
         });
         preparedProducts.reduce((acc, child) => {
             acc.append(child.render());

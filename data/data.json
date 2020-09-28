@@ -17,7 +17,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "collectionRule": {
+            "ingredientsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -40,6 +40,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 2
         },
         {
@@ -57,6 +62,11 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
+            },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
             },
             "id": 3
         },
@@ -76,6 +86,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 4
         },
         {
@@ -93,6 +108,11 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
+            },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
             },
             "id": 5
         },
@@ -112,6 +132,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 6
         },
         {
@@ -129,6 +154,11 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
+            },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
             },
             "id": 7
         },
@@ -148,6 +178,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 8
         },
         {
@@ -165,6 +200,11 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
+            },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
             },
             "id": 9
         },
@@ -184,6 +224,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 10
         },
         {
@@ -201,6 +246,11 @@
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
+            },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
             },
             "id": 11
         },
@@ -220,6 +270,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 12
         },
         {
@@ -238,6 +293,11 @@
                 "sauce": [],
                 "filling": []
             },
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 13
         },
         {
@@ -250,6 +310,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {},
+            "ingredientsRule": {
+                "sizes": 1,
+                "breads": 1,
+                "sauces": 3
+            },
             "id": 14
         },
         {

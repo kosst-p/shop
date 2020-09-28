@@ -14,6 +14,7 @@ class IngredientTypes {
         this.buttonNext = null;
         this.buttonPrev = null;
     }
+
     // создание ul
     createList() {
         const ul = document.createElement("ul");
@@ -105,8 +106,8 @@ class IngredientTypes {
                 list[i - 1]
             ) {
                 const prevId = list[i - 1].getAttribute("data-id");
-                const params = this.ingredientTypeParams(prevId); // узнать предыдущий index и title
-                const { title, index } = params;
+                const params = this.ingredientTypeParams(prevId); // узнать предыдущий index и title и category
+                const { title, index, category } = params;
                 list[i].classList.remove("active-ingredient");
                 list[i - 1].classList.add("active-ingredient");
                 list[i].removeAttribute("class");
@@ -116,7 +117,8 @@ class IngredientTypes {
                     this.buttonNext.classList.remove("disabled");
                     pubSub.fireEvent("ingredientTypeChanged", {
                         id: prevId,
-                        title
+                        title,
+                        category
                     });
                 }
 
@@ -155,8 +157,9 @@ class IngredientTypes {
                 list[i + 1]
             ) {
                 const nextId = list[i + 1].getAttribute("data-id");
-                const params = this.ingredientTypeParams(nextId); // узнать следующий index и title
-                const { title, index } = params;
+                const params = this.ingredientTypeParams(nextId); // узнать следующий index и title и category
+                const { title, index, category } = params;
+                console.log(category);
                 list[i].classList.remove("active-ingredient");
                 list[i + 1].classList.add("active-ingredient");
                 list[i].removeAttribute("class");
@@ -168,7 +171,8 @@ class IngredientTypes {
                     this.buttonPrev.classList.remove("disabled");
                     pubSub.fireEvent("ingredientTypeChanged", {
                         id: nextId,
-                        title
+                        title,
+                        category
                     });
                 }
 
@@ -176,12 +180,14 @@ class IngredientTypes {
             }
         }
     }
+
     ingredientTypeParams(id) {
         const params = {};
         for (let i = 0; i < this.ingredientsArray.length; i++) {
             if (+id === this.ingredientsArray[i].id) {
                 params.title = this.ingredientsArray[i].title;
                 params.index = i;
+                params.category = this.ingredientsArray[i].category;
                 break;
             }
         }

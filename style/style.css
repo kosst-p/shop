@@ -275,7 +275,8 @@ body {
     background-color: #ffffff;
     color: #464646;
 }
-.basket-components {
+.basket-ingredients {
+    display: inline-block;
     font-size: 10px;
 }
 .basket-icon {

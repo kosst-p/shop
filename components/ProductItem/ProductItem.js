@@ -10,7 +10,8 @@ class ProductItem {
         this.type = props.type;
         this.quantity = 1;
         this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
-        this.collectionRule = props.collectionRule;
+        this.ingredientsRule = props.ingredientsRule;
+        this.ingredientsType = ingredientsType;
     }
 
     // добавить в корзину
@@ -60,14 +61,23 @@ class ProductItem {
     // открыть ммодальное окно
     openModal() {
         this.ROOT_MODAL_WINDOW.classList.add("open");
+        let firstLoadCategory = ""; // для первого раза открытия модалки
+
+        this.ingredientsType.forEach(element => {
+            if (element.id === 1) {
+                firstLoadCategory = element.category;
+            }
+        });
+        const randomId = Math.floor(
+            Math.random() * (Math.pow(10, 9) - 1000 + 1) + 1000
+        );
         pubSub.fireEvent("openModal", {
-            id: 1,
-            nameProduct: this.name,
-            image: this.image,
-            idProduct: this.id * 1000,
-            collectionRule: this.collectionRule
+            category: firstLoadCategory,
+            nameProduct: this.name + "(компл.)",
+            imageProduct: this.image,
+            idProduct: this.id * randomId,
+            ingredientsRule: this.ingredientsRule
         }); // пользовательское событие. передает id первого элемента из списка
-        //TODO прокинуть имя и картинку и записать в преордер
     }
 
     // рендер
