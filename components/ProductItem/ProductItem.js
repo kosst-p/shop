@@ -1,20 +1,14 @@
 class ProductItem {
     constructor(props) {
         this.id = props.id;
-        this.marketImg = props.marketImg;
         this.name = props.name;
         this.description = props.description;
-        this.category = props.category;
         this.image = props.image;
+        this.marketImg = props.marketImg;
         this.price = props.price;
-        this.type = props.type;
         this.quantity = 1;
-        this.ROOT_MODAL_WINDOW = ROOT_MODAL_WINDOW;
-        this.ingredientsRule = props.ingredientsRule;
-        this.ingredientsType = ingredientsType;
     }
 
-    // добавить в корзину
     addInBasket() {
         const product = {
             id: this.id,
@@ -23,23 +17,13 @@ class ProductItem {
             quantity: this.quantity,
             total: this.quantity * this.price
         };
-        pubSub.fireEvent("onAddProductInBasket", product); // пользовательское событие
+        pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
     }
 
     // увеличить количество
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
-
-        const product = {
-            id: this.id,
-            price: this.price,
-            quantity: this.quantity,
-            total: this.quantity * this.price,
-            type: "increase"
-        };
-
-        pubSub.fireEvent("onIncreaseQuantityInBasket", product); // пользовательское событие
     }
 
     // уменьшить количество
@@ -47,40 +31,9 @@ class ProductItem {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
-            const product = {
-                id: this.id,
-                price: this.price,
-                quantity: this.quantity,
-                total: this.quantity * this.price,
-                type: "decrease"
-            };
-            pubSub.fireEvent("onDecreaseQuantityInBasket", product); // пользовательское событие
         }
     }
 
-    // открыть ммодальное окно
-    openModal() {
-        this.ROOT_MODAL_WINDOW.classList.add("open");
-        let firstLoadCategory = ""; // для первого раза открытия модалки
-
-        this.ingredientsType.forEach(element => {
-            if (element.id === 1) {
-                firstLoadCategory = element.category;
-            }
-        });
-        const randomId = Math.floor(
-            Math.random() * (Math.pow(10, 9) - 1000 + 1) + 1000
-        );
-        pubSub.fireEvent("openModal", {
-            category: firstLoadCategory,
-            nameProduct: this.name + "(компл.)",
-            imageProduct: this.image,
-            idProduct: this.id * randomId,
-            ingredientsRule: this.ingredientsRule
-        }); // пользовательское событие. передает id первого элемента из списка
-    }
-
-    // рендер
     render() {
         /* Create item */
         const itemWrapper = document.createElement("div");
@@ -105,15 +58,8 @@ class ProductItem {
         itemImgWrapper.after(nameWrapper);
         const descrWrapper = document.createElement("div");
 
-        if (this.type === "single") {
-            descrWrapper.classList.add("single");
-        }
-        if (this.type === "multiple") {
-            descrWrapper.classList.add("multiple");
-            descrWrapper.addEventListener("click", e => {
-                this.openModal();
-            });
-        }
+        // модалка
+
         descrWrapper.classList.add("item-wrapper__description");
         descrWrapper.setAttribute("data-atr", this.type);
         descrWrapper.textContent = this.description;
@@ -164,12 +110,11 @@ class ProductItem {
         buttonIncrease.addEventListener("click", e => {
             this.increaseQuantity(spanCount);
         });
-
         buttonDecrease.addEventListener("click", e => {
             this.decreaseQuantity(spanCount);
         });
         buttonInBasket.addEventListener("click", e => {
-            this.addInBasket(spanCount);
+            this.addInBasket();
         });
         /* *** */
 

@@ -1,37 +1,11 @@
 class FetchApi {
-    constructor() {
-        this.fetchData = this.fetchData.bind(this);
+    constructor(props) {
+        this.url = props.url;
     }
 
-    static async fetchDataProducts(url) {
+    async fetchData() {
+        let response = await fetch(this.url);
         try {
-            let response = await fetch(url);
-            if (response.ok) {
-                let data = await response.json();
-                const products = data.menu;
-                return products;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    static async fetchDataMarkets(url) {
-        try {
-            let response = await fetch(url);
-            if (response.ok) {
-                let data = await response.json();
-                const markets = data.markets;
-                return markets;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    static async fetchDataIngredients(url) {
-        try {
-            let response = await fetch(url);
             if (response.ok) {
                 let data = await response.json();
                 return data;

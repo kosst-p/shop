@@ -21,7 +21,6 @@ class PubSub {
         }
     }
 }
-
 const pubSub = new PubSub();
 
 /* список пользовательских событий:
