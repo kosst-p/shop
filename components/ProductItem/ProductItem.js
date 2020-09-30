@@ -9,21 +9,19 @@ class ProductItem {
         this.quantity = 1;
     }
 
+    // добавить в корзину
     addInBasket() {
-        const product = {
-            id: this.id,
-            name: this.name,
-            price: this.price,
-            quantity: this.quantity,
-            total: this.quantity * this.price
-        };
-        pubSub.fireEvent("addProductInBasket", product); // пользовательское событие
+        pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
     // увеличить количество
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
+        pubSub.fireEvent("changeQuantity", {
+            currentProd: this,
+            increase: "increase"
+        }); // пользовательское событие
     }
 
     // уменьшить количество
@@ -31,6 +29,10 @@ class ProductItem {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
+            pubSub.fireEvent("changeQuantity", {
+                currentProd: this,
+                decrease: "decrease"
+            }); // пользовательское событие
         }
     }
 
@@ -116,6 +118,8 @@ class ProductItem {
         buttonInBasket.addEventListener("click", e => {
             this.addInBasket();
         });
+
+        itemImgWrapper.addEventListener("click", e => {});
         /* *** */
 
         return itemWrapper;
