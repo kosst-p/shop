@@ -1,30 +1,20 @@
 class IngredientItem {
     constructor(props) {
+        this.id = props.id;
         this.name = props.name;
+        this.description = props.description;
         this.image = props.image;
         this.price = props.price;
-        this.description = props.description;
-        this.id = props.id;
-        this.category = props.category;
-        this.changedIngredients = props.changedIngredients;
-        this.ingredientsRule = {
-            sizes: 1,
-            breads: 1,
-            sauces: 3
-        };
-        this.count = 1;
-        pubSub.subscribeByEvent("test", this.checkAddedIngredients.bind(this)); // слушаем событие добавился или удалился ингредиент из объекта preorder
-        // this.checkedCurrentItem = false;
     }
 
-    addIngredientInPreOrder() {
-        pubSub.fireEvent("onAddInPreOrder", {
-            name: this.name,
-            category: this.category,
-            price: this.price,
-            id: this.id
-        }); // пользовательское событие
-    }
+    // addIngredientInPreOrder() {
+    //     pubSub.fireEvent("onAddInPreOrder", {
+    //         name: this.name,
+    //         category: this.category,
+    //         price: this.price,
+    //         id: this.id
+    //     }); // пользовательское событие
+    // }
 
     // для ререндара
     checkAddedIngredients(params) {
@@ -46,16 +36,14 @@ class IngredientItem {
         const ingredientWrapper = document.createElement("div");
         ingredientWrapper.classList.add("ingredient-wrapper");
 
-        ingredientWrapper.setAttribute("id", `${this.id}-${this.name}`); // img
+        // if (this.changedIngredients.includes(this.name)) {
+        //     ingredientWrapper.classList.add("active-name-ingredient");
+        // }
 
-        if (this.changedIngredients.includes(this.name)) {
-            ingredientWrapper.classList.add("active-name-ingredient");
-        }
-
-        if (this.checkedCurrentItem) {
-            console.log("check");
-            ingredientWrapper.classList.add("active-name-ingredient");
-        }
+        // if (this.checkedCurrentItem) {
+        //     console.log("check");
+        //     ingredientWrapper.classList.add("active-name-ingredient");
+        // }
 
         const ingredientWrapperImg = document.createElement("div");
         ingredientWrapperImg.classList.add("ingredient-wrapper__img");
@@ -82,7 +70,6 @@ class IngredientItem {
         ingredientWrapper.addEventListener("click", e => {
             this.addIngredientInPreOrder();
         });
-
         return ingredientWrapper;
     }
 }

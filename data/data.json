@@ -11,13 +11,13 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": {},
+                "size": "1x",
                 "bread": "white-italian",
                 "vegetable": [],
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -40,7 +40,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -63,7 +63,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -86,7 +86,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -109,7 +109,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -132,7 +132,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -155,7 +155,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -178,7 +178,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -201,7 +201,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -224,7 +224,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -247,7 +247,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -270,7 +270,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -293,7 +293,7 @@
                 "sauce": [],
                 "filling": []
             },
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -310,7 +310,7 @@
             "type": "multiple",
             "weight": 1,
             "components": {},
-            "ingredientsRule": {
+            "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
                 "sauces": 3
@@ -1512,7 +1512,7 @@
     "sizes": {
         "1x": {
             "name": "15 См",
-            "price": 60,
+            "price": 0,
             "image": "/i/sizes/1x.jpg",
             "id": 1
         },

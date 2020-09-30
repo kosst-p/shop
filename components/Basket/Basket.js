@@ -16,6 +16,7 @@ class Basket {
             this.renderAddedProducts();
             this.renderTotalPrice();
         });
+
         /* подписка на изменение количества */
         pubSub.subscribeByEvent("changeQuantity", data => {
             this.onChangedQuantity(data);

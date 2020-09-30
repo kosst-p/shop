@@ -9,7 +9,13 @@ class ProductItem {
         this.quantity = 1;
         this.category = props.category;
         this.type = props.type;
-        this.ingredientsRule = props.ingredientsRule;
+        this.componentsRule = props.componentsRule;
+        this.totalPrice = this.price;
+        this.quantityField = null;
+    }
+
+    changeTextFieldQuantity(value) {
+        this.quantityField.textContent = value;
     }
 
     // добавить в корзину
@@ -21,6 +27,7 @@ class ProductItem {
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
+        this.totalPrice = this.quantity * this.price;
         pubSub.fireEvent("changeQuantity", {
             currentProd: this,
             increase: "increase"
@@ -70,7 +77,7 @@ class ProductItem {
         if (this.type === "multiple") {
             descrWrapper.classList.add("multiple");
             descrWrapper.addEventListener("click", e => {
-                pubSub.fireEvent("checkModalWindow"); // пользовательское событие
+                pubSub.fireEvent("openModal", this); // пользовательское событие
             });
         }
         //
@@ -101,6 +108,7 @@ class ProductItem {
         founIdescr.classList.add("fa-minus");
         buttonDecrease.prepend(founIdescr);
         const spanCount = document.createElement("span");
+        this.quantityField = spanCount;
         spanCount.textContent = this.quantity; // тут обновляется количество
         spanCount.classList.add("item-count__field");
         buttonDecrease.after(spanCount);
@@ -131,8 +139,6 @@ class ProductItem {
         buttonInBasket.addEventListener("click", e => {
             this.addInBasket();
         });
-
-        itemImgWrapper.addEventListener("click", e => {});
         /* *** */
 
         return itemWrapper;

@@ -3,19 +3,9 @@ class App {
         this.URL = "../data/data.json";
         this.ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
         this.ROOT_RIGHT_SIDE = document.querySelector(".right-side");
-        this.ROOT_INGREDIENT_TYPES = document.querySelector(
-            ".ingredient-types"
-        );
-        this.ROOT_MODAL_TITLE = document.querySelector(".modal-title");
-        this.ROOT_MODAL_PRICE = document.querySelector(".modal-price");
-        this.ROOT_MODAL_BUTTONS_WRAPPER = document.querySelector(
-            ".modal-buttons-wrapper"
-        );
         this.ROOT_INGREDIENTS_WRAPPER = document.querySelector(
             ".ingredients-wrapper"
         );
-        this.ROOT_MODAL_COUNT = document.querySelector(".modal-count");
-
         // список типов продуктов
         this.productsType = [
             { id: 1, category: "pizza", name: "Пицца" },
@@ -75,14 +65,28 @@ class App {
             this.renderProductCard(data);
         });
 
+        /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
+        pubSub.subscribeByEvent("ingredientTypeChange", data => {
+            this.renderIngredientCard(data);
+        });
+
         /* открытие модального окна*/
-        pubSub.subscribeByEvent("openedModal", data => {
+        pubSub.subscribeByEvent("openModal", data => {
             this.modalIsOpen(data);
+            this.firstLoadIngredientCard();
         });
         /* закрытие модального окна*/
         pubSub.subscribeByEvent("closedModal", data => {
             this.modalIsClose(data);
         });
+        /* замена содержимого поля с количеством в карточке с продуктом*/
+        pubSub.subscribeByEvent("changeQuantity", data => {
+            this.changedTextField(data);
+        });
+    }
+
+    changedTextField(data) {
+        data.currentProd.changeTextFieldQuantity(data.currentProd.quantity);
     }
 
     async request() {
@@ -109,7 +113,7 @@ class App {
                     market,
                     category,
                     type,
-                    ingredientsRule
+                    componentsRule
                 } = product;
                 const marketImg = this.responseData.markets[market].image;
                 const instanceProductItem = new ProductItem({
@@ -121,7 +125,7 @@ class App {
                     marketImg,
                     category,
                     type,
-                    ingredientsRule
+                    componentsRule
                 });
 
                 return instanceProductItem;
@@ -134,8 +138,8 @@ class App {
     }
 
     // первая загрузка страницы со всеми карточками продукта
-    async firstLoadProductCard() {
-        const allProducts = await this.responseData.menu.map(product => {
+    firstLoadProductCard() {
+        const allProducts = this.responseData.menu.map(product => {
             const {
                 id,
                 name,
@@ -145,7 +149,7 @@ class App {
                 market,
                 category,
                 type,
-                ingredientsRule
+                componentsRule
             } = product;
             const marketImg = this.responseData.markets[market].image;
             const instanceProductItem = new ProductItem({
@@ -157,7 +161,7 @@ class App {
                 marketImg,
                 category,
                 type,
-                ingredientsRule
+                componentsRule
             });
 
             return instanceProductItem;
@@ -168,17 +172,60 @@ class App {
         }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
     }
 
-    modalIsOpen(data) {
-        data.open();
+    modalIsOpen(data) {}
+
+    firstLoadIngredientCard() {
+        let category = "";
+        this.ingredientsType.forEach(element => {
+            if (element.id === 1) {
+                category = element.category;
+            }
+        });
+        this.renderIngredientCard({ category });
     }
+
     modalIsClose(data) {
         data.close();
+    }
+
+    renderIngredientCard(data) {
+        const { category } = data;
+        const filteredIngredients = [];
+
+        for (const key in this.responseData[category]) {
+            if (this.responseData[category].hasOwnProperty(key)) {
+                const {
+                    id,
+                    name,
+                    price,
+                    description,
+                    image
+                } = this.responseData[category][key];
+                filteredIngredients.push(
+                    new IngredientItem({
+                        id,
+                        name,
+                        description,
+                        image,
+                        price
+                    })
+                );
+            }
+        }
+
+        filteredIngredients.reduce((acc, child) => {
+            acc.append(child.render());
+            return acc;
+        }, this.ROOT_INGREDIENTS_WRAPPER); // рендер карточек ингредиент
     }
 }
 
 const app = new App();
-app.request();
-
-setTimeout(() => {
+/* *** */
+// дождемся, пока загрузятся все данные по api
+(async () => {
+    await app.request();
     app.firstLoadProductCard();
-}, 500); // ?
+})();
+// setTimeout(() => {}, 500); // ?
+/* *** */
