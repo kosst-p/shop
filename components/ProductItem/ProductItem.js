@@ -7,6 +7,9 @@ class ProductItem {
         this.marketImg = props.marketImg;
         this.price = props.price;
         this.quantity = 1;
+        this.category = props.category;
+        this.type = props.type;
+        this.ingredientsRule = props.ingredientsRule;
     }
 
     // добавить в корзину
@@ -61,6 +64,16 @@ class ProductItem {
         const descrWrapper = document.createElement("div");
 
         // модалка
+        if (this.type === "single") {
+            descrWrapper.classList.add("single");
+        }
+        if (this.type === "multiple") {
+            descrWrapper.classList.add("multiple");
+            descrWrapper.addEventListener("click", e => {
+                pubSub.fireEvent("checkModalWindow"); // пользовательское событие
+            });
+        }
+        //
 
         descrWrapper.classList.add("item-wrapper__description");
         descrWrapper.setAttribute("data-atr", this.type);

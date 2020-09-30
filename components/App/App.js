@@ -3,7 +3,6 @@ class App {
         this.URL = "../data/data.json";
         this.ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
         this.ROOT_RIGHT_SIDE = document.querySelector(".right-side");
-        this.ROOT_MODAL_WINDOW = document.querySelector(".modal");
         this.ROOT_INGREDIENT_TYPES = document.querySelector(
             ".ingredient-types"
         );
@@ -75,6 +74,15 @@ class App {
         pubSub.subscribeByEvent("productTypeChange", data => {
             this.renderProductCard(data);
         });
+
+        /* открытие модального окна*/
+        pubSub.subscribeByEvent("openedModal", data => {
+            this.modalIsOpen(data);
+        });
+        /* закрытие модального окна*/
+        pubSub.subscribeByEvent("closedModal", data => {
+            this.modalIsClose(data);
+        });
     }
 
     async request() {
@@ -92,7 +100,17 @@ class App {
         const filteredProducts = this.responseData.menu
             .filter(product => data.category === product.category)
             .map(product => {
-                const { id, name, description, image, price, market } = product;
+                const {
+                    id,
+                    name,
+                    description,
+                    image,
+                    price,
+                    market,
+                    category,
+                    type,
+                    ingredientsRule
+                } = product;
                 const marketImg = this.responseData.markets[market].image;
                 const instanceProductItem = new ProductItem({
                     id,
@@ -100,7 +118,10 @@ class App {
                     description,
                     image,
                     price,
-                    marketImg
+                    marketImg,
+                    category,
+                    type,
+                    ingredientsRule
                 });
 
                 return instanceProductItem;
@@ -115,7 +136,17 @@ class App {
     // первая загрузка страницы со всеми карточками продукта
     async firstLoadProductCard() {
         const allProducts = await this.responseData.menu.map(product => {
-            const { id, name, description, image, price, market } = product;
+            const {
+                id,
+                name,
+                description,
+                image,
+                price,
+                market,
+                category,
+                type,
+                ingredientsRule
+            } = product;
             const marketImg = this.responseData.markets[market].image;
             const instanceProductItem = new ProductItem({
                 id,
@@ -123,7 +154,10 @@ class App {
                 description,
                 image,
                 price,
-                marketImg
+                marketImg,
+                category,
+                type,
+                ingredientsRule
             });
 
             return instanceProductItem;
@@ -132,6 +166,13 @@ class App {
             acc.append(child.render());
             return acc;
         }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
+    }
+
+    modalIsOpen(data) {
+        data.open();
+    }
+    modalIsClose(data) {
+        data.close();
     }
 }
 
