@@ -52,6 +52,7 @@ class Basket {
 
     // добавление продукта в стор и обновление цены
     addedProductInStore(data) {
+        console.log(data);
         const foundProduct = this.addedProducts.find(
             item => item.id === data.id
         );

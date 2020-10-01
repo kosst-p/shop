@@ -1,50 +1,42 @@
 class IngredientItem {
     constructor(props) {
+        this.code = props.code;
         this.id = props.id;
         this.name = props.name;
         this.description = props.description;
         this.image = props.image;
         this.price = props.price;
+        this.category = props.category;
+        this.currentIngredientWrapper = null;
+        this.isActive = props.isActive;
     }
 
-    // addIngredientInPreOrder() {
-    //     pubSub.fireEvent("onAddInPreOrder", {
-    //         name: this.name,
-    //         category: this.category,
-    //         price: this.price,
-    //         id: this.id
-    //     }); // пользовательское событие
-    // }
+    // событие на выбор ингредиента
+    updateIngredient() {
+        pubSub.fireEvent("addIngredient", this); // пользовательское событие
+    }
 
-    // для ререндара
-    checkAddedIngredients(params) {
-        console.log(params);
-        // if (this.id === params.id) {
-        //     this.checkedCurrentItem = params.added;
-        // }
-        // console.log(params); // передается true или false
-        // debugger;
-        // this.checkedCurrentItem = params;
-        // console.log("return info about added item");
-        // const currentCard = document.getElementById(`${this.id}-${this.name}`);
-        // console.log(currentCard);
-        // ROOT_INGREDIENTS_WRAPPER.replaceChild(this.render(), currentCard);
-        // currentCard.classList.add("active-name-ingredient");
+    // установить активный класс по клику
+    addActiveClass() {
+        this.currentIngredientWrapper.classList.add("active-name-ingredient");
+    }
+
+    // удалить активный класс по клику
+    deleteActiveClass() {
+        this.currentIngredientWrapper.classList.remove(
+            "active-name-ingredient"
+        );
     }
 
     render() {
+        // console.log(this);
         const ingredientWrapper = document.createElement("div");
         ingredientWrapper.classList.add("ingredient-wrapper");
+        if (this.isActive) {
+            ingredientWrapper.classList.add("active-name-ingredient");
+        }
 
-        // if (this.changedIngredients.includes(this.name)) {
-        //     ingredientWrapper.classList.add("active-name-ingredient");
-        // }
-
-        // if (this.checkedCurrentItem) {
-        //     console.log("check");
-        //     ingredientWrapper.classList.add("active-name-ingredient");
-        // }
-
+        this.currentIngredientWrapper = ingredientWrapper;
         const ingredientWrapperImg = document.createElement("div");
         ingredientWrapperImg.classList.add("ingredient-wrapper__img");
         const img = document.createElement("img");
@@ -68,7 +60,7 @@ class IngredientItem {
         ingredientWrapperDescr.after(ingredientWrapperPrice);
 
         ingredientWrapper.addEventListener("click", e => {
-            this.addIngredientInPreOrder();
+            this.updateIngredient();
         });
         return ingredientWrapper;
     }

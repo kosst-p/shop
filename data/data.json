@@ -11,15 +11,13 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
-                "sizes": 1,
-                "breads": 1,
                 "sauces": 3
             },
             "id": 1
@@ -34,11 +32,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -57,10 +55,10 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
                 "filling": []
             },
             "componentsRule": {
@@ -80,11 +78,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -103,11 +101,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -126,11 +124,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -149,11 +147,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -172,11 +170,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -195,11 +193,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -218,11 +216,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -241,11 +239,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -264,11 +262,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,
@@ -287,11 +285,11 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "size": "1x",
-                "bread": "white-italian",
-                "vegetable": [],
-                "sauce": [],
-                "filling": []
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,

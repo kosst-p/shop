@@ -60,6 +60,12 @@ class App {
         // выгрузили все данные одним ajax запросом
         this.responseData = null;
 
+        // текущий выбранный продукт
+        this.currentProduct = null;
+
+        // начальное состояние, чтобы потом сбросить при удалении товара из корзины
+        this.initialStateOfComponents = null;
+
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
         pubSub.subscribeByEvent("productTypeChange", data => {
             this.renderProductCard(data);
@@ -82,6 +88,13 @@ class App {
         /* замена содержимого поля с количеством в карточке с продуктом*/
         pubSub.subscribeByEvent("changeQuantity", data => {
             this.changedTextField(data);
+        });
+        pubSub.subscribeByEvent("addIngredient", data => {
+            this.addedIngredient(data);
+        });
+
+        pubSub.subscribeByEvent("orderListRender", data => {
+            this.onActiveOrderList(data);
         });
     }
 
@@ -113,6 +126,7 @@ class App {
                     market,
                     category,
                     type,
+                    components,
                     componentsRule
                 } = product;
                 const marketImg = this.responseData.markets[market].image;
@@ -125,6 +139,7 @@ class App {
                     marketImg,
                     category,
                     type,
+                    components,
                     componentsRule
                 });
 
@@ -149,6 +164,7 @@ class App {
                 market,
                 category,
                 type,
+                components,
                 componentsRule
             } = product;
             const marketImg = this.responseData.markets[market].image;
@@ -161,6 +177,7 @@ class App {
                 marketImg,
                 category,
                 type,
+                components,
                 componentsRule
             });
 
@@ -172,9 +189,60 @@ class App {
         }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
     }
 
-    modalIsOpen(data) {}
+    modalIsOpen(data) {
+        this.currentProduct = data;
+        this.initialStateOfComponents = data.components;
+    }
+
+    // добавление ингредиента
+    addedIngredient(data) {
+        // string
+        if (
+            this.currentProduct.components[data.category] === data.code &&
+            typeof this.currentProduct.components[data.category] === "string"
+        ) {
+            this.currentProduct.components[data.category] = "";
+            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+        } else if (
+            this.currentProduct.components[data.category] === "" &&
+            typeof this.currentProduct.components[data.category] === "string"
+        ) {
+            this.currentProduct.components[data.category] = data.code;
+            data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+        }
+
+        // obj
+        if (
+            this.currentProduct.components[data.category].includes(data.code) &&
+            Array.isArray(this.currentProduct.components[data.category])
+        ) {
+            const foundIndex = this.currentProduct.components[
+                data.category
+            ].findIndex(item => item === data.code);
+            this.currentProduct.components[data.category].splice(foundIndex, 1);
+            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+        } else {
+            if (
+                this.currentProduct.components[data.category].length <
+                    this.currentProduct.componentsRule[data.category] &&
+                Array.isArray(this.currentProduct.components[data.category])
+            ) {
+                this.currentProduct.components[data.category].push(data.code);
+                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+            }
+            if (
+                this.currentProduct.componentsRule[data.category] ===
+                    undefined &&
+                Array.isArray(this.currentProduct.components[data.category])
+            ) {
+                this.currentProduct.components[data.category].push(data.code);
+                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+            }
+        }
+    }
 
     firstLoadIngredientCard() {
+        console.log(this.initialStateOfComponents);
         let category = "";
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
@@ -194,6 +262,11 @@ class App {
 
         for (const key in this.responseData[category]) {
             if (this.responseData[category].hasOwnProperty(key)) {
+                // проверка добавлен ли ингредиент
+                let isActive = this.currentProduct.components[
+                    category
+                ].includes(key);
+                ///////////////
                 const {
                     id,
                     name,
@@ -203,11 +276,14 @@ class App {
                 } = this.responseData[category][key];
                 filteredIngredients.push(
                     new IngredientItem({
+                        code: key,
                         id,
                         name,
                         description,
                         image,
-                        price
+                        price,
+                        category,
+                        isActive // !
                     })
                 );
             }
@@ -217,6 +293,31 @@ class App {
             acc.append(child.render());
             return acc;
         }, this.ROOT_INGREDIENTS_WRAPPER); // рендер карточек ингредиент
+    }
+
+    onActiveOrderList(data) {
+        const params = {
+            name: this.currentProduct.name,
+            image: this.currentProduct.image,
+            ingredients: {}
+        };
+
+        for (const j in this.currentProduct.components) {
+            params.ingredients[j] = [];
+            if (Array.isArray(this.currentProduct.components[j])) {
+                this.currentProduct.components[j].forEach(element => {
+                    params.ingredients[j].push(
+                        this.responseData[j][element].name
+                    );
+                });
+            } else {
+                params.ingredients[j] = this.responseData[j][
+                    this.currentProduct.components[j]
+                ].name;
+            }
+        }
+
+        data.renderOrderList(params);
     }
 }
 

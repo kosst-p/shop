@@ -9,6 +9,7 @@ class ProductItem {
         this.quantity = 1;
         this.category = props.category;
         this.type = props.type;
+        this.components = props.components;
         this.componentsRule = props.componentsRule;
         this.totalPrice = this.price;
         this.quantityField = null;
@@ -49,6 +50,7 @@ class ProductItem {
     render() {
         /* Create item */
         const itemWrapper = document.createElement("div");
+
         itemWrapper.classList.add("item-wrapper");
         itemWrapper.setAttribute("id", this.id);
         const marketImgWrapper = document.createElement("div");

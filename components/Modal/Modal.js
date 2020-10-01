@@ -231,7 +231,9 @@ class Modal {
         this.ROOT_MODAL_COUNT.innerHTML = "";
         // условие для последнего элемента списка
         if (id === this.ingredientsType.length) {
+            // this.renderOrderList();
             this.renderQuantityBlock();
+            pubSub.fireEvent("orderListRender", this);
             this.buttonNext.classList.add("disabled");
         } else {
             pubSub.fireEvent("ingredientTypeChange", { category });
@@ -349,6 +351,58 @@ class Modal {
 
     addInBasket() {
         pubSub.fireEvent("addProductInBasket", this.currentProduct); // пользовательское событие
+    }
+    /* ***** */
+
+    /* Блок заказа */
+    renderOrderList(params) {
+        const {
+            name,
+            image,
+            ingredients: { sizes, breads, vegetables, sauces, fillings }
+        } = params;
+        this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
+        const preOrderWrapper = document.createElement("div");
+        preOrderWrapper.classList.add("preorder-wrapper");
+        const preOrderWrapperImg = document.createElement("div");
+        preOrderWrapperImg.classList.add("preorder-wrapper_img");
+        const img = document.createElement("img");
+        img.setAttribute("src", `data${image}`); // img
+        preOrderWrapperImg.prepend(img);
+        preOrderWrapper.prepend(preOrderWrapperImg);
+        const preOrderWrapperContent = document.createElement("div");
+        preOrderWrapperContent.classList.add("preorder-wrapper_content");
+        preOrderWrapperImg.after(preOrderWrapperContent);
+        const preOrderWrapperTitle = document.createElement("div");
+        preOrderWrapperTitle.classList.add("preorder-wrapper_title");
+        preOrderWrapperTitle.textContent = "Ваш сендвич готов!"; // титл
+        preOrderWrapperContent.prepend(preOrderWrapperTitle);
+        const preOrderWrapperSize = document.createElement("div");
+        preOrderWrapperSize.classList.add("preorder-wrapper_sizes");
+        preOrderWrapperSize.textContent = `Размер: ${sizes}`; // размер
+        preOrderWrapperTitle.after(preOrderWrapperSize);
+        const preOrderWrapperBread = document.createElement("div");
+        preOrderWrapperBread.classList.add("preorder-wrapper_bread");
+        preOrderWrapperBread.textContent = `Хлеб:  ${breads}`; // хлеб
+        preOrderWrapperSize.after(preOrderWrapperBread);
+        const preOrderWrapperVeg = document.createElement("div");
+        preOrderWrapperVeg.classList.add("preorder-wrapper_vegetables");
+        preOrderWrapperVeg.textContent = `Овощи: ${vegetables.join(", ")}`; // овощи
+        preOrderWrapperBread.after(preOrderWrapperVeg);
+        const preOrderWrapperSauces = document.createElement("div");
+        preOrderWrapperSauces.classList.add("preorder-wrapper_sauces");
+        preOrderWrapperSauces.textContent = `Соусы: ${sauces.join(", ")}`; // соусы
+        preOrderWrapperVeg.after(preOrderWrapperSauces);
+        const preOrderWrapperFillings = document.createElement("div");
+        preOrderWrapperFillings.classList.add("preorder-wrapper_fillings");
+        preOrderWrapperFillings.textContent = `Начинка: ${fillings.join(", ")}`; // начинка
+        preOrderWrapperSauces.after(preOrderWrapperFillings);
+        const preOrderWrapperProdName = document.createElement("div");
+        preOrderWrapperProdName.classList.add("preorder-wrapper_productname");
+        preOrderWrapperProdName.textContent = `${name}`; // имя
+        preOrderWrapperFillings.after(preOrderWrapperProdName);
+
+        this.ROOT_INGREDIENTS_WRAPPER.append(preOrderWrapper);
     }
     /* ***** */
 }
