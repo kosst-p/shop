@@ -64,7 +64,13 @@ class App {
         this.currentProduct = null;
 
         // начальное состояние, чтобы потом сбросить при удалении товара из корзины
-        this.initialStateOfComponents = null;
+        // this.initialStateOfComponents = {
+        //     sizes: "1x",
+        //     breads: "white-italian",
+        //     vegetables: [],
+        //     sauces: [],
+        //     fillings: []
+        // };
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
         pubSub.subscribeByEvent("productTypeChange", data => {
@@ -113,7 +119,6 @@ class App {
         // console.log(this.responseData);
         // console.log(this.responseData.menu);
         // console.log(this.responseData.markets);
-
         const filteredProducts = this.responseData.menu
             .filter(product => data.category === product.category)
             .map(product => {
@@ -130,6 +135,7 @@ class App {
                     componentsRule
                 } = product;
                 const marketImg = this.responseData.markets[market].image;
+
                 const instanceProductItem = new ProductItem({
                     id,
                     name,
@@ -191,58 +197,12 @@ class App {
 
     modalIsOpen(data) {
         this.currentProduct = data;
-        this.initialStateOfComponents = data.components;
-    }
-
-    // добавление ингредиента
-    addedIngredient(data) {
-        // string
-        if (
-            this.currentProduct.components[data.category] === data.code &&
-            typeof this.currentProduct.components[data.category] === "string"
-        ) {
-            this.currentProduct.components[data.category] = "";
-            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
-        } else if (
-            this.currentProduct.components[data.category] === "" &&
-            typeof this.currentProduct.components[data.category] === "string"
-        ) {
-            this.currentProduct.components[data.category] = data.code;
-            data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
-        }
-
-        // obj
-        if (
-            this.currentProduct.components[data.category].includes(data.code) &&
-            Array.isArray(this.currentProduct.components[data.category])
-        ) {
-            const foundIndex = this.currentProduct.components[
-                data.category
-            ].findIndex(item => item === data.code);
-            this.currentProduct.components[data.category].splice(foundIndex, 1);
-            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
-        } else {
-            if (
-                this.currentProduct.components[data.category].length <
-                    this.currentProduct.componentsRule[data.category] &&
-                Array.isArray(this.currentProduct.components[data.category])
-            ) {
-                this.currentProduct.components[data.category].push(data.code);
-                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
-            }
-            if (
-                this.currentProduct.componentsRule[data.category] ===
-                    undefined &&
-                Array.isArray(this.currentProduct.components[data.category])
-            ) {
-                this.currentProduct.components[data.category].push(data.code);
-                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
-            }
-        }
+        // console.log(this.currentProduct);
+        // this.initialStateOfComponents = data.components;
+        console.log(this.currentProduct);
     }
 
     firstLoadIngredientCard() {
-        console.log(this.initialStateOfComponents);
         let category = "";
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
@@ -295,6 +255,72 @@ class App {
         }, this.ROOT_INGREDIENTS_WRAPPER); // рендер карточек ингредиент
     }
 
+    // добавление ингредиента
+    addedIngredient(data) {
+        if (
+            this.currentProduct.components[data.category] === data.code &&
+            typeof this.currentProduct.components[data.category] === "string"
+        ) {
+            this.currentProduct.components[data.category] = "";
+            this.currentProduct.priceWithIngredients -= data.price;
+
+            this.currentProduct.totalPrice -= data.price;
+            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+        } else if (
+            this.currentProduct.components[data.category] === "" &&
+            typeof this.currentProduct.components[data.category] === "string"
+        ) {
+            this.currentProduct.components[data.category] = data.code;
+            this.currentProduct.priceWithIngredients += data.price;
+
+            this.currentProduct.totalPrice += data.price;
+            data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+        }
+
+        // obj
+        if (
+            this.currentProduct.components[data.category].includes(data.code) &&
+            Array.isArray(this.currentProduct.components[data.category])
+        ) {
+            const foundIndex = this.currentProduct.components[
+                data.category
+            ].findIndex(item => item === data.code);
+            this.currentProduct.components[data.category].splice(foundIndex, 1);
+            this.currentProduct.priceWithIngredients -= data.price;
+
+            this.currentProduct.totalPrice -= data.price;
+            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+        } else {
+            if (
+                this.currentProduct.components[data.category].length <
+                    this.currentProduct.componentsRule[data.category] &&
+                Array.isArray(this.currentProduct.components[data.category])
+            ) {
+                this.currentProduct.components[data.category].push(data.code);
+                this.currentProduct.priceWithIngredients += data.price;
+
+                this.currentProduct.totalPrice += data.price;
+                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+            }
+            if (
+                this.currentProduct.componentsRule[data.category] ===
+                    undefined &&
+                Array.isArray(this.currentProduct.components[data.category])
+            ) {
+                this.currentProduct.components[data.category].push(data.code);
+                this.currentProduct.priceWithIngredients += data.price;
+
+                this.currentProduct.totalPrice += data.price;
+                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+            }
+        }
+        // console.log(
+        //     "from app",
+        //     this.currentProduct.totalPrice,
+        //     this.currentProduct.priceWithIngredients
+        // );
+    }
+
     onActiveOrderList(data) {
         const params = {
             name: this.currentProduct.name,
@@ -304,16 +330,18 @@ class App {
 
         for (const j in this.currentProduct.components) {
             params.ingredients[j] = [];
-            if (Array.isArray(this.currentProduct.components[j])) {
-                this.currentProduct.components[j].forEach(element => {
-                    params.ingredients[j].push(
-                        this.responseData[j][element].name
-                    );
-                });
-            } else {
-                params.ingredients[j] = this.responseData[j][
-                    this.currentProduct.components[j]
-                ].name;
+            if (this.currentProduct.components[j]) {
+                if (Array.isArray(this.currentProduct.components[j])) {
+                    this.currentProduct.components[j].forEach(element => {
+                        params.ingredients[j].push(
+                            this.responseData[j][element].name
+                        );
+                    });
+                } else {
+                    params.ingredients[j] = this.responseData[j][
+                        this.currentProduct.components[j]
+                    ].name;
+                }
             }
         }
 

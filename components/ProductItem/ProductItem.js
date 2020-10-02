@@ -13,6 +13,8 @@ class ProductItem {
         this.componentsRule = props.componentsRule;
         this.totalPrice = this.price;
         this.quantityField = null;
+
+        this.priceWithIngredients = this.price;
     }
 
     changeTextFieldQuantity(value) {
@@ -28,11 +30,15 @@ class ProductItem {
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
-        this.totalPrice = this.quantity * this.price;
+        this.totalPrice = this.quantity * this.priceWithIngredients;
+
+        let tmp = this.priceWithIngredients * this.quantity;
+        this.totalPrice = tmp;
         pubSub.fireEvent("changeQuantity", {
             currentProd: this,
             increase: "increase"
         }); // пользовательское событие
+        // console.log("from productitem", this.totalPrice);
     }
 
     // уменьшить количество
@@ -40,11 +46,16 @@ class ProductItem {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
+
+            let tmp = this.priceWithIngredients * this.quantity;
+            this.totalPrice = tmp;
+
             pubSub.fireEvent("changeQuantity", {
                 currentProd: this,
                 decrease: "decrease"
             }); // пользовательское событие
         }
+        // console.log("from productitem", this.totalPrice);
     }
 
     render() {

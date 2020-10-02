@@ -18,15 +18,21 @@ class Modal {
         this.closeBtn = document.querySelector(".modal-close-btn");
         this.ingredientsListWrapper = null;
         this.ingredientsType = props.ingredientsType;
-        this.modalTitle = ""; //todo
-        this.modalTotalPrice = 0;
-        this.modalQuantity = 1;
+        this.modalTitle = "";
+        // this.modalTotalPrice = 0;
+        // this.modalQuantity = 1;
         this.buttonPrev = null;
         this.buttonNext = null;
         this.currentProduct = null;
         /* открытие модального окна*/
         pubSub.subscribeByEvent("openModal", data => {
             this.isModalOpen(data);
+        });
+
+        pubSub.subscribeByEvent("addIngredient", () => {
+            setTimeout(() => {
+                this.renderModalTotalPrice();
+            }, 1);
         });
     }
 
@@ -39,8 +45,8 @@ class Modal {
     isModalOpen(data) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.currentProduct = data; // продукт в котором открыли модальное окно
-        this.modalTotalPrice = this.currentProduct.totalPrice;
-        this.modalQuantity = this.currentProduct.quantity;
+        // this.modalTotalPrice = this.currentProduct.totalPrice;
+        // this.modalQuantity = this.currentProduct.quantity;
         this.ROOT_MODAL_WINDOW.classList.add("open");
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
@@ -76,13 +82,18 @@ class Modal {
     /* ***** */
 
     /* Итоговая цена в модальном окне */
-    changeModalTotalPrice(value) {
-        this.modalTotalPrice = "";
-    }
+    // changeModalTotalPrice() {
+    //     console.log(this.currentProduct.totalPrice);
+    //     console.log(this.modalTotalPrice);
+    //     this.modalTotalPrice = this.currentProduct.totalPrice;
+    //     console.log(this.currentProduct.totalPrice);
+    //     console.log(this.modalTotalPrice);
+    // }
+
     renderModalTotalPrice() {
         this.ROOT_MODAL_PRICE.innerHTML = "";
         const span = document.createElement("span");
-        span.textContent = `Цена: ${this.modalTotalPrice} руб.`;
+        span.textContent = `Цена: ${this.currentProduct.totalPrice} руб.`;
         this.ROOT_MODAL_PRICE.append(span);
     }
     /* ***** */
@@ -279,7 +290,7 @@ class Modal {
         buttonDecrease.prepend(iDescr);
 
         const spanCount = document.createElement("span");
-        spanCount.textContent = this.modalQuantity; // тут обновляется количество
+        spanCount.textContent = this.currentProduct.quantity; // тут обновляется количество
         spanCount.classList.add("ingredients-count__field");
         buttonDecrease.after(spanCount);
 
@@ -316,36 +327,42 @@ class Modal {
 
     // увеличить количество
     increaseQuantity(field) {
-        this.modalQuantity += 1;
-        field.textContent = this.modalQuantity;
-        this.currentProduct.quantity = this.modalQuantity;
+        console.log(this.currentProduct.priceWithIngredients);
+        this.currentProduct.quantity += 1;
 
-        this.modalTotalPrice = this.modalQuantity * this.currentProduct.price;
-        this.currentProduct.totalPrice = this.modalTotalPrice;
+        field.textContent = this.currentProduct.quantity;
+
+        let tmp =
+            this.currentProduct.priceWithIngredients *
+            this.currentProduct.quantity;
+        this.currentProduct.totalPrice = tmp;
 
         this.renderModalTotalPrice();
         pubSub.fireEvent("changeQuantity", {
             currentProd: this.currentProduct,
             increase: "increase"
         }); // пользовательское событие
+
+        // console.log("from modal", this.currentProduct.totalPrice);
     }
 
     // уменьшить количество
     decreaseQuantity(field) {
-        if (this.modalQuantity > 1) {
-            this.modalQuantity -= 1;
-            field.textContent = this.modalQuantity;
-            this.currentProduct.quantity = this.modalQuantity;
+        if (this.currentProduct.quantity > 1) {
+            this.currentProduct.quantity -= 1;
+            field.textContent = this.currentProduct.quantity;
 
-            this.modalTotalPrice =
-                this.modalQuantity * this.currentProduct.price;
-            this.currentProduct.totalPrice = this.modalTotalPrice;
+            let tmp =
+                this.currentProduct.priceWithIngredients *
+                this.currentProduct.quantity;
+            this.currentProduct.totalPrice = tmp;
 
             this.renderModalTotalPrice();
             pubSub.fireEvent("changeQuantity", {
                 currentProd: this.currentProduct,
                 decrease: "decrease"
             }); // пользовательское событие
+            // console.log("from modal", this.currentProduct.totalPrice);
         }
     }
 

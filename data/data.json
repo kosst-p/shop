@@ -11,8 +11,8 @@
             "type": "multiple",
             "weight": 1,
             "components": {
-                "sizes": "1x",
-                "breads": "white-italian",
+                "sizes": "",
+                "breads": "",
                 "vegetables": [],
                 "sauces": [],
                 "fillings": []
@@ -59,7 +59,7 @@
                 "breads": "white-italian",
                 "vegetables": [],
                 "sauces": [],
-                "filling": []
+                "fillings": []
             },
             "componentsRule": {
                 "sizes": 1,

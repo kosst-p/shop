@@ -12,18 +12,34 @@ class Basket {
         /* подписка на добавление продукта в корзину */
         pubSub.subscribeByEvent("addProductInBasket", data => {
             this.addedProductInStore(data);
-
             this.renderAddedProducts();
+            this.updateTotalPrice();
             this.renderTotalPrice();
         });
 
         /* подписка на изменение количества */
         pubSub.subscribeByEvent("changeQuantity", data => {
             this.onChangedQuantity(data);
-
             this.renderAddedProducts();
             this.renderTotalPrice();
         });
+
+        /* подписка на добавление ингредиента к продукту */
+        pubSub.subscribeByEvent("addIngredient", () => {
+            setTimeout(() => {
+                this.updateTotalPrice();
+                this.renderTotalPrice();
+            }, 1);
+        });
+    }
+
+    // обновления общей цены после добавления ингредиента
+    updateTotalPrice() {
+        let tmp = 0;
+        this.addedProducts.forEach(element => {
+            tmp += element.totalPrice;
+        });
+        this.totalPrice = tmp;
     }
 
     // удаление продукта из корзины
@@ -32,27 +48,28 @@ class Basket {
             item => item.id === product.id
         );
         this.addedProducts.splice(foundIndex, 1);
-        this.totalPrice -= product.quantity * product.price;
+        this.totalPrice -= product.quantity * product.priceWithIngredients;
         this.renderAddedProducts();
         this.renderTotalPrice();
     }
 
     // изменение количества продукта
     onChangedQuantity(data) {
+        console.log(this.addedProducts);
         const foundProduct = this.addedProducts.find(
             item => item.id === data.currentProd.id
         );
         if (foundProduct) {
+            console.log(data.currentProd);
             if (data.increase === "increase")
-                this.totalPrice += data.currentProd.price;
+                this.totalPrice = data.currentProd.totalPrice;
             if (data.decrease === "decrease")
-                this.totalPrice -= data.currentProd.price;
+                this.totalPrice = data.currentProd.totalPrice;
         }
     }
 
     // добавление продукта в стор и обновление цены
     addedProductInStore(data) {
-        console.log(data);
         const foundProduct = this.addedProducts.find(
             item => item.id === data.id
         );
