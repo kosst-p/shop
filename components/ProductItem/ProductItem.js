@@ -6,23 +6,33 @@ class ProductItem {
         this.image = props.image;
         this.marketImg = props.marketImg;
         this.price = props.price;
-        this.quantity = 1;
+        this.initialPrice = props.price;
         this.category = props.category;
         this.type = props.type;
         this.components = props.components;
         this.componentsRule = props.componentsRule;
-        this.totalPrice = this.price;
+
+        this.quantity = 1;
+
+        this.totalPrice = this.initialPrice; // общая цена выводится в корзине
+
+        this.priceField = null;
         this.quantityField = null;
 
-        this.priceWithIngredients = this.price;
+        this.productPriceWithIngredients = this.price;
     }
 
-    changeTextFieldQuantity(value) {
-        this.quantityField.textContent = value;
+    changeTextFieldQuantity() {
+        this.quantityField.textContent = this.quantity;
+    }
+
+    changeTextFieldPrice() {
+        this.priceField.textContent = `Цена: ${this.productPriceWithIngredients} руб.`;
     }
 
     // добавить в корзину
-    addInBasket() {
+    addInStore() {
+        store.setProductFromStore(this);
         pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
@@ -30,15 +40,10 @@ class ProductItem {
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
-        this.totalPrice = this.quantity * this.priceWithIngredients;
 
-        let tmp = this.priceWithIngredients * this.quantity;
-        this.totalPrice = tmp;
-        pubSub.fireEvent("changeQuantity", {
-            currentProd: this,
-            increase: "increase"
-        }); // пользовательское событие
-        // console.log("from productitem", this.totalPrice);
+        this.totalPrice = this.quantity * this.productPriceWithIngredients;
+
+        pubSub.fireEvent("changeQuantity", this);
     }
 
     // уменьшить количество
@@ -47,15 +52,10 @@ class ProductItem {
             this.quantity -= 1;
             field.textContent = this.quantity;
 
-            let tmp = this.priceWithIngredients * this.quantity;
-            this.totalPrice = tmp;
+            this.totalPrice = this.quantity * this.productPriceWithIngredients;
 
-            pubSub.fireEvent("changeQuantity", {
-                currentProd: this,
-                decrease: "decrease"
-            }); // пользовательское событие
+            pubSub.fireEvent("changeQuantity", this);
         }
-        // console.log("from productitem", this.totalPrice);
     }
 
     render() {
@@ -101,7 +101,8 @@ class ProductItem {
         nameWrapper.after(descrWrapper);
         const priceWrapper = document.createElement("div");
         priceWrapper.classList.add("item-wrapper__price");
-        priceWrapper.textContent = `Цена: ${this.price} руб.`;
+        priceWrapper.textContent = `Цена: ${this.productPriceWithIngredients} руб.`;
+        this.priceField = priceWrapper;
         descrWrapper.after(priceWrapper);
         const countItemWrapper = document.createElement("div");
         countItemWrapper.classList.add("item-wrapper__count");
@@ -150,7 +151,7 @@ class ProductItem {
             this.decreaseQuantity(spanCount);
         });
         buttonInBasket.addEventListener("click", e => {
-            this.addInBasket();
+            this.addInStore();
         });
         /* *** */
 

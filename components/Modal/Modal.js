@@ -17,18 +17,21 @@ class Modal {
 
         this.closeBtn = document.querySelector(".modal-close-btn");
         this.ingredientsListWrapper = null;
+
         this.ingredientsType = props.ingredientsType;
         this.modalTitle = "";
-        // this.modalTotalPrice = 0;
-        // this.modalQuantity = 1;
         this.buttonPrev = null;
         this.buttonNext = null;
         this.currentProduct = null;
-        /* открытие модального окна*/
+
+        this.initialState = null;
+
+        /* открытие модального окна */
         pubSub.subscribeByEvent("openModal", data => {
             this.isModalOpen(data);
         });
 
+        /* добавить ингредиент */
         pubSub.subscribeByEvent("addIngredient", () => {
             setTimeout(() => {
                 this.renderModalTotalPrice();
@@ -43,10 +46,10 @@ class Modal {
     }
 
     isModalOpen(data) {
+        console.log(data);
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.currentProduct = data; // продукт в котором открыли модальное окно
-        // this.modalTotalPrice = this.currentProduct.totalPrice;
-        // this.modalQuantity = this.currentProduct.quantity;
+
         this.ROOT_MODAL_WINDOW.classList.add("open");
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
@@ -82,14 +85,6 @@ class Modal {
     /* ***** */
 
     /* Итоговая цена в модальном окне */
-    // changeModalTotalPrice() {
-    //     console.log(this.currentProduct.totalPrice);
-    //     console.log(this.modalTotalPrice);
-    //     this.modalTotalPrice = this.currentProduct.totalPrice;
-    //     console.log(this.currentProduct.totalPrice);
-    //     console.log(this.modalTotalPrice);
-    // }
-
     renderModalTotalPrice() {
         this.ROOT_MODAL_PRICE.innerHTML = "";
         const span = document.createElement("span");
@@ -181,6 +176,7 @@ class Modal {
                 const { title, id, category } = params;
                 if (id === list.length) {
                     //условие для последнего элемента списка
+                    pubSub.fireEvent("orderListRender", this);
                     this.renderQuantityBlock();
                     this.buttonNext.classList.add("disabled");
                 } else {
@@ -321,29 +317,20 @@ class Modal {
         buttonInBasket.addEventListener("click", e => {
             this.addInBasket();
         });
+
         /* *** */
         this.ROOT_MODAL_COUNT.append(ingredientCountWrapper);
     }
 
     // увеличить количество
     increaseQuantity(field) {
-        console.log(this.currentProduct.priceWithIngredients);
         this.currentProduct.quantity += 1;
-
         field.textContent = this.currentProduct.quantity;
 
-        let tmp =
-            this.currentProduct.priceWithIngredients *
-            this.currentProduct.quantity;
-        this.currentProduct.totalPrice = tmp;
-
+        this.currentProduct.totalPrice += this.currentProduct.productPriceWithIngredients;
+        pubSub.fireEvent("modalChangeQuantity", this.currentProduct);
+        pubSub.fireEvent("changeQuantity");
         this.renderModalTotalPrice();
-        pubSub.fireEvent("changeQuantity", {
-            currentProd: this.currentProduct,
-            increase: "increase"
-        }); // пользовательское событие
-
-        // console.log("from modal", this.currentProduct.totalPrice);
     }
 
     // уменьшить количество
@@ -352,22 +339,16 @@ class Modal {
             this.currentProduct.quantity -= 1;
             field.textContent = this.currentProduct.quantity;
 
-            let tmp =
-                this.currentProduct.priceWithIngredients *
-                this.currentProduct.quantity;
-            this.currentProduct.totalPrice = tmp;
-
+            this.currentProduct.totalPrice -= this.currentProduct.productPriceWithIngredients;
+            pubSub.fireEvent("modalChangeQuantity", this.currentProduct);
+            pubSub.fireEvent("changeQuantity");
             this.renderModalTotalPrice();
-            pubSub.fireEvent("changeQuantity", {
-                currentProd: this.currentProduct,
-                decrease: "decrease"
-            }); // пользовательское событие
-            // console.log("from modal", this.currentProduct.totalPrice);
         }
     }
 
     addInBasket() {
-        pubSub.fireEvent("addProductInBasket", this.currentProduct); // пользовательское событие
+        store.setProductFromStore(this.currentProduct);
+        pubSub.fireEvent("modalAddProductInBasket", this.currentProduct); // пользовательское событие
     }
     /* ***** */
 

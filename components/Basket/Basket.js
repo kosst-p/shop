@@ -3,33 +3,30 @@ class Basket {
         this.parentDOMTag = props.parentDOMTag;
         this.basketContentWrapper = null;
         this.basketTotalPriceWrapper = null;
-
-        this.addedProducts = [];
+        this.addedProducts = store.getAllProductsFromStore();
         this.totalPrice = 0;
 
         this.render(); // рендер
 
         /* подписка на добавление продукта в корзину */
-        pubSub.subscribeByEvent("addProductInBasket", data => {
-            this.addedProductInStore(data);
+        pubSub.subscribeByEvent("addProductInBasket", () => {
+            this.renderAddedProducts();
+            this.updateTotalPrice();
+            this.renderTotalPrice();
+        });
+
+        /* подписка на добавление продукта в корзину */
+        pubSub.subscribeByEvent("modalAddProductInBasket", () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
             this.renderTotalPrice();
         });
 
         /* подписка на изменение количества */
-        pubSub.subscribeByEvent("changeQuantity", data => {
-            this.onChangedQuantity(data);
+        pubSub.subscribeByEvent("changeQuantity", () => {
             this.renderAddedProducts();
+            this.updateTotalPrice();
             this.renderTotalPrice();
-        });
-
-        /* подписка на добавление ингредиента к продукту */
-        pubSub.subscribeByEvent("addIngredient", () => {
-            setTimeout(() => {
-                this.updateTotalPrice();
-                this.renderTotalPrice();
-            }, 1);
         });
     }
 
@@ -42,49 +39,24 @@ class Basket {
         this.totalPrice = tmp;
     }
 
-    // удаление продукта из корзины
-    deletedProduct(product) {
-        const foundIndex = this.addedProducts.findIndex(
-            item => item.id === product.id
-        );
-        this.addedProducts.splice(foundIndex, 1);
-        this.totalPrice -= product.quantity * product.priceWithIngredients;
-        this.renderAddedProducts();
-        this.renderTotalPrice();
-    }
-
-    // изменение количества продукта
-    onChangedQuantity(data) {
-        console.log(this.addedProducts);
-        const foundProduct = this.addedProducts.find(
-            item => item.id === data.currentProd.id
-        );
-        if (foundProduct) {
-            console.log(data.currentProd);
-            if (data.increase === "increase")
-                this.totalPrice = data.currentProd.totalPrice;
-            if (data.decrease === "decrease")
-                this.totalPrice = data.currentProd.totalPrice;
-        }
-    }
-
-    // добавление продукта в стор и обновление цены
-    addedProductInStore(data) {
-        const foundProduct = this.addedProducts.find(
-            item => item.id === data.id
-        );
-        if (!foundProduct) {
-            this.addedProducts.push(data);
-            this.totalPrice += data.price * data.quantity;
-        }
-    }
-
     // рендер общей цены
     renderTotalPrice() {
         this.basketTotalPriceWrapper.innerHTML = "";
         const span = document.createElement("span");
         span.textContent = `Итого: ${this.totalPrice} руб.`;
         this.basketTotalPriceWrapper.append(span);
+    }
+
+    // удаление продукта из корзины
+    deletedProduct(product) {
+        const foundIndex = this.addedProducts.findIndex(
+            item => item.id === product.id
+        );
+        this.addedProducts.splice(foundIndex, 1); // удалится и из store тоже
+
+        this.updateTotalPrice();
+        this.renderAddedProducts();
+        this.renderTotalPrice();
     }
 
     // рендер продуктов внутри корзины
@@ -172,4 +144,3 @@ class Basket {
 const basket = new Basket({
     parentDOMTag: ROOT_BASKET
 });
-// basket.render();

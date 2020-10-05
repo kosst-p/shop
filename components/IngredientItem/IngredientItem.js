@@ -29,7 +29,6 @@ class IngredientItem {
     }
 
     render() {
-        // console.log(this);
         const ingredientWrapper = document.createElement("div");
         ingredientWrapper.classList.add("ingredient-wrapper");
         if (this.isActive) {
