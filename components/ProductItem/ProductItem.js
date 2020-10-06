@@ -6,34 +6,30 @@ class ProductItem {
         this.image = props.image;
         this.marketImg = props.marketImg;
         this.price = props.price;
-        this.initialPrice = props.price;
+
         this.category = props.category;
         this.type = props.type;
         this.components = props.components;
         this.componentsRule = props.componentsRule;
 
         this.quantity = 1;
+        this.quantityModal = 1;
 
-        this.totalPrice = this.initialPrice; // общая цена выводится в корзине
+        this.totalPrice = this.price; // общая цена выводится в корзине
+        this.modalTotalPrice = this.price;
 
         this.priceField = null;
         this.quantityField = null;
 
         this.productPriceWithIngredients = this.price;
-    }
 
-    changeTextFieldQuantity() {
-        this.quantityField.textContent = this.quantity;
-    }
-
-    changeTextFieldPrice() {
-        this.priceField.textContent = `Цена: ${this.productPriceWithIngredients} руб.`;
+        this.productPriceWithOutIngredients = this.price;
     }
 
     // добавить в корзину
     addInStore() {
         store.setProductFromStore(this);
-        pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
+        pubSub.fireEvent("addProductInBasket", { flag: "card" }); // пользовательское событие
     }
 
     // увеличить количество
@@ -41,7 +37,7 @@ class ProductItem {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
 
-        this.totalPrice = this.quantity * this.productPriceWithIngredients;
+        this.totalPrice = this.quantity * this.productPriceWithOutIngredients;
 
         pubSub.fireEvent("changeQuantity", this);
     }
@@ -52,13 +48,15 @@ class ProductItem {
             this.quantity -= 1;
             field.textContent = this.quantity;
 
-            this.totalPrice = this.quantity * this.productPriceWithIngredients;
+            this.totalPrice =
+                this.quantity * this.productPriceWithOutIngredients;
 
             pubSub.fireEvent("changeQuantity", this);
         }
     }
 
     render() {
+        // console.log(this.components);
         /* Create item */
         const itemWrapper = document.createElement("div");
 

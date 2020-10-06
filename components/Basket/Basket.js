@@ -15,13 +15,6 @@ class Basket {
             this.renderTotalPrice();
         });
 
-        /* подписка на добавление продукта в корзину */
-        pubSub.subscribeByEvent("modalAddProductInBasket", () => {
-            this.renderAddedProducts();
-            this.updateTotalPrice();
-            this.renderTotalPrice();
-        });
-
         /* подписка на изменение количества */
         pubSub.subscribeByEvent("changeQuantity", () => {
             this.renderAddedProducts();
@@ -33,6 +26,7 @@ class Basket {
     // обновления общей цены после добавления ингредиента
     updateTotalPrice() {
         let tmp = 0;
+        console.log(this.addedProducts);
         this.addedProducts.forEach(element => {
             tmp += element.totalPrice;
         });

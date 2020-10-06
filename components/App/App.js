@@ -93,11 +93,6 @@ class App {
         pubSub.subscribeByEvent("orderListRender", data => {
             this.onActiveOrderList(data);
         });
-
-        /* подписка на изменение количества в модальном окне */
-        pubSub.subscribeByEvent("modalChangeQuantity", data => {
-            this.changeProductQuantity(data);
-        });
     }
 
     // api
@@ -159,13 +154,13 @@ class App {
     renderProductCard(data) {
         this.ROOT_RIGHT_SIDE.innerHTML = "";
         // console.log(this.responseData);
-        // console.log(this.responseData.menu);
+        console.log("*рендер карточке продукта*", this.responseData.menu);
         // console.log(this.responseData.markets);
 
         const filteredProducts = this.responseData.menu
             .filter(product => data.category === product.category)
             .map(product => {
-                const {
+                let {
                     id,
                     name,
                     description,
@@ -180,7 +175,7 @@ class App {
                 const marketImg = this.responseData.markets[market].image;
 
                 const productFromStore = store.getProductFromStoreById(id);
-
+                console.log(productFromStore);
                 if (productFromStore) {
                     return productFromStore;
                 } else {
@@ -215,14 +210,13 @@ class App {
             if (this.responseData[category].hasOwnProperty(key)) {
                 // проверка добавлен ли ингредиент
 
-                /* FIXME: this.currentProduct - не удаляется при переходе по вкладкам, он сохранен! */
+                /* FIXME: this.responseData - все изменения сохраняются по ссылке */
 
                 let isActive = this.currentProduct.components[
                     category
                 ].includes(key);
                 ///////////////
-                console.log("*", this.currentProduct);
-                console.log(isActive);
+
                 const {
                     id,
                     name,
@@ -252,6 +246,7 @@ class App {
     }
 
     modalIsOpen(data) {
+        // FIXME
         this.currentProduct = data;
     }
 
@@ -261,17 +256,16 @@ class App {
 
     // добавление ингредиента
     addedIngredient(data) {
+        console.log("до*** клик по ингредиенту", this.responseData.menu);
         if (
             this.currentProduct.components[data.category] === data.code &&
             typeof this.currentProduct.components[data.category] === "string"
         ) {
             this.currentProduct.components[data.category] = "";
 
-            this.currentProduct.totalPrice -=
-                data.price * this.currentProduct.quantity; // обновление общей цены
-
             this.currentProduct.productPriceWithIngredients -= data.price;
-
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
         } else if (
             this.currentProduct.components[data.category] === "" &&
@@ -279,11 +273,9 @@ class App {
         ) {
             this.currentProduct.components[data.category] = data.code;
 
-            this.currentProduct.totalPrice +=
-                data.price * this.currentProduct.quantity;
-
             this.currentProduct.productPriceWithIngredients += data.price;
-
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
         }
 
@@ -297,11 +289,10 @@ class App {
             ].findIndex(item => item === data.code);
             this.currentProduct.components[data.category].splice(foundIndex, 1);
 
-            this.currentProduct.totalPrice -=
-                data.price * this.currentProduct.quantity;
-
             this.currentProduct.productPriceWithIngredients -= data.price;
-
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
         } else {
             if (
@@ -311,11 +302,9 @@ class App {
             ) {
                 this.currentProduct.components[data.category].push(data.code);
 
-                this.currentProduct.totalPrice +=
-                    data.price * this.currentProduct.quantity;
-
                 this.currentProduct.productPriceWithIngredients += data.price;
-
+                this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
                 data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
             }
             if (
@@ -325,15 +314,13 @@ class App {
             ) {
                 this.currentProduct.components[data.category].push(data.code);
 
-                this.currentProduct.totalPrice +=
-                    data.price * this.currentProduct.quantity;
-
                 this.currentProduct.productPriceWithIngredients += data.price;
-
+                this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
                 data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
             }
-            this.currentProduct.changeTextFieldPrice(); // метод изменения цены в карточке товара
         }
+        console.log("после*** клик по ингредиенту", this.responseData.menu);
     }
 
     // загрузка вкладки с предзаказом
@@ -362,11 +349,6 @@ class App {
 
         data.renderOrderList(params);
     }
-
-    // смена количества в карточке товара
-    changeProductQuantity(data) {
-        data.changeTextFieldQuantity();
-    }
 }
 
 const app = new App();
@@ -378,3 +360,12 @@ const app = new App();
 })();
 // setTimeout(() => {}, 500); // ?
 /* *** */
+
+// components: {
+//   ...components,
+//   vegetables: [],
+//   sauces: [],
+//   fillings: []
+// },
+
+// JSON.parse(JSON.stringify(components)),

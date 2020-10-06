@@ -307,7 +307,13 @@
             "market": "subway",
             "type": "multiple",
             "weight": 1,
-            "components": {},
+            "components": {
+                "sizes": "1x",
+                "breads": "white-italian",
+                "vegetables": [],
+                "sauces": [],
+                "fillings": []
+            },
             "componentsRule": {
                 "sizes": 1,
                 "breads": 1,
