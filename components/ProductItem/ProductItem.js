@@ -10,64 +10,16 @@ class ProductItem {
         this.componentsRule = props.componentsRule;
         this.category = props.category;
         this.type = props.type;
-        this.components = props.components
-            ? JSON.parse(JSON.stringify(props.components))
-            : props.components; // NOTE "отвязались от ссылки на объект components из responseData"
+        this.components = props.components;
 
         // пользовательские данные
         this.quantity = 1;
-        this.quantityModal = 1;
-        this.totalPrice = this.price; // общая цена выводится в корзине
-        this.modalTotalPrice = this.price;
-        this.productPriceWithIngredients = this.price;
-        this.productPriceWithOutIngredients = this.price;
-
-        /* для установки начального состояния при удалении из корзины */
-        this.initialStateComponents = props.components
-            ? JSON.parse(JSON.stringify(props.components))
-            : props.components; // NOTE "отвязались от ссылки на объект components из responseData"
-        this.initialStateModalTotalPrice = props.price;
-        this.initialStateQuantityModal = 1;
-        this.initialTotalPrice = this.price;
-        this.initialStateQuantity = 1;
-        /* **** */
-
-        pubSub.subscribeByEvent("clearIngredientsFromProduct", id => {
-            this.onClearIngredients(id);
-        });
-    }
-
-    // сброс выбранных ингредиентов после удаления продукта из корзины
-    onClearIngredients(id) {
-        if (this.id === id) {
-            console.log(id);
-            this.components = this.initialStateComponents
-                ? JSON.parse(JSON.stringify(this.initialStateComponents))
-                : this.initialStateComponents; // NOTE "отвязались от ссылки на объект this.components"
-            // this.components = this.initialStateComponents; // !так не работает!
-            this.modalTotalPrice = this.initialStateModalTotalPrice;
-            this.quantityModal = this.initialStateQuantityModal;
-            this.totalPrice = this.initialTotalPrice;
-            this.productPriceWithIngredients = this.price;
-            this.productPriceWithOutIngredients = this.price;
-            this.quantity = this.initialStateQuantity;
-        }
-    }
-
-    // добавить в корзину
-    addInStore() {
-        store.setProductFromStore(this);
-        pubSub.fireEvent("addProductInBasket", { flag: "card" }); // пользовательское событие
     }
 
     // увеличить количество
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
-
-        this.totalPrice = this.quantity * this.productPriceWithOutIngredients;
-
-        pubSub.fireEvent("changeQuantity");
     }
 
     // уменьшить количество
@@ -75,11 +27,6 @@ class ProductItem {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
-
-            this.totalPrice =
-                this.quantity * this.productPriceWithOutIngredients;
-
-            pubSub.fireEvent("changeQuantity");
         }
     }
 
@@ -125,7 +72,7 @@ class ProductItem {
         nameWrapper.after(descrWrapper);
         const priceWrapper = document.createElement("div");
         priceWrapper.classList.add("item-wrapper__price");
-        priceWrapper.textContent = `Цена: ${this.productPriceWithOutIngredients} руб.`;
+        priceWrapper.textContent = `Цена: ${this.price} руб.`;
         descrWrapper.after(priceWrapper);
         const countItemWrapper = document.createElement("div");
         countItemWrapper.classList.add("item-wrapper__count");

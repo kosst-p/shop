@@ -51,7 +51,6 @@ class ProductTypesList {
         this.createListItems();
     }
 }
-
 const productTypesList = new ProductTypesList({
     parentDOMTag: ROOT_PRODUCT_TYPES,
     typesList: productsType
