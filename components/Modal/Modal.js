@@ -25,8 +25,8 @@ class Modal {
         this.currentProduct = null;
 
         /* открытие модального окна */
-        pubSub.subscribeByEvent("openModal", data => {
-            this.isModalOpen(data);
+        pubSub.subscribeByEvent("openModal", product => {
+            this.isModalOpen(product);
         });
 
         /* добавить ингредиент */
@@ -43,9 +43,10 @@ class Modal {
         });
     }
 
-    isModalOpen(data) {
+    isModalOpen(product) {
+        console.log(product);
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
-        this.currentProduct = data; // продукт в котором открыли модальное окно
+        this.currentProduct = product; // продукт в котором открыли модальное окно
         this.ROOT_MODAL_WINDOW.classList.add("open");
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
@@ -234,7 +235,6 @@ class Modal {
         this.ROOT_MODAL_COUNT.innerHTML = "";
         // условие для последнего элемента списка
         if (id === this.ingredientsType.length) {
-            // this.renderOrderList();
             this.renderQuantityBlock();
             pubSub.fireEvent("orderListRender", this);
             this.buttonNext.classList.add("disabled");

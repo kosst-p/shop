@@ -1,29 +1,57 @@
 class ProductItem {
     constructor(props) {
+        // приходящие данные
         this.id = props.id;
         this.name = props.name;
         this.description = props.description;
         this.image = props.image;
         this.marketImg = props.marketImg;
         this.price = props.price;
-
+        this.componentsRule = props.componentsRule;
         this.category = props.category;
         this.type = props.type;
-        this.components = props.components;
-        this.componentsRule = props.componentsRule;
+        this.components = props.components
+            ? JSON.parse(JSON.stringify(props.components))
+            : props.components; // NOTE "отвязались от ссылки на объект components из responseData"
 
+        // пользовательские данные
         this.quantity = 1;
         this.quantityModal = 1;
-
         this.totalPrice = this.price; // общая цена выводится в корзине
         this.modalTotalPrice = this.price;
-
-        this.priceField = null;
-        this.quantityField = null;
-
         this.productPriceWithIngredients = this.price;
-
         this.productPriceWithOutIngredients = this.price;
+
+        /* для установки начального состояния при удалении из корзины */
+        this.initialStateComponents = props.components
+            ? JSON.parse(JSON.stringify(props.components))
+            : props.components; // NOTE "отвязались от ссылки на объект components из responseData"
+        this.initialStateModalTotalPrice = props.price;
+        this.initialStateQuantityModal = 1;
+        this.initialTotalPrice = this.price;
+        this.initialStateQuantity = 1;
+        /* **** */
+
+        pubSub.subscribeByEvent("clearIngredientsFromProduct", id => {
+            this.onClearIngredients(id);
+        });
+    }
+
+    // сброс выбранных ингредиентов после удаления продукта из корзины
+    onClearIngredients(id) {
+        if (this.id === id) {
+            console.log(id);
+            this.components = this.initialStateComponents
+                ? JSON.parse(JSON.stringify(this.initialStateComponents))
+                : this.initialStateComponents; // NOTE "отвязались от ссылки на объект this.components"
+            // this.components = this.initialStateComponents; // !так не работает!
+            this.modalTotalPrice = this.initialStateModalTotalPrice;
+            this.quantityModal = this.initialStateQuantityModal;
+            this.totalPrice = this.initialTotalPrice;
+            this.productPriceWithIngredients = this.price;
+            this.productPriceWithOutIngredients = this.price;
+            this.quantity = this.initialStateQuantity;
+        }
     }
 
     // добавить в корзину
@@ -39,7 +67,7 @@ class ProductItem {
 
         this.totalPrice = this.quantity * this.productPriceWithOutIngredients;
 
-        pubSub.fireEvent("changeQuantity", this);
+        pubSub.fireEvent("changeQuantity");
     }
 
     // уменьшить количество
@@ -51,15 +79,13 @@ class ProductItem {
             this.totalPrice =
                 this.quantity * this.productPriceWithOutIngredients;
 
-            pubSub.fireEvent("changeQuantity", this);
+            pubSub.fireEvent("changeQuantity");
         }
     }
 
     render() {
-        // console.log(this.components);
         /* Create item */
         const itemWrapper = document.createElement("div");
-
         itemWrapper.classList.add("item-wrapper");
         itemWrapper.setAttribute("id", this.id);
         const marketImgWrapper = document.createElement("div");
@@ -99,8 +125,7 @@ class ProductItem {
         nameWrapper.after(descrWrapper);
         const priceWrapper = document.createElement("div");
         priceWrapper.classList.add("item-wrapper__price");
-        priceWrapper.textContent = `Цена: ${this.productPriceWithIngredients} руб.`;
-        this.priceField = priceWrapper;
+        priceWrapper.textContent = `Цена: ${this.productPriceWithOutIngredients} руб.`;
         descrWrapper.after(priceWrapper);
         const countItemWrapper = document.createElement("div");
         countItemWrapper.classList.add("item-wrapper__count");
@@ -111,7 +136,6 @@ class ProductItem {
         const countButtonWrapper = document.createElement("div");
         countButtonWrapper.classList.add("item-count__button");
         countTitle.after(countButtonWrapper);
-
         const buttonDecrease = document.createElement("button");
         buttonDecrease.classList.add("btn-count");
         countButtonWrapper.prepend(buttonDecrease);
@@ -120,7 +144,6 @@ class ProductItem {
         founIdescr.classList.add("fa-minus");
         buttonDecrease.prepend(founIdescr);
         const spanCount = document.createElement("span");
-        this.quantityField = spanCount;
         spanCount.textContent = this.quantity; // тут обновляется количество
         spanCount.classList.add("item-count__field");
         buttonDecrease.after(spanCount);

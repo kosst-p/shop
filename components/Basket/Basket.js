@@ -6,7 +6,7 @@ class Basket {
         this.addedProducts = store.getAllProductsFromStore();
         this.totalPrice = 0;
 
-        this.render(); // рендер
+        this.render(); // рендер корзины
 
         /* подписка на добавление продукта в корзину */
         pubSub.subscribeByEvent("addProductInBasket", () => {
@@ -15,7 +15,7 @@ class Basket {
             this.renderTotalPrice();
         });
 
-        /* подписка на изменение количества */
+        /* подписка на изменение количества из карточки продукта */
         pubSub.subscribeByEvent("changeQuantity", () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
@@ -26,7 +26,6 @@ class Basket {
     // обновления общей цены после добавления ингредиента
     updateTotalPrice() {
         let tmp = 0;
-        console.log(this.addedProducts);
         this.addedProducts.forEach(element => {
             tmp += element.totalPrice;
         });
@@ -47,7 +46,7 @@ class Basket {
             item => item.id === product.id
         );
         this.addedProducts.splice(foundIndex, 1); // удалится и из store тоже
-
+        pubSub.fireEvent("clearIngredientsFromProduct", product.id); // пользовательское событие
         this.updateTotalPrice();
         this.renderAddedProducts();
         this.renderTotalPrice();
@@ -55,6 +54,7 @@ class Basket {
 
     // рендер продуктов внутри корзины
     renderAddedProducts() {
+        console.log(this.addedProducts);
         this.basketContentWrapper.innerHTML = "";
         this.addedProducts.map(item => {
             const basketContentItem = document.createElement("div");
@@ -120,7 +120,7 @@ class Basket {
         basketBtnWrapper.prepend(completeOrder);
 
         basketBtnWrapper.addEventListener("click", event => {
-            "click";
+            console.log("оформить заказ");
         });
         basketTotalPrice.after(basketBtnWrapper);
 

@@ -27,13 +27,14 @@ class ProductTypesList {
                     "active-product",
                     this.menuListWrapper
                 );
-                this.productTypeChangeByClick(id, category);
+                this.productTypeChangeByClick(category);
             });
         });
     }
 
-    productTypeChangeByClick(id, category) {
-        pubSub.fireEvent("productTypeChange", { id, category }); // пользовательское событие
+    // ф-я для пользовательского события
+    productTypeChangeByClick(category) {
+        pubSub.fireEvent("productTypeChange", { category }); // пользовательское событие
     }
 
     // смена активного класса

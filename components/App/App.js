@@ -64,34 +64,34 @@ class App {
         this.currentProduct = null;
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
-        pubSub.subscribeByEvent("productTypeChange", data => {
-            this.renderProductCard(data);
+        pubSub.subscribeByEvent("productTypeChange", params => {
+            this.renderProductCard(params);
         });
 
         /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
-        pubSub.subscribeByEvent("ingredientTypeChange", data => {
-            this.renderIngredientCard(data);
+        pubSub.subscribeByEvent("ingredientTypeChange", params => {
+            this.renderIngredientCard(params);
         });
 
         /* открытие модального окна */
-        pubSub.subscribeByEvent("openModal", data => {
-            this.modalIsOpen(data);
+        pubSub.subscribeByEvent("openModal", product => {
+            this.modalIsOpen(product);
             this.firstLoadIngredientCard();
         });
 
         /* закрытие модального окна */
-        pubSub.subscribeByEvent("closedModal", data => {
-            this.modalIsClose(data);
+        pubSub.subscribeByEvent("closedModal", modal => {
+            this.modalIsClose(modal);
         });
 
         /* добавление ингредиента */
-        pubSub.subscribeByEvent("addIngredient", data => {
-            this.addedIngredient(data);
+        pubSub.subscribeByEvent("addIngredient", ingredient => {
+            this.addedIngredient(ingredient);
         });
 
         /* загрузка предзаказа */
-        pubSub.subscribeByEvent("orderListRender", data => {
-            this.onActiveOrderList(data);
+        pubSub.subscribeByEvent("orderListRender", modal => {
+            this.onActiveOrderList(modal);
         });
     }
 
@@ -151,16 +151,17 @@ class App {
         this.renderIngredientCard({ category });
     }
 
-    renderProductCard(data) {
+    renderProductCard(params) {
         this.ROOT_RIGHT_SIDE.innerHTML = "";
-        // console.log(this.responseData);
-        console.log("*рендер карточке продукта*", this.responseData.menu);
-        // console.log(this.responseData.markets);
+        console.log(
+            "*рендер карточке продукта. responseData*",
+            this.responseData.menu
+        );
 
         const filteredProducts = this.responseData.menu
-            .filter(product => data.category === product.category)
+            .filter(product => params.category === product.category)
             .map(product => {
-                let {
+                const {
                     id,
                     name,
                     description,
@@ -174,12 +175,11 @@ class App {
                 } = product;
                 const marketImg = this.responseData.markets[market].image;
 
-                const productFromStore = store.getProductFromStoreById(id);
-                console.log(productFromStore);
+                const productFromStore = store.getProductFromStoreById(id); // берем из стора, если продукт там есть
                 if (productFromStore) {
                     return productFromStore;
                 } else {
-                    const newProduct = new ProductItem({
+                    let newProduct = new ProductItem({
                         id,
                         name,
                         description,
@@ -199,19 +199,15 @@ class App {
             acc.append(child.render());
             return acc;
         }, this.ROOT_RIGHT_SIDE); // рендер карточек продукта
-        this.currentProduct = null;
     }
 
-    renderIngredientCard(data) {
-        const { category } = data;
+    renderIngredientCard(params) {
+        const { category } = params;
         const filteredIngredients = [];
 
         for (const key in this.responseData[category]) {
             if (this.responseData[category].hasOwnProperty(key)) {
                 // проверка добавлен ли ингредиент
-
-                /* FIXME: this.responseData - все изменения сохраняются по ссылке */
-
                 let isActive = this.currentProduct.components[
                     category
                 ].includes(key);
@@ -245,86 +241,102 @@ class App {
         }, this.ROOT_INGREDIENTS_WRAPPER); // рендер карточек ингредиент
     }
 
-    modalIsOpen(data) {
-        // FIXME
-        this.currentProduct = data;
+    modalIsOpen(product) {
+        this.currentProduct = product;
     }
 
-    modalIsClose(data) {
-        data.close();
+    modalIsClose(modal) {
+        modal.close();
     }
 
     // добавление ингредиента
-    addedIngredient(data) {
-        console.log("до*** клик по ингредиенту", this.responseData.menu);
+    addedIngredient(ingredient) {
         if (
-            this.currentProduct.components[data.category] === data.code &&
-            typeof this.currentProduct.components[data.category] === "string"
+            this.currentProduct.components[ingredient.category] ===
+                ingredient.code &&
+            typeof this.currentProduct.components[ingredient.category] ===
+                "string"
         ) {
-            this.currentProduct.components[data.category] = "";
+            this.currentProduct.components[ingredient.category] = "";
 
-            this.currentProduct.productPriceWithIngredients -= data.price;
+            this.currentProduct.productPriceWithIngredients -= ingredient.price;
             this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
             this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+            ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
         } else if (
-            this.currentProduct.components[data.category] === "" &&
-            typeof this.currentProduct.components[data.category] === "string"
+            this.currentProduct.components[ingredient.category] === "" &&
+            typeof this.currentProduct.components[ingredient.category] ===
+                "string"
         ) {
-            this.currentProduct.components[data.category] = data.code;
+            this.currentProduct.components[ingredient.category] =
+                ingredient.code;
 
-            this.currentProduct.productPriceWithIngredients += data.price;
+            this.currentProduct.productPriceWithIngredients += ingredient.price;
             this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
             this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-            data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+            ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
         }
 
         // obj
         if (
-            this.currentProduct.components[data.category].includes(data.code) &&
-            Array.isArray(this.currentProduct.components[data.category])
+            this.currentProduct.components[ingredient.category].includes(
+                ingredient.code
+            ) &&
+            Array.isArray(this.currentProduct.components[ingredient.category])
         ) {
             const foundIndex = this.currentProduct.components[
-                data.category
-            ].findIndex(item => item === data.code);
-            this.currentProduct.components[data.category].splice(foundIndex, 1);
+                ingredient.category
+            ].findIndex(item => item === ingredient.code);
+            this.currentProduct.components[ingredient.category].splice(
+                foundIndex,
+                1
+            );
 
-            this.currentProduct.productPriceWithIngredients -= data.price;
+            this.currentProduct.productPriceWithIngredients -= ingredient.price;
             this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
             this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-            data.deleteActiveClass(); // метод удаления активного класса на карточку ингредиента
+            ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
         } else {
             if (
-                this.currentProduct.components[data.category].length <
-                    this.currentProduct.componentsRule[data.category] &&
-                Array.isArray(this.currentProduct.components[data.category])
+                this.currentProduct.components[ingredient.category].length <
+                    this.currentProduct.componentsRule[ingredient.category] &&
+                Array.isArray(
+                    this.currentProduct.components[ingredient.category]
+                )
             ) {
-                this.currentProduct.components[data.category].push(data.code);
+                this.currentProduct.components[ingredient.category].push(
+                    ingredient.code
+                );
 
-                this.currentProduct.productPriceWithIngredients += data.price;
+                this.currentProduct.productPriceWithIngredients +=
+                    ingredient.price;
                 this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
                 this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+                ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
             }
             if (
-                this.currentProduct.componentsRule[data.category] ===
+                this.currentProduct.componentsRule[ingredient.category] ===
                     undefined &&
-                Array.isArray(this.currentProduct.components[data.category])
+                Array.isArray(
+                    this.currentProduct.components[ingredient.category]
+                )
             ) {
-                this.currentProduct.components[data.category].push(data.code);
+                this.currentProduct.components[ingredient.category].push(
+                    ingredient.code
+                );
 
-                this.currentProduct.productPriceWithIngredients += data.price;
+                this.currentProduct.productPriceWithIngredients +=
+                    ingredient.price;
                 this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
                 this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
-                data.addActiveClass(); // метод добавления активного класса на карточку ингредиента
+                ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
             }
         }
-        console.log("после*** клик по ингредиенту", this.responseData.menu);
+        // console.log("после*** клик по ингредиенту", this.responseData.menu);
     }
 
     // загрузка вкладки с предзаказом
-    onActiveOrderList(data) {
+    onActiveOrderList(modal) {
         const params = {
             name: this.currentProduct.name,
             image: this.currentProduct.image,
@@ -346,8 +358,7 @@ class App {
                 }
             }
         }
-
-        data.renderOrderList(params);
+        modal.renderOrderList(params);
     }
 }
 
@@ -360,12 +371,3 @@ const app = new App();
 })();
 // setTimeout(() => {}, 500); // ?
 /* *** */
-
-// components: {
-//   ...components,
-//   vegetables: [],
-//   sauces: [],
-//   fillings: []
-// },
-
-// JSON.parse(JSON.stringify(components)),
