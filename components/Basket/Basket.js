@@ -3,13 +3,13 @@ class Basket {
         this.parentDOMTag = props.parentDOMTag;
         this.basketContentWrapper = null;
         this.basketTotalPriceWrapper = null;
-        this.addedProducts = store.getAllProductsFromStore();
+
+        this.addedProducts = [];
         this.totalPrice = 0;
 
-        this.render(); // рендер корзины
-
         /* подписка на добавление продукта в корзину */
-        pubSub.subscribeByEvent("addProductInBasket", () => {
+        pubSub.subscribeByEvent("addProductInBasket", product => {
+            this.addProduct(product);
             this.renderAddedProducts();
             this.updateTotalPrice();
             this.renderTotalPrice();
@@ -23,33 +23,12 @@ class Basket {
         });
     }
 
-    // обновления общей цены после добавления ингредиента
-    updateTotalPrice() {
-        let tmp = 0;
-        this.addedProducts.forEach(element => {
-            tmp += element.totalPrice;
-        });
-        this.totalPrice = tmp;
-    }
-
-    // рендер общей цены
-    renderTotalPrice() {
-        this.basketTotalPriceWrapper.innerHTML = "";
-        const span = document.createElement("span");
-        span.textContent = `Итого: ${this.totalPrice} руб.`;
-        this.basketTotalPriceWrapper.append(span);
-    }
-
-    // удаление продукта из корзины
-    deletedProduct(product) {
-        const foundIndex = this.addedProducts.findIndex(
-            item => item.id === product.id
-        );
-        this.addedProducts.splice(foundIndex, 1); // удалится и из store тоже
-        pubSub.fireEvent("clearIngredientsFromProduct", product.id); // пользовательское событие
-        this.updateTotalPrice();
-        this.renderAddedProducts();
-        this.renderTotalPrice();
+    // добавление продукта в корзину
+    addProduct(product) {
+        const foundProduct = this.addedProducts.find(item => item === product);
+        if (!foundProduct) {
+            this.addedProducts.push(product);
+        }
     }
 
     // рендер продуктов внутри корзины
@@ -76,6 +55,24 @@ class Basket {
             });
             this.basketContentWrapper.append(basketContentItem);
         });
+    }
+
+    // обновления общей
+    updateTotalPrice() {
+        let tmp = 0;
+        this.addedProducts.forEach(element => {
+            console.log(element.totalPrice);
+            tmp += element.totalPrice;
+        });
+        this.totalPrice = tmp;
+    }
+
+    // рендер общей цены
+    renderTotalPrice() {
+        this.basketTotalPriceWrapper.innerHTML = "";
+        const span = document.createElement("span");
+        span.textContent = `Итого: ${this.totalPrice} руб.`;
+        this.basketTotalPriceWrapper.append(span);
     }
 
     // создание корзины
@@ -120,17 +117,38 @@ class Basket {
         basketBtnWrapper.prepend(completeOrder);
 
         basketBtnWrapper.addEventListener("click", event => {
-            console.log("оформить заказ");
+            this.purchaseProducts();
         });
         basketTotalPrice.after(basketBtnWrapper);
 
         return basket;
     }
 
+    // удаление продукта из корзины
+    deletedProduct(product) {
+        const foundIndex = this.addedProducts.findIndex(
+            item => item === product
+        );
+        this.addedProducts.splice(foundIndex, 1);
+        // обновление корзины
+        this.renderAddedProducts();
+        this.updateTotalPrice();
+        this.renderTotalPrice();
+    }
+
+    // оформление заказа
+    purchaseProducts() {
+        this.addedProducts = [];
+        console.log("заказ оформлен");
+        // обновление корзины
+        this.renderAddedProducts();
+        this.updateTotalPrice();
+        this.renderTotalPrice();
+    }
+
     // рендер корзины со всем содержимым
     render() {
         this.parentDOMTag.append(this.createBasket());
-        this.renderAddedProducts();
         this.renderTotalPrice();
     }
 }
@@ -138,3 +156,4 @@ class Basket {
 const basket = new Basket({
     parentDOMTag: ROOT_BASKET
 });
+basket.render();

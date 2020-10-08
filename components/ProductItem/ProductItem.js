@@ -14,12 +14,15 @@ class ProductItem {
 
         // пользовательские данные
         this.quantity = 1;
+        this.totalPrice = this.price; // общая цена выводится в корзине
     }
 
     // увеличить количество
     increaseQuantity(field) {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
+        this.totalPrice = this.quantity * this.price;
+        pubSub.fireEvent("changeQuantity"); // пользовательское событие
     }
 
     // уменьшить количество
@@ -27,7 +30,14 @@ class ProductItem {
         if (this.quantity > 1) {
             this.quantity -= 1;
             field.textContent = this.quantity;
+            this.totalPrice = this.quantity * this.price;
+            pubSub.fireEvent("changeQuantity"); // пользовательское событие
         }
+    }
+
+    // добавить в корзину
+    addInStore() {
+        pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
     render() {

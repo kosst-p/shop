@@ -16,6 +16,7 @@ class App {
             { id: 6, category: "salads", name: "Тортилья & Салаты" },
             { id: 7, category: "drinks", name: "Напитки & Десерты" }
         ];
+
         // выгрузили все данные одним ajax запросом
         this.responseData = null;
 
@@ -39,7 +40,6 @@ class App {
 
     // экземпляры класса ProductItem
     createProductItems() {
-        console.log(this.responseData.menu);
         this.responseData.menu.forEach(product => {
             const {
                 id,
@@ -92,10 +92,8 @@ class App {
 
     // рендер всех карточек продуктов при первой загрузки страницы
     firstLoadProductCard() {
-        console.log(this.productItems);
         for (const key in this.productItems) {
             if (this.productItems.hasOwnProperty(key)) {
-                console.log(this.productItems[key]);
                 this.productItems[key].forEach(item => {
                     this.ROOT_RIGHT_SIDE.append(item.render());
                 });
