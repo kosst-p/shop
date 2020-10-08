@@ -8,7 +8,7 @@ class IngredientItem {
         this.price = props.price;
         this.category = props.category;
         this.currentIngredientWrapper = null;
-        this.isActive = props.isActive;
+        this.isActive = false;
     }
 
     // событие на выбор ингредиента
@@ -31,9 +31,10 @@ class IngredientItem {
     render() {
         const ingredientWrapper = document.createElement("div");
         ingredientWrapper.classList.add("ingredient-wrapper");
-        if (this.isActive) {
-            ingredientWrapper.classList.add("active-name-ingredient");
-        }
+
+        // if (this.isActive) {
+        //     ingredientWrapper.classList.add("active-name-ingredient");
+        // }
 
         this.currentIngredientWrapper = ingredientWrapper;
         const ingredientWrapperImg = document.createElement("div");

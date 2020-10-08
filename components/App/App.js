@@ -17,6 +17,46 @@ class App {
             { id: 7, category: "drinks", name: "Напитки & Десерты" }
         ];
 
+        // список типов ингредиентов
+        this.ingredientsType = [
+            {
+                id: 1,
+                category: "sizes",
+                name: "Размер",
+                title: "Выберите размер сэндвича"
+            },
+            {
+                id: 2,
+                category: "breads",
+                name: "Хлеб",
+                title: "Хлеб для сэндвича на выбор"
+            },
+            {
+                id: 3,
+                category: "vegetables",
+                name: "Овощи",
+                title: "Дополнительные овощи бесплатно"
+            },
+            {
+                id: 4,
+                category: "sauces",
+                name: "Соусы",
+                title: "Выберите 3 бесплатных соуса по вкусу"
+            },
+            {
+                id: 5,
+                category: "fillings",
+                name: "Начинка",
+                title: "Добавьте начинку по вкусу"
+            },
+            {
+                id: 6,
+                category: "ready",
+                name: "Готово",
+                title: "Проверьте и добавьте в корзину"
+            }
+        ];
+
         // выгрузили все данные одним ajax запросом
         this.responseData = null;
 
@@ -36,6 +76,7 @@ class App {
         const fetch = new FetchApi({ url: this.URL });
         const data = await fetch.fetchData();
         this.responseData = data;
+        console.log(this.responseData);
     }
 
     // экземпляры класса ProductItem
@@ -88,6 +129,81 @@ class App {
                 );
             }
         });
+        console.log(this.productItems);
+    }
+
+    // экземпляры класса IngredientItem
+    createIngredientItems() {
+        for (const key in this.ingredientsType) {
+            if (this.ingredientsType.hasOwnProperty(key)) {
+                if (
+                    // кроме последнего id
+                    this.ingredientsType[key].id !== this.ingredientsType.length
+                ) {
+                    // this.ingredientsType[key].category - название категории
+                    for (const jey in this.responseData[
+                        this.ingredientsType[key].category
+                    ]) {
+                        if (
+                            this.responseData[
+                                this.ingredientsType[key].category
+                            ].hasOwnProperty(jey)
+                        ) {
+                            // this.responseData[this.ingredientsType[key].category][jey] - каждый объект в конкретной категории из из this.responseData
+                            const {
+                                id,
+                                name,
+                                price,
+                                description,
+                                image
+                            } = this.responseData[
+                                this.ingredientsType[key].category
+                            ][jey];
+                            // если не существует ключа внутри объекта
+                            if (
+                                !this.ingredientItems[
+                                    this.ingredientsType[key].category
+                                ]
+                            ) {
+                                this.ingredientItems[
+                                    this.ingredientsType[key].category
+                                ] = [];
+                                this.ingredientItems[
+                                    this.ingredientsType[key].category
+                                ].push(
+                                    new IngredientItem({
+                                        code: key,
+                                        id,
+                                        name,
+                                        description,
+                                        image,
+                                        price,
+                                        category: this.ingredientsType[key]
+                                            .category
+                                    })
+                                );
+                            } else {
+                                this.ingredientItems[
+                                    this.ingredientsType[key].category
+                                ].push(
+                                    new IngredientItem({
+                                        code: key,
+                                        id,
+                                        name,
+                                        description,
+                                        image,
+                                        price,
+                                        category: this.ingredientsType[key]
+                                            .category
+                                    })
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log(this.ingredientItems);
     }
 
     // рендер всех карточек продуктов при первой загрузки страницы
@@ -117,6 +233,7 @@ const app = new App();
     await app.request();
     await app.createProductItems();
     await app.firstLoadProductCard();
+    await app.createIngredientItems();
 })();
 // setTimeout(() => {}, 500); // ?
 /* *** */
