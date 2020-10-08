@@ -33,7 +33,6 @@ class Basket {
 
     // рендер продуктов внутри корзины
     renderAddedProducts() {
-        console.log(this.addedProducts);
         this.basketContentWrapper.innerHTML = "";
         this.addedProducts.map(item => {
             const basketContentItem = document.createElement("div");
@@ -61,7 +60,6 @@ class Basket {
     updateTotalPrice() {
         let tmp = 0;
         this.addedProducts.forEach(element => {
-            console.log(element.totalPrice);
             tmp += element.totalPrice;
         });
         this.totalPrice = tmp;
