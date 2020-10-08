@@ -28,23 +28,9 @@ class Modal {
         pubSub.subscribeByEvent("openModal", product => {
             this.isModalOpen(product);
         });
-
-        /* добавить ингредиент */
-        pubSub.subscribeByEvent("addIngredient", () => {
-            setTimeout(() => {
-                this.renderModalTotalPrice();
-            }, 1);
-        });
-    }
-
-    eventCloseModal() {
-        this.closeBtn.addEventListener("click", e => {
-            pubSub.fireEvent("closedModal", this); // пользовательское событие
-        });
     }
 
     isModalOpen(product) {
-        console.log(product);
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.currentProduct = product; // продукт в котором открыли модальное окно
         this.ROOT_MODAL_WINDOW.classList.add("open");
@@ -58,6 +44,12 @@ class Modal {
         this.renderButtonPrev();
         this.renderButtonNext();
         this.renderIngredientTypesList();
+    }
+
+    eventCloseModal() {
+        this.closeBtn.addEventListener("click", e => {
+            pubSub.fireEvent("closedModal", this); // пользовательское событие
+        });
     }
 
     close() {
@@ -109,7 +101,6 @@ class Modal {
         this.buttonPrev = prev;
         this.ROOT_MODAL_BUTTONS_WRAPPER.append(prev);
     }
-
     prevIngredientType() {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.ROOT_MODAL_COUNT.innerHTML = "";
@@ -406,7 +397,6 @@ class Modal {
     }
     /* ***** */
 }
-
 const modal = new Modal({
     ingredientsType: ingredientsType
 });

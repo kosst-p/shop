@@ -63,11 +63,28 @@ class App {
         /* STORE */
         this.productItems = {};
         this.ingredientItems = {};
+        this.currentProduct = null;
         /* *** */
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
         pubSub.subscribeByEvent("productTypeChange", params => {
             this.renderProductCard(params);
+        });
+
+        /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
+        pubSub.subscribeByEvent("ingredientTypeChange", params => {
+            this.renderIngredientCard(params);
+        });
+
+        /* открытие модального окна */
+        pubSub.subscribeByEvent("openModal", product => {
+            this.modalIsOpen(product);
+            this.firstLoadIngredientCard();
+        });
+
+        /* закрытие модального окна */
+        pubSub.subscribeByEvent("closedModal", modal => {
+            this.modalIsClose(modal);
         });
     }
 
@@ -182,18 +199,15 @@ class App {
                             } else {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
-                                ][jey] = {
-                                    ...new IngredientItem({
-                                        code: jey,
-                                        id,
-                                        name,
-                                        description,
-                                        image,
-                                        price,
-                                        category: this.ingredientsType[key]
-                                            .category
-                                    })
-                                };
+                                ][jey] = new IngredientItem({
+                                    code: jey,
+                                    id,
+                                    name,
+                                    description,
+                                    image,
+                                    price,
+                                    category: this.ingredientsType[key].category
+                                });
                             }
                         }
                     }
@@ -222,7 +236,38 @@ class App {
             this.ROOT_RIGHT_SIDE.append(item.render());
         });
     }
+
+    // первая загрузка ингредиентов при открытии модального окна
+    firstLoadIngredientCard() {
+        let category = "";
+        this.ingredientsType.forEach(element => {
+            if (element.id === 1) {
+                category = element.category;
+            }
+        });
+        this.renderIngredientCard({ category });
+    }
+
+    // рендер карточек ингредиентов в зависимости от категории
+    renderIngredientCard(params) {
+        const { category } = params;
+        for (const key in this.ingredientItems[category]) {
+            const item = this.ingredientItems[category][key];
+            this.ROOT_INGREDIENTS_WRAPPER.append(item.render());
+        }
+    }
+
+    // открытие модалки
+    modalIsOpen(product) {
+        this.currentProduct = product;
+    }
+
+    // закрытие модалки
+    modalIsClose(modal) {
+        modal.close();
+    }
 }
+
 const app = new App();
 /* *** */
 // дождемся, пока загрузятся все данные по api
