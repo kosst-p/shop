@@ -149,7 +149,7 @@ class App {
                                 this.ingredientsType[key].category
                             ].hasOwnProperty(jey)
                         ) {
-                            // this.responseData[this.ingredientsType[key].category][jey] - каждый объект в конкретной категории из из this.responseData
+                            // this.responseData[this.ingredientsType[key].category][jey] - каждый объект в конкретной категории из this.responseData
                             const {
                                 id,
                                 name,
@@ -167,27 +167,24 @@ class App {
                             ) {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
-                                ] = [];
+                                ] = {};
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
-                                ].push(
-                                    new IngredientItem({
-                                        code: key,
-                                        id,
-                                        name,
-                                        description,
-                                        image,
-                                        price,
-                                        category: this.ingredientsType[key]
-                                            .category
-                                    })
-                                );
+                                ][jey] = new IngredientItem({
+                                    code: jey,
+                                    id,
+                                    name,
+                                    description,
+                                    image,
+                                    price,
+                                    category: this.ingredientsType[key].category
+                                });
                             } else {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
-                                ].push(
-                                    new IngredientItem({
-                                        code: key,
+                                ][jey] = {
+                                    ...new IngredientItem({
+                                        code: jey,
                                         id,
                                         name,
                                         description,
@@ -196,7 +193,7 @@ class App {
                                         category: this.ingredientsType[key]
                                             .category
                                     })
-                                );
+                                };
                             }
                         }
                     }
