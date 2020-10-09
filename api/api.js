@@ -4,12 +4,7 @@ class FetchApi {
     }
 
     async fetchData() {
-        let response = await fetch(this.url, {
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            }
-        });
+        let response = await fetch(this.url);
         try {
             if (response.ok) {
                 let data = await response.json();

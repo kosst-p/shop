@@ -1,6 +1,6 @@
 class App {
     constructor() {
-        this.URL = "../data/data.json";
+        this.URL = "data.json";
         this.ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
         this.ROOT_RIGHT_SIDE = document.querySelector(".right-side");
         this.ROOT_INGREDIENTS_WRAPPER = document.querySelector(
