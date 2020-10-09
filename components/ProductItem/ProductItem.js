@@ -14,7 +14,11 @@ class ProductItem {
 
         // пользовательские данные
         this.quantity = 1;
+        this.quantityModal = 1;
         this.totalPrice = this.price; // общая цена выводится в корзине
+        this.modalTotalPrice = this.price;
+        this.productPriceWithIngredients = this.price;
+        this.productPriceWithOutIngredients = this.price;
     }
 
     // увеличить количество

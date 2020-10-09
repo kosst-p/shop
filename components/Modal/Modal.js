@@ -24,6 +24,13 @@ class Modal {
         this.buttonNext = null;
         this.currentProduct = null;
 
+        /* добавить ингредиент */
+        pubSub.subscribeByEvent("addIngredient", () => {
+            setTimeout(() => {
+                this.renderModalTotalPrice();
+            }, 1);
+        });
+
         /* открытие модального окна */
         pubSub.subscribeByEvent("openModal", product => {
             this.isModalOpen(product);
@@ -342,9 +349,9 @@ class Modal {
         }
     }
 
+    // добавить в корзину
     addInBasket() {
-        store.setProductFromStore(this.currentProduct);
-        pubSub.fireEvent("addProductInBasket", { flag: "modal" }); // пользовательское событие
+        pubSub.fireEvent("addProductInBasket", this.currentProduct); // пользовательское событие
     }
     /* ***** */
 

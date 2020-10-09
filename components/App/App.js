@@ -292,9 +292,9 @@ class App {
         ) {
             this.currentProduct.components[ingredient.category] = "";
 
-            // this.currentProduct.productPriceWithIngredients -= ingredient.price;
-            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
-            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            this.currentProduct.productPriceWithIngredients -= ingredient.price;
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
         } else if (
             this.currentProduct.components[ingredient.category] === "" &&
@@ -304,9 +304,9 @@ class App {
             this.currentProduct.components[ingredient.category] =
                 ingredient.code;
 
-            // this.currentProduct.productPriceWithIngredients += ingredient.price;
-            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
-            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            this.currentProduct.productPriceWithIngredients += ingredient.price;
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
         }
 
@@ -325,9 +325,9 @@ class App {
                 1
             );
 
-            // this.currentProduct.productPriceWithIngredients -= ingredient.price;
-            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
-            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            this.currentProduct.productPriceWithIngredients -= ingredient.price;
+            this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
             ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
         } else {
             if (
@@ -341,10 +341,10 @@ class App {
                     ingredient.code
                 );
 
-                // this.currentProduct.productPriceWithIngredients +=
-                // ingredient.price;
-                // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
-                // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+                this.currentProduct.productPriceWithIngredients +=
+                    ingredient.price;
+                this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
                 ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
             }
             if (
@@ -358,10 +358,10 @@ class App {
                     ingredient.code
                 );
 
-                // this.currentProduct.productPriceWithIngredients +=
-                // ingredient.price;
-                // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
-                // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+                this.currentProduct.productPriceWithIngredients +=
+                    ingredient.price;
+                this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
                 ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
             }
         }
