@@ -106,6 +106,14 @@ class Basket {
         this.basketTotalPriceWrapper = basketTotalPrice;
         basketContent.after(basketTotalPrice); // <- общая цена
 
+        // <div>
+        //     <span>
+        //         Total: <span id="total">0</span>
+        //     </span>
+        // </div>;
+
+        // document.querySelector("#total").innerHTML = "100";
+
         const basketBtnWrapper = document.createElement("div");
         basketBtnWrapper.classList.add("basket-btn-wrapper");
         const completeOrder = document.createElement("button");

@@ -30,6 +30,7 @@ class Modal {
         });
     }
 
+    // открытие модалки
     isModalOpen(product) {
         this.ROOT_INGREDIENTS_WRAPPER.innerHTML = "";
         this.currentProduct = product; // продукт в котором открыли модальное окно
@@ -46,12 +47,14 @@ class Modal {
         this.renderIngredientTypesList();
     }
 
+    // событие закрытия модалки
     eventCloseModal() {
         this.closeBtn.addEventListener("click", e => {
             pubSub.fireEvent("closedModal", this); // пользовательское событие
         });
     }
 
+    // закрытие модалки
     close() {
         this.ROOT_MODAL_WINDOW.classList.remove("open");
         this.ROOT_MODAL_TITLE.innerHTML = "";

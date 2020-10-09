@@ -86,6 +86,16 @@ class App {
         pubSub.subscribeByEvent("closedModal", modal => {
             this.modalIsClose(modal);
         });
+
+        /* добавление ингредиента */
+        pubSub.subscribeByEvent("addIngredient", ingredient => {
+            this.addedIngredient(ingredient);
+        });
+
+        /* загрузка предзаказа */
+        pubSub.subscribeByEvent("orderListRender", modal => {
+            this.onActiveOrderList(modal);
+        });
     }
 
     // api
@@ -93,7 +103,7 @@ class App {
         const fetch = new FetchApi({ url: this.URL });
         const data = await fetch.fetchData();
         this.responseData = data;
-        console.log(this.responseData);
+        // console.log(this.responseData);
     }
 
     // экземпляры класса ProductItem
@@ -146,7 +156,7 @@ class App {
                 );
             }
         });
-        console.log(this.productItems);
+        // console.log(this.productItems);
     }
 
     // экземпляры класса IngredientItem
@@ -214,7 +224,7 @@ class App {
                 }
             }
         }
-        console.log(this.ingredientItems);
+        // console.log(this.ingredientItems);
     }
 
     // рендер всех карточек продуктов при первой загрузки страницы
@@ -252,19 +262,136 @@ class App {
     renderIngredientCard(params) {
         const { category } = params;
         for (const key in this.ingredientItems[category]) {
-            const item = this.ingredientItems[category][key];
-            this.ROOT_INGREDIENTS_WRAPPER.append(item.render());
+            const ingredientCard = this.ingredientItems[category][key];
+            this.ROOT_INGREDIENTS_WRAPPER.append(ingredientCard.render());
+            // проверка на наличии выбранного ингредиента у продукта
+            if (this.currentProduct.components[category].includes(key)) {
+                ingredientCard.addActiveClass();
+            }
         }
     }
 
     // открытие модалки
     modalIsOpen(product) {
+        // в данной переменной лежит продукт(меняется) в котором мы открыли модальное окно
         this.currentProduct = product;
     }
 
     // закрытие модалки
     modalIsClose(modal) {
         modal.close();
+    }
+
+    // добавление ингредиента
+    addedIngredient(ingredient) {
+        if (
+            this.currentProduct.components[ingredient.category] ===
+                ingredient.code &&
+            typeof this.currentProduct.components[ingredient.category] ===
+                "string"
+        ) {
+            this.currentProduct.components[ingredient.category] = "";
+
+            // this.currentProduct.productPriceWithIngredients -= ingredient.price;
+            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
+        } else if (
+            this.currentProduct.components[ingredient.category] === "" &&
+            typeof this.currentProduct.components[ingredient.category] ===
+                "string"
+        ) {
+            this.currentProduct.components[ingredient.category] =
+                ingredient.code;
+
+            // this.currentProduct.productPriceWithIngredients += ingredient.price;
+            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
+        }
+
+        // obj
+        if (
+            this.currentProduct.components[ingredient.category].includes(
+                ingredient.code
+            ) &&
+            Array.isArray(this.currentProduct.components[ingredient.category])
+        ) {
+            const foundIndex = this.currentProduct.components[
+                ingredient.category
+            ].findIndex(item => item === ingredient.code);
+            this.currentProduct.components[ingredient.category].splice(
+                foundIndex,
+                1
+            );
+
+            // this.currentProduct.productPriceWithIngredients -= ingredient.price;
+            // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+            // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+            ingredient.deleteActiveClass(); // метод удаления активного класса на карточке ингредиента
+        } else {
+            if (
+                this.currentProduct.components[ingredient.category].length <
+                    this.currentProduct.componentsRule[ingredient.category] &&
+                Array.isArray(
+                    this.currentProduct.components[ingredient.category]
+                )
+            ) {
+                this.currentProduct.components[ingredient.category].push(
+                    ingredient.code
+                );
+
+                // this.currentProduct.productPriceWithIngredients +=
+                // ingredient.price;
+                // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+                ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
+            }
+            if (
+                this.currentProduct.componentsRule[ingredient.category] ===
+                    undefined &&
+                Array.isArray(
+                    this.currentProduct.components[ingredient.category]
+                )
+            ) {
+                this.currentProduct.components[ingredient.category].push(
+                    ingredient.code
+                );
+
+                // this.currentProduct.productPriceWithIngredients +=
+                // ingredient.price;
+                // this.currentProduct.modalTotalPrice = this.currentProduct.productPriceWithIngredients;
+                // this.currentProduct.totalPrice = this.currentProduct.modalTotalPrice;
+                ingredient.addActiveClass(); // метод добавления активного класса на карточке ингредиента
+            }
+        }
+        // console.log(this.productItems);
+    }
+
+    // загрузка вкладки с предзаказом
+    onActiveOrderList(modal) {
+        const params = {
+            name: this.currentProduct.name,
+            image: this.currentProduct.image,
+            ingredients: {}
+        };
+        for (const j in this.currentProduct.components) {
+            params.ingredients[j] = [];
+            if (this.currentProduct.components[j]) {
+                if (Array.isArray(this.currentProduct.components[j])) {
+                    this.currentProduct.components[j].forEach(element => {
+                        params.ingredients[j].push(
+                            this.responseData[j][element].name
+                        );
+                    });
+                } else {
+                    params.ingredients[j] = this.responseData[j][
+                        this.currentProduct.components[j]
+                    ].name;
+                }
+            }
+        }
+        modal.renderOrderList(params);
     }
 }
 

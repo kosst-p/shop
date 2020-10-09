@@ -40,6 +40,7 @@ class ProductItem {
         pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
+    // рендер карточки
     render() {
         /* Create item */
         const itemWrapper = document.createElement("div");
