@@ -1,6 +1,7 @@
 class ProductItem {
     constructor(props) {
         // приходящие данные
+        this.pubSub = props.pubSub;
         this.id = props.id;
         this.name = props.name;
         this.description = props.description;
@@ -26,7 +27,7 @@ class ProductItem {
         this.quantity = this.quantity + 1;
         field.textContent = this.quantity;
         this.totalPrice = this.quantity * this.price;
-        pubSub.fireEvent("changeQuantity"); // пользовательское событие
+        this.pubSub.fireEvent("changeQuantity"); // пользовательское событие
     }
 
     // уменьшить количество
@@ -35,13 +36,13 @@ class ProductItem {
             this.quantity -= 1;
             field.textContent = this.quantity;
             this.totalPrice = this.quantity * this.price;
-            pubSub.fireEvent("changeQuantity"); // пользовательское событие
+            this.pubSub.fireEvent("changeQuantity"); // пользовательское событие
         }
     }
 
     // добавить в корзину
     addInStore() {
-        pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
+        this.pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
     // рендер карточки
@@ -76,7 +77,7 @@ class ProductItem {
         if (this.type === "multiple") {
             descrWrapper.classList.add("multiple");
             descrWrapper.addEventListener("click", e => {
-                pubSub.fireEvent("openModal", this); // пользовательское событие
+                this.pubSub.fireEvent("openModal", this); // пользовательское событие
             });
         }
         //
@@ -141,3 +142,4 @@ class ProductItem {
         return itemWrapper;
     }
 }
+export default ProductItem;

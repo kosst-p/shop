@@ -1,6 +1,4 @@
 const URL = "../data/data.json";
-
-const APP = document.querySelector(".app");
 const ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
 const ROOT_RIGHT_SIDE = document.querySelector(".right-side");
 const ROOT_BASKET = document.querySelector(".basket-wrapper");
@@ -64,3 +62,58 @@ const ingredientsType = [
         title: "Проверьте и добавьте в корзину"
     }
 ];
+
+import "./style/style.css";
+import App from "./components/App/App";
+import ProductTypesList from "./components/ProductTypesList/ProductTypesList";
+import Basket from "./components/Basket/Basket";
+import Modal from "./components/Modal/Modal";
+
+import PubSub from "./components/PubSub/PubSub";
+
+const pubSub = new PubSub();
+
+const modal = new Modal({
+    typesListOfIngredients: ingredientsType,
+    pubSub: pubSub,
+    modalWindowWrapper: ROOT_MODAL_WINDOW,
+    modalTitleWrapper: ROOT_MODAL_TITLE,
+    modalPriceWrapper: ROOT_MODAL_PRICE,
+    modalButtonsWrapper: ROOT_MODAL_BUTTONS_WRAPPER,
+    ingredientTypesListWrapper: ROOT_INGREDIENT_TYPES,
+    ingredientCardsWrapper: ROOT_INGREDIENTS_WRAPPER,
+    modalCountWrapper: ROOT_MODAL_COUNT
+});
+modal.eventCloseModal();
+
+const app = new App({
+    typesListOfProducts: productsType,
+    typesListOfIngredients: ingredientsType,
+    pubSub: pubSub,
+    productCardsWrapper: ROOT_RIGHT_SIDE,
+    ingredientCardsWrapper: ROOT_INGREDIENTS_WRAPPER
+});
+
+/* *** */
+// дождемся, пока загрузятся все данные по api
+(async () => {
+    await app.request();
+    await app.createProductItems();
+    await app.firstLoadProductCard();
+    await app.createIngredientItems();
+})();
+// setTimeout(() => {}, 500); // ?
+/* *** */
+
+const productTypesList = new ProductTypesList({
+    productTypesListWrapper: ROOT_PRODUCT_TYPES,
+    typesListOfProducts: productsType,
+    pubSub: pubSub
+});
+productTypesList.render();
+
+const basket = new Basket({
+    parentDOMTag: ROOT_BASKET,
+    pubSub: pubSub
+});
+basket.render();

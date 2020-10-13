@@ -21,7 +21,8 @@ class PubSub {
         }
     }
 }
-const pubSub = new PubSub();
+
+export default PubSub;
 
 /* список пользовательских событий:
 

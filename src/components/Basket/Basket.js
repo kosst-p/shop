@@ -1,6 +1,7 @@
 class Basket {
     constructor(props) {
         this.parentDOMTag = props.parentDOMTag;
+        this.pubSub = props.pubSub;
         this.basketContentWrapper = null;
         this.basketTotalPriceWrapper = null;
 
@@ -8,7 +9,7 @@ class Basket {
         this.totalPrice = 0;
 
         /* подписка на добавление продукта в корзину */
-        pubSub.subscribeByEvent("addProductInBasket", product => {
+        this.pubSub.subscribeByEvent("addProductInBasket", product => {
             this.addProduct(product);
             this.renderAddedProducts();
             this.updateTotalPrice();
@@ -16,7 +17,7 @@ class Basket {
         });
 
         /* подписка на изменение количества из карточки продукта */
-        pubSub.subscribeByEvent("changeQuantity", () => {
+        this.pubSub.subscribeByEvent("changeQuantity", () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
             this.renderTotalPrice();
@@ -106,14 +107,6 @@ class Basket {
         this.basketTotalPriceWrapper = basketTotalPrice;
         basketContent.after(basketTotalPrice); // <- общая цена
 
-        // <div>
-        //     <span>
-        //         Total: <span id="total">0</span>
-        //     </span>
-        // </div>;
-
-        // document.querySelector("#total").innerHTML = "100";
-
         const basketBtnWrapper = document.createElement("div");
         basketBtnWrapper.classList.add("basket-btn-wrapper");
         const completeOrder = document.createElement("button");
@@ -159,7 +152,4 @@ class Basket {
     }
 }
 
-const basket = new Basket({
-    parentDOMTag: ROOT_BASKET
-});
-basket.render();
+export default Basket;

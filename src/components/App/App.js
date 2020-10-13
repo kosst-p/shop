@@ -1,61 +1,16 @@
+import FetchApi from "../../api/api";
+import ProductItem from "../ProductItem/ProductItem";
+import IngredientItem from "../IngredientItem/IngredientItem";
+
 class App {
-    constructor() {
+    constructor(props) {
         this.URL = "data.json";
-        this.ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
-        this.ROOT_RIGHT_SIDE = document.querySelector(".right-side");
-        this.ROOT_INGREDIENTS_WRAPPER = document.querySelector(
-            ".ingredients-wrapper"
-        );
-        // список типов продуктов
-        this.productsType = [
-            { id: 1, category: "pizza", name: "Пицца" },
-            { id: 2, category: "shaurma", name: "Шаурма" },
-            { id: 3, category: "sandwiches", name: "Сэндвичи" },
-            { id: 4, category: "burgers", name: "Бургеры" },
-            { id: 5, category: "chicken", name: "Курица & Картофель" },
-            { id: 6, category: "salads", name: "Тортилья & Салаты" },
-            { id: 7, category: "drinks", name: "Напитки & Десерты" }
-        ];
+        this.pubSub = props.pubSub;
+        this.productCardsWrapper = props.productCardsWrapper;
+        this.ingredientCardsWrapper = props.ingredientCardsWrapper;
 
         // список типов ингредиентов
-        this.ingredientsType = [
-            {
-                id: 1,
-                category: "sizes",
-                name: "Размер",
-                title: "Выберите размер сэндвича"
-            },
-            {
-                id: 2,
-                category: "breads",
-                name: "Хлеб",
-                title: "Хлеб для сэндвича на выбор"
-            },
-            {
-                id: 3,
-                category: "vegetables",
-                name: "Овощи",
-                title: "Дополнительные овощи бесплатно"
-            },
-            {
-                id: 4,
-                category: "sauces",
-                name: "Соусы",
-                title: "Выберите 3 бесплатных соуса по вкусу"
-            },
-            {
-                id: 5,
-                category: "fillings",
-                name: "Начинка",
-                title: "Добавьте начинку по вкусу"
-            },
-            {
-                id: 6,
-                category: "ready",
-                name: "Готово",
-                title: "Проверьте и добавьте в корзину"
-            }
-        ];
+        this.ingredientsType = props.typesListOfIngredients;
 
         // выгрузили все данные одним ajax запросом
         this.responseData = null;
@@ -67,33 +22,33 @@ class App {
         /* *** */
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
-        pubSub.subscribeByEvent("productTypeChange", params => {
+        this.pubSub.subscribeByEvent("productTypeChange", params => {
             this.renderProductCard(params);
         });
 
         /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
-        pubSub.subscribeByEvent("ingredientTypeChange", params => {
+        this.pubSub.subscribeByEvent("ingredientTypeChange", params => {
             this.renderIngredientCard(params);
         });
 
         /* открытие модального окна */
-        pubSub.subscribeByEvent("openModal", product => {
+        this.pubSub.subscribeByEvent("openModal", product => {
             this.modalIsOpen(product);
             this.firstLoadIngredientCard();
         });
 
         /* закрытие модального окна */
-        pubSub.subscribeByEvent("closedModal", modal => {
+        this.pubSub.subscribeByEvent("closedModal", modal => {
             this.modalIsClose(modal);
         });
 
         /* добавление ингредиента */
-        pubSub.subscribeByEvent("addIngredient", ingredient => {
+        this.pubSub.subscribeByEvent("addIngredient", ingredient => {
             this.addedIngredient(ingredient);
         });
 
         /* загрузка предзаказа */
-        pubSub.subscribeByEvent("orderListRender", modal => {
+        this.pubSub.subscribeByEvent("orderListRender", modal => {
             this.onActiveOrderList(modal);
         });
     }
@@ -127,6 +82,7 @@ class App {
                 // для первого элемента
                 this.productItems[category].push(
                     new ProductItem({
+                        pubSub: this.pubSub,
                         id,
                         name,
                         description,
@@ -142,6 +98,7 @@ class App {
             } else {
                 this.productItems[category].push(
                     new ProductItem({
+                        pubSub: this.pubSub,
                         id,
                         name,
                         description,
@@ -198,6 +155,7 @@ class App {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
                                 ][jey] = new IngredientItem({
+                                    pubSub: this.pubSub,
                                     code: jey,
                                     id,
                                     name,
@@ -210,6 +168,7 @@ class App {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
                                 ][jey] = new IngredientItem({
+                                    pubSub: this.pubSub,
                                     code: jey,
                                     id,
                                     name,
@@ -232,7 +191,7 @@ class App {
         for (const key in this.productItems) {
             if (this.productItems.hasOwnProperty(key)) {
                 this.productItems[key].forEach(item => {
-                    this.ROOT_RIGHT_SIDE.append(item.render());
+                    this.productCardsWrapper.append(item.render());
                 });
             }
         }
@@ -241,9 +200,9 @@ class App {
     // рендер карточек продуктов в зависимости от категории
     renderProductCard(params) {
         const { category } = params;
-        this.ROOT_RIGHT_SIDE.innerHTML = "";
+        this.productCardsWrapper.innerHTML = "";
         this.productItems[category].forEach(item => {
-            this.ROOT_RIGHT_SIDE.append(item.render());
+            this.productCardsWrapper.append(item.render());
         });
     }
 
@@ -263,7 +222,7 @@ class App {
         const { category } = params;
         for (const key in this.ingredientItems[category]) {
             const ingredientCard = this.ingredientItems[category][key];
-            this.ROOT_INGREDIENTS_WRAPPER.append(ingredientCard.render());
+            this.ingredientCardsWrapper.append(ingredientCard.render());
             // проверка на наличии выбранного ингредиента у продукта
             if (this.currentProduct.components[category].includes(key)) {
                 ingredientCard.addActiveClass();
@@ -395,14 +354,4 @@ class App {
     }
 }
 
-const app = new App();
-/* *** */
-// дождемся, пока загрузятся все данные по api
-(async () => {
-    await app.request();
-    await app.createProductItems();
-    await app.firstLoadProductCard();
-    await app.createIngredientItems();
-})();
-// setTimeout(() => {}, 500); // ?
-/* *** */
+export default App;

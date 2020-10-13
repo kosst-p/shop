@@ -15,3 +15,5 @@ class FetchApi {
         }
     }
 }
+
+export default FetchApi;

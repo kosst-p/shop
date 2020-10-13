@@ -1,7 +1,8 @@
 class ProductTypesList {
     constructor(props) {
-        this.parentDOMTag = props.parentDOMTag;
-        this.typesList = props.typesList;
+        this.productTypesListWrapper = props.productTypesListWrapper;
+        this.typesListOfProducts = props.typesListOfProducts;
+        this.pubSub = props.pubSub;
         this.menuListWrapper = null;
     }
 
@@ -9,13 +10,13 @@ class ProductTypesList {
     createList() {
         const ul = document.createElement("ul");
         ul.classList.add("menu-list");
-        this.parentDOMTag.appendChild(ul); // добавил в DOM
+        this.productTypesListWrapper.appendChild(ul); // добавил в DOM
         this.menuListWrapper = ul;
     }
 
     // создание li и добавление в ul
     createListItems() {
-        this.typesList.map(item => {
+        this.typesListOfProducts.map(item => {
             const { id, name, category } = item;
             let li = document.createElement("li");
             li.setAttribute("data-id", id);
@@ -34,7 +35,7 @@ class ProductTypesList {
 
     // ф-я для пользовательского события
     productTypeChangeByClick(category) {
-        pubSub.fireEvent("productTypeChange", { category }); // пользовательское событие
+        this.pubSub.fireEvent("productTypeChange", { category }); // пользовательское событие
     }
 
     // смена активного класса
@@ -51,8 +52,5 @@ class ProductTypesList {
         this.createListItems();
     }
 }
-const productTypesList = new ProductTypesList({
-    parentDOMTag: ROOT_PRODUCT_TYPES,
-    typesList: productsType
-});
-productTypesList.render();
+
+export default ProductTypesList;

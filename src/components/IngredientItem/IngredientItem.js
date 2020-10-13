@@ -1,5 +1,6 @@
 class IngredientItem {
     constructor(props) {
+        this.pubSub = props.pubSub;
         this.code = props.code;
         this.id = props.id;
         this.name = props.name;
@@ -12,7 +13,7 @@ class IngredientItem {
 
     // событие на выбор ингредиента
     updateIngredient() {
-        pubSub.fireEvent("addIngredient", this); // пользовательское событие
+        this.pubSub.fireEvent("addIngredient", this); // пользовательское событие
     }
 
     // установить активный класс по клику
@@ -60,3 +61,5 @@ class IngredientItem {
         return ingredientWrapper;
     }
 }
+
+export default IngredientItem;
