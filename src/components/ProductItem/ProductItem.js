@@ -41,7 +41,7 @@ class ProductItem {
     }
 
     // добавить в корзину
-    addInStore() {
+    addInBasket() {
         this.pubSub.fireEvent("addProductInBasket", this); // пользовательское событие
     }
 
@@ -135,7 +135,7 @@ class ProductItem {
             this.decreaseQuantity(spanCount);
         });
         buttonInBasket.addEventListener("click", e => {
-            this.addInStore();
+            this.addInBasket();
         });
         /* *** */
 

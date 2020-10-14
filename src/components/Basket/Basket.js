@@ -1,6 +1,6 @@
 class Basket {
     constructor(props) {
-        this.parentDOMTag = props.parentDOMTag;
+        this.basketWrapper = props.basketWrapper;
         this.pubSub = props.pubSub;
         this.basketContentWrapper = null;
         this.basketTotalPriceWrapper = null;
@@ -57,7 +57,7 @@ class Basket {
         });
     }
 
-    // обновления общей
+    // обновления общей цены
     updateTotalPrice() {
         let tmp = 0;
         this.addedProducts.forEach(element => {
@@ -147,7 +147,7 @@ class Basket {
 
     // рендер корзины со всем содержимым
     render() {
-        this.parentDOMTag.append(this.createBasket());
+        this.basketWrapper.append(this.createBasket());
         this.renderTotalPrice();
     }
 }

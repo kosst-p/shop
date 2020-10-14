@@ -201,7 +201,7 @@ class Modal {
         const ul = document.createElement("ul");
         ul.classList.add("ingredients-list");
         this.ingredientsListWrapper = ul;
-        this.ingredientTypesListWrapper.appendChild(ul); // добавил ul в DOM
+        this.ingredientTypesListWrapper.append(ul); // добавил ul в DOM
 
         this.ingredientsType.map(item => {
             const { id, name, title, category } = item;

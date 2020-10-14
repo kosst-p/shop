@@ -23,18 +23,18 @@ class App {
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
         this.pubSub.subscribeByEvent("productTypeChange", params => {
-            this.renderProductCard(params);
+            this.renderProductCards(params);
         });
 
         /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
         this.pubSub.subscribeByEvent("ingredientTypeChange", params => {
-            this.renderIngredientCard(params);
+            this.renderIngredientCards(params);
         });
 
         /* открытие модального окна */
         this.pubSub.subscribeByEvent("openModal", product => {
             this.modalIsOpen(product);
-            this.firstLoadIngredientCard();
+            this.firstRenderIngredientCards();
         });
 
         /* закрытие модального окна */
@@ -187,7 +187,7 @@ class App {
     }
 
     // рендер всех карточек продуктов при первой загрузки страницы
-    firstLoadProductCard() {
+    firstRenderProductCards() {
         for (const key in this.productItems) {
             if (this.productItems.hasOwnProperty(key)) {
                 this.productItems[key].forEach(item => {
@@ -198,7 +198,7 @@ class App {
     }
 
     // рендер карточек продуктов в зависимости от категории
-    renderProductCard(params) {
+    renderProductCards(params) {
         const { category } = params;
         this.productCardsWrapper.innerHTML = "";
         this.productItems[category].forEach(item => {
@@ -207,18 +207,18 @@ class App {
     }
 
     // первая загрузка ингредиентов при открытии модального окна
-    firstLoadIngredientCard() {
+    firstRenderIngredientCards() {
         let category = "";
         this.ingredientsType.forEach(element => {
             if (element.id === 1) {
                 category = element.category;
             }
         });
-        this.renderIngredientCard({ category });
+        this.renderIngredientCards({ category });
     }
 
     // рендер карточек ингредиентов в зависимости от категории
-    renderIngredientCard(params) {
+    renderIngredientCards(params) {
         const { category } = params;
         for (const key in this.ingredientItems[category]) {
             const ingredientCard = this.ingredientItems[category][key];

@@ -99,7 +99,7 @@ const app = new App({
 (async () => {
     await app.request();
     await app.createProductItems();
-    await app.firstLoadProductCard();
+    await app.firstRenderProductCards();
     await app.createIngredientItems();
 })();
 // setTimeout(() => {}, 500); // ?
@@ -113,7 +113,7 @@ const productTypesList = new ProductTypesList({
 productTypesList.render();
 
 const basket = new Basket({
-    parentDOMTag: ROOT_BASKET,
+    basketWrapper: ROOT_BASKET,
     pubSub: pubSub
 });
 basket.render();

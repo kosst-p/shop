@@ -10,7 +10,7 @@ class ProductTypesList {
     createList() {
         const ul = document.createElement("ul");
         ul.classList.add("menu-list");
-        this.productTypesListWrapper.appendChild(ul); // добавил в DOM
+        this.productTypesListWrapper.append(ul); // добавил в DOM
         this.menuListWrapper = ul;
     }
 
@@ -20,7 +20,7 @@ class ProductTypesList {
             const { id, name, category } = item;
             let li = document.createElement("li");
             li.setAttribute("data-id", id);
-            this.menuListWrapper.appendChild(li); // добавил в ul
+            this.menuListWrapper.append(li); // добавил в ul
             li.textContent = name;
             li.addEventListener("click", event => {
                 this.switchActiveClass(
@@ -28,13 +28,13 @@ class ProductTypesList {
                     "active-product",
                     this.menuListWrapper
                 );
-                this.productTypeChangeByClick(category);
+                this.changeProductTypeName(category);
             });
         });
     }
 
     // ф-я для пользовательского события
-    productTypeChangeByClick(category) {
+    changeProductTypeName(category) {
         this.pubSub.fireEvent("productTypeChange", { category }); // пользовательское событие
     }
 
