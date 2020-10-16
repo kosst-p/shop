@@ -4,8 +4,9 @@ import IngredientItem from "../IngredientItem/IngredientItem";
 
 class App {
     constructor(props) {
+        // this.URL = "https://jsonplaceholder.typicode.com/posts";
         this.URL = "data.json";
-        this.pubSub = props.pubSub;
+        this.eventsManager = props.eventsManager;
         this.productCardsWrapper = props.productCardsWrapper;
         this.ingredientCardsWrapper = props.ingredientCardsWrapper;
 
@@ -22,33 +23,33 @@ class App {
         /* *** */
 
         /* рендер карточек с продуктами в зависимости от выбранного типа из списка */
-        this.pubSub.subscribeByEvent("productTypeChange", params => {
+        this.eventsManager.subscribeByEvent("productTypeChange", params => {
             this.renderProductCards(params);
         });
 
         /* рендер карточек с ингредиентами в зависимости от выбранного типа из списка */
-        this.pubSub.subscribeByEvent("ingredientTypeChange", params => {
+        this.eventsManager.subscribeByEvent("ingredientTypeChange", params => {
             this.renderIngredientCards(params);
         });
 
         /* открытие модального окна */
-        this.pubSub.subscribeByEvent("openModal", product => {
+        this.eventsManager.subscribeByEvent("openModal", product => {
             this.modalIsOpen(product);
             this.firstRenderIngredientCards();
         });
 
         /* закрытие модального окна */
-        this.pubSub.subscribeByEvent("closedModal", modal => {
+        this.eventsManager.subscribeByEvent("closedModal", modal => {
             this.modalIsClose(modal);
         });
 
         /* добавление ингредиента */
-        this.pubSub.subscribeByEvent("addIngredient", ingredient => {
+        this.eventsManager.subscribeByEvent("addIngredient", ingredient => {
             this.addedIngredient(ingredient);
         });
 
         /* загрузка предзаказа */
-        this.pubSub.subscribeByEvent("orderListRender", modal => {
+        this.eventsManager.subscribeByEvent("orderListRender", modal => {
             this.onActiveOrderList(modal);
         });
     }
@@ -82,7 +83,7 @@ class App {
                 // для первого элемента
                 this.productItems[category].push(
                     new ProductItem({
-                        pubSub: this.pubSub,
+                        eventsManager: this.eventsManager,
                         id,
                         name,
                         description,
@@ -98,7 +99,7 @@ class App {
             } else {
                 this.productItems[category].push(
                     new ProductItem({
-                        pubSub: this.pubSub,
+                        eventsManager: this.eventsManager,
                         id,
                         name,
                         description,
@@ -155,7 +156,7 @@ class App {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
                                 ][jey] = new IngredientItem({
-                                    pubSub: this.pubSub,
+                                    eventsManager: this.eventsManager,
                                     code: jey,
                                     id,
                                     name,
@@ -168,7 +169,7 @@ class App {
                                 this.ingredientItems[
                                     this.ingredientsType[key].category
                                 ][jey] = new IngredientItem({
-                                    pubSub: this.pubSub,
+                                    eventsManager: this.eventsManager,
                                     code: jey,
                                     id,
                                     name,

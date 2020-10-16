@@ -1,7 +1,7 @@
 class Basket {
     constructor(props) {
         this.basketWrapper = props.basketWrapper;
-        this.pubSub = props.pubSub;
+        this.eventsManager = props.eventsManager;
         this.basketContentWrapper = null;
         this.basketTotalPriceWrapper = null;
 
@@ -9,7 +9,7 @@ class Basket {
         this.totalPrice = 0;
 
         /* подписка на добавление продукта в корзину */
-        this.pubSub.subscribeByEvent("addProductInBasket", product => {
+        this.eventsManager.subscribeByEvent("addProductInBasket", product => {
             this.addProduct(product);
             this.renderAddedProducts();
             this.updateTotalPrice();
@@ -17,7 +17,7 @@ class Basket {
         });
 
         /* подписка на изменение количества из карточки продукта */
-        this.pubSub.subscribeByEvent("changeQuantity", () => {
+        this.eventsManager.subscribeByEvent("changeQuantity", () => {
             this.renderAddedProducts();
             this.updateTotalPrice();
             this.renderTotalPrice();

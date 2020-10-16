@@ -1,4 +1,3 @@
-const URL = "../data/data.json";
 const ROOT_PRODUCT_TYPES = document.querySelector(".product-types");
 const ROOT_RIGHT_SIDE = document.querySelector(".right-side");
 const ROOT_BASKET = document.querySelector(".basket-wrapper");
@@ -69,13 +68,13 @@ import ProductTypesList from "./components/ProductTypesList/ProductTypesList";
 import Basket from "./components/Basket/Basket";
 import Modal from "./components/Modal/Modal";
 
-import PubSub from "./components/PubSub/PubSub";
+import EventsManager from "./components/EventsManager/EventsManager";
 
-const pubSub = new PubSub();
+const eventsManager = new EventsManager();
 
 const modal = new Modal({
     typesListOfIngredients: ingredientsType,
-    pubSub: pubSub,
+    eventsManager: eventsManager,
     modalWindowWrapper: ROOT_MODAL_WINDOW,
     modalTitleWrapper: ROOT_MODAL_TITLE,
     modalPriceWrapper: ROOT_MODAL_PRICE,
@@ -89,7 +88,7 @@ modal.eventCloseModal();
 const app = new App({
     typesListOfProducts: productsType,
     typesListOfIngredients: ingredientsType,
-    pubSub: pubSub,
+    eventsManager: eventsManager,
     productCardsWrapper: ROOT_RIGHT_SIDE,
     ingredientCardsWrapper: ROOT_INGREDIENTS_WRAPPER
 });
@@ -108,12 +107,12 @@ const app = new App({
 const productTypesList = new ProductTypesList({
     productTypesListWrapper: ROOT_PRODUCT_TYPES,
     typesListOfProducts: productsType,
-    pubSub: pubSub
+    eventsManager: eventsManager
 });
 productTypesList.render();
 
 const basket = new Basket({
     basketWrapper: ROOT_BASKET,
-    pubSub: pubSub
+    eventsManager: eventsManager
 });
 basket.render();

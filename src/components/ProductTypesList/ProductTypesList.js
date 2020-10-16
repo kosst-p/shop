@@ -2,7 +2,7 @@ class ProductTypesList {
     constructor(props) {
         this.productTypesListWrapper = props.productTypesListWrapper;
         this.typesListOfProducts = props.typesListOfProducts;
-        this.pubSub = props.pubSub;
+        this.eventsManager = props.eventsManager;
         this.menuListWrapper = null;
     }
 
@@ -35,7 +35,7 @@ class ProductTypesList {
 
     // ф-я для пользовательского события
     changeProductTypeName(category) {
-        this.pubSub.fireEvent("productTypeChange", { category }); // пользовательское событие
+        this.eventsManager.fireEvent("productTypeChange", { category }); // пользовательское событие
     }
 
     // смена активного класса

@@ -1,6 +1,6 @@
 class Modal {
     constructor(props) {
-        this.pubSub = props.pubSub;
+        this.eventsManager = props.eventsManager;
         this.modalWindowWrapper = props.modalWindowWrapper;
         this.modalTitleWrapper = props.modalTitleWrapper;
         this.modalPriceWrapper = props.modalPriceWrapper;
@@ -18,14 +18,14 @@ class Modal {
         this.currentProduct = null;
 
         /* добавить ингредиент */
-        this.pubSub.subscribeByEvent("addIngredient", () => {
+        this.eventsManager.subscribeByEvent("addIngredient", () => {
             setTimeout(() => {
                 this.renderModalTotalPrice();
             }, 1);
         });
 
         /* открытие модального окна */
-        this.pubSub.subscribeByEvent("openModal", product => {
+        this.eventsManager.subscribeByEvent("openModal", product => {
             this.isModalOpen(product);
         });
     }
@@ -50,7 +50,7 @@ class Modal {
     // событие закрытия модалки
     eventCloseModal() {
         this.closeBtn.addEventListener("click", e => {
-            this.pubSub.fireEvent("closedModal", this); // пользовательское событие
+            this.eventsManager.fireEvent("closedModal", this); // пользовательское событие
         });
     }
 
@@ -120,7 +120,9 @@ class Modal {
                 const { title, id, category } = params;
                 // условие для последнего элемента списка
                 if (id !== list.length) {
-                    this.pubSub.fireEvent("ingredientTypeChange", { category }); // пользовательское событие
+                    this.eventsManager.fireEvent("ingredientTypeChange", {
+                        category
+                    }); // пользовательское событие
                     this.buttonNext.classList.remove("disabled");
                 }
                 // условие для первого элемента списка
@@ -167,11 +169,13 @@ class Modal {
                 const { title, id, category } = params;
                 if (id === list.length) {
                     //условие для последнего элемента списка
-                    this.pubSub.fireEvent("orderListRender", this);
+                    this.eventsManager.fireEvent("orderListRender", this);
                     this.renderQuantityBlock();
                     this.buttonNext.classList.add("disabled");
                 } else {
-                    this.pubSub.fireEvent("ingredientTypeChange", { category }); // пользовательское событие
+                    this.eventsManager.fireEvent("ingredientTypeChange", {
+                        category
+                    }); // пользовательское событие
                     this.buttonPrev.classList.remove("disabled");
                 }
                 this.changeModalTitle(title);
@@ -230,10 +234,10 @@ class Modal {
         // условие для последнего элемента списка
         if (id === this.ingredientsType.length) {
             this.renderQuantityBlock();
-            this.pubSub.fireEvent("orderListRender", this);
+            this.eventsManager.fireEvent("orderListRender", this);
             this.buttonNext.classList.add("disabled");
         } else {
-            this.pubSub.fireEvent("ingredientTypeChange", { category });
+            this.eventsManager.fireEvent("ingredientTypeChange", { category });
             this.buttonNext.classList.remove("disabled");
         }
         if (id === 1) {
@@ -344,7 +348,7 @@ class Modal {
 
     // добавить в корзину
     addInBasket() {
-        this.pubSub.fireEvent("addProductInBasket", this.currentProduct); // пользовательское событие
+        this.eventsManager.fireEvent("addProductInBasket", this.currentProduct); // пользовательское событие
     }
     /* ***** */
 

@@ -1,4 +1,4 @@
-class PubSub {
+class EventsManager {
     constructor() {
         this.listeners = {};
     }
@@ -22,7 +22,7 @@ class PubSub {
     }
 }
 
-export default PubSub;
+export default EventsManager;
 
 /* список пользовательских событий:
 

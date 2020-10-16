@@ -4,14 +4,19 @@ class FetchApi {
     }
 
     async fetchData() {
-        let response = await fetch(this.url);
+        let response = await fetch(this.url, {
+            method: "GET",
+            mode: "no-cors"
+        });
+
         try {
             if (response.ok) {
+                console.log(response);
                 let data = await response.json();
                 return data;
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 }
